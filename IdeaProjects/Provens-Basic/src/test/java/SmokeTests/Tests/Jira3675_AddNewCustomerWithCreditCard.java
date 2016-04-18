@@ -21,6 +21,5 @@ public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
         addCustomerPage.addBillingAddress();
         addCustomerPage.addShippingAddress();
         addCustomerPage.addCreditCard();
-        Thread.sleep(2000);
     }
 }
