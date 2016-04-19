@@ -2,6 +2,7 @@ package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -48,9 +49,19 @@ public class AddCustomerPage extends BrowserSettings {
     By cardExpiredYearLocator = By.xpath("(//*[@id='card_expYear'])[2]/option[7]");
     By saveCardLinkLocator = By.xpath("(//*[@id='linkSaveCard'])[2]");
     By editCardLinkLocator = By.xpath("(//*[@id='linkEditCard'])[2]");
-    By saveContextualButton = By.xpath("//a[@id='btnSave']");
+//    By saveContextualButton = By.xpath("//a[@id='btnSave']");
     By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
     By popupBoxMessageLocator = By.xpath("(//div[@id='customerMessageBox']//*)[1]");
+    By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
+
+
+    By filterCustomersFieldLocator = By.xpath("//*[@aria-controls='searchCustomerResult']");
+    By customerNameInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[4]");
+    By customerEmailInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[5]");
+    By customerAddressInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[7]");
+    By customerCityInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[8]");
+//    By customerStateInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[9]");
+    By customerZipInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[10]/div[1]");
 
 
     public void openAddCustomerPage() {
@@ -139,7 +150,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(sameAsBillingButtonLocator).click();
     }
 
-    public void addCreditCard() {
+    public void addCreditCard() throws InterruptedException {
         log("Add Credit Card");
         log("Select Payment Methods tab");
         driver.findElement(paymentDetailsTabLocator).click();
@@ -159,11 +170,36 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(cardExpiredYearLocator).click();
         driver.findElement(saveCardLinkLocator).click();
 
+        Thread.sleep(5000);
         Assert.assertEquals(driver.findElement(editCardLinkLocator).isDisplayed(), true, "New Card is added");
+    }
+
+    public void saveNewCustomer() throws InterruptedException {
+        log("Save new Customer");
         log("Click 'Save and Close' button");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
+        Thread.sleep(2000);
+
         String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
         Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
+        driver.findElement(popupOkBtnLocator).click();
+    }
+
+    public void searchNewCustomerInTheGrid () throws InterruptedException {
+        log("Search new Customer in the grid");
+        WebElement searchField = driver.findElement(filterCustomersFieldLocator);
+        searchField.clear();
+        searchField.click();
+        searchField.sendKeys(customerFirstName);
+        searchField.sendKeys(Keys.ENTER);
+
+        Thread.sleep(1000);
+
+        log("Compare Customer's data from the grid");
+        Assert.assertEquals(driver.findElement(customerNameInTheGridLocator).getText(), customerFirstName + " " + customerLastName, "Unexpected Customer name");
+        Assert.assertEquals(driver.findElement(customerEmailInTheGridLocator).getText(), merchantEmail, "Unexpected Customer Email");
+        Assert.assertEquals(driver.findElement(customerAddressInTheGridLocator).getText(), billingAddressAddrLine1, "Unexpected Customer address");
+        Assert.assertEquals(driver.findElement(customerZipInTheGridLocator).getText(), billingAddressZip, "Unexpected Customer Zip");
     }
 }

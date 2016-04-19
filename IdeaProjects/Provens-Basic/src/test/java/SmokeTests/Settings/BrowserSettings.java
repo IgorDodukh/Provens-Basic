@@ -14,13 +14,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by igor on 17.04.16.
  */
+
 public class BrowserSettings {
     protected WebDriver driver;
+    protected GenerateRandomData generateRandomData;
+
     protected String merchantEmail = "themerchant@dydacomp.biz";
     protected String merchantPassword = "78qa22!#";
 //    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
-    protected String customerFirstName = "TesterFirstName_11";
-    protected String customerLastName = "TesterLastName_11";
+
+    protected String customerFirstName = "TesterFirstName_13";
+    protected String customerLastName = "TesterLastName_13";
     protected String customerPhone = "1234567890";
     protected String billingAddressTitle = "Billing Address";
     protected String billingAddressFirstName = "TesterBillingFirstName_11";
@@ -32,6 +36,14 @@ public class BrowserSettings {
     protected String paymentMethodsTitle = "Payment Method";
     protected String visaTestCardNumber = "4005550000000019";
     protected String addCustomerPopupMessage = "The customer has been successfully created.";
+
+    protected String warehouseName = "Test Warehouse";
+    protected String warehouseContactName = "Test Warehouse Contact Name";
+    protected String startPickupTime = "08:00";
+    protected String endPickupTime = "21:00";
+
+    protected String newBinName = "Test Warehouse Bin";
+    protected String saveWarehousePopupMessage = "Save warehouse successfully";
 
 
     @BeforeTest

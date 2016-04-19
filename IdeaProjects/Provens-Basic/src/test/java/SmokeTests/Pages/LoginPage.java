@@ -20,10 +20,10 @@ public class LoginPage extends BrowserSettings{
     By passwordInputLocator = By.xpath("//input[@name='UserPassword']");
     By loginButtonLocator = By.xpath("//input[@value='Login']");
     By siteLogoLocator = By.xpath("//img[@id='logoIcon']");
-    By msgBox = By.xpath("//div[@id='dydacomp_messagebox']");
-    By alreadyLoggedMsgBoxLocator = By.xpath("//div[@id='dydacomp_messagebox']/p");
-    By msgBoxOkButton = By.xpath("//div [@class='ui-dialog-buttonset']/button");
-    By closeMsgBoxLocator = By.xpath("//span[@class='ui-icon ui-icon-closethick']");
+//    By msgBox = By.xpath("//div[@id='dydacomp_messagebox']");
+//    By alreadyLoggedMsgBoxLocator = By.xpath("//div[@id='dydacomp_messagebox']/p");
+//    By msgBoxOkButton = By.xpath("//div [@class='ui-dialog-buttonset']/button");
+//    By closeMsgBoxLocator = By.xpath("//span[@class='ui-icon ui-icon-closethick']");
     By signInDropdown = By.xpath("//li[@id='SignIn']");
     By logOutButton = By.xpath("//a[@href='/web/Home/Logout']");
 

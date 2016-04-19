@@ -2,6 +2,7 @@ package SmokeTests.Tests;
 
 import SmokeTests.Pages.AddCustomerPage;
 import SmokeTests.Pages.LoginPage;
+import SmokeTests.Pages.MainPage;
 import SmokeTests.Settings.BrowserSettings;
 import org.testng.annotations.Test;
 
@@ -15,11 +16,19 @@ public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant();
 
+        MainPage mainPage = new MainPage(driver);
+        mainPage.openAddCustomerPage();
+//        mainPage.openCustomersGrid();
+
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
-        addCustomerPage.openAddCustomerPage();
+
+//        addCustomerPage.openAddCustomerPage();
+
         addCustomerPage.addCustomerInfo();
         addCustomerPage.addBillingAddress();
         addCustomerPage.addShippingAddress();
         addCustomerPage.addCreditCard();
+        addCustomerPage.saveNewCustomer();
+        addCustomerPage.searchNewCustomerInTheGrid();
     }
 }
