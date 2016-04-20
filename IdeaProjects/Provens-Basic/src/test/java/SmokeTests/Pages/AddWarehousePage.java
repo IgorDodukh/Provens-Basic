@@ -96,6 +96,7 @@ public class AddWarehousePage extends BrowserSettings {
         driver.findElement(binsTabLocator).click();
         log("Open 'Add Bin' popup");
         driver.findElement(addWarehouseBinButtonLocator).click();
+
         final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(addBinPopupTitleLocator));
 
@@ -116,15 +117,20 @@ public class AddWarehousePage extends BrowserSettings {
     }
 
     public void saveWarehouse() throws InterruptedException {
+        log("Save Warehouse");
         driver.findElement(saveContextualButton).click();
 
-        Thread.sleep(5000);
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Confirmation popup was not found");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
+        log("Confirm popup message");
         String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
         Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
         driver.findElement(popupOkBtnLocator).click();
 
-        Thread.sleep(5000);
+        log("Check displayed page with the created WH name");
+        final Wait<WebDriver> wait1 = new WebDriverWait(driver, 5).withMessage("Waiting popup is not hidden for a long time");
+        wait1.until(ExpectedConditions.elementToBeClickable(binsTabLocator));
 
         Assert.assertEquals(driver.findElement(warehouseInfoTitleLocator).isDisplayed(), true, "Unexpected page title");
         Assert.assertEquals(driver.findElement(currentPageModePopup).getText(), "View " + warehouseName, "Unexpected page mode. Should be view.");

@@ -37,7 +37,7 @@ public class BrowserSettings {
     protected String visaTestCardNumber = "4005550000000019";
     protected String addCustomerPopupMessage = "The customer has been successfully created.";
 
-    protected String warehouseName = "Test Warehouse";
+    protected String warehouseName = "Test Warehouse2";
     protected String warehouseContactName = "Test Warehouse Contact Name";
     protected String startPickupTime = "08:00";
     protected String endPickupTime = "21:00";
