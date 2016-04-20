@@ -5,6 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
@@ -17,9 +20,6 @@ public class AddCustomerPage extends BrowserSettings {
         this.driver = driver;
     }
 
-    By customersButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/a");
-    By addCustomerButtonLocator = By.xpath("//li/a[@href='/web/Customer/CreateCustomerView']");
-    By customerInfoTabLocator = By.xpath("//h2[@tooltipid='Customer_CustomerInfo']");
     By firstNameFieldLocator = By.xpath("//input[@id='customer_first_name']");
     By lastNameFieldLocator = By.xpath("//input[@id='customer_last_name']");
     By emailFieldLocator = By.xpath("//input[@id='customer_email']");
@@ -63,13 +63,10 @@ public class AddCustomerPage extends BrowserSettings {
 //    By customerStateInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[9]");
     By customerZipInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[10]/div[1]");
 
+    By waitingPopupLocator = By.xpath("//*[@id='waitingPopup']");
+    By waitingPopupTextLocator = By.xpath("//*[@id='waitingPopup']//*[@id='waiting-popup-text']");
+    By numberOfCustomersLocator = By.xpath("//*[@id='searchCustomerResult']//tbody/tr");
 
-    public void openAddCustomerPage() {
-        log("Open 'Add customer' page");
-        driver.findElement(customersButtonLocator).click();
-        driver.findElement(addCustomerButtonLocator).click();
-        Assert.assertEquals(driver.findElement(customerInfoTabLocator).isDisplayed(), true, "Customer creating page is not loaded");
-    }
 
     public void addCustomerInfo() {
         log("Add customer info");
@@ -170,8 +167,10 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(cardExpiredYearLocator).click();
         driver.findElement(saveCardLinkLocator).click();
 
-        Thread.sleep(5000);
-        Assert.assertEquals(driver.findElement(editCardLinkLocator).isDisplayed(), true, "New Card is added");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Waiting popup is not hidden for a long time");
+        wait.until(ExpectedConditions.elementToBeClickable(editCardLinkLocator));
+
+        Assert.assertEquals(driver.findElement(editCardLinkLocator).isDisplayed(), true, "Credit card is not saved");
     }
 
     public void saveNewCustomer() throws InterruptedException {
@@ -179,7 +178,8 @@ public class AddCustomerPage extends BrowserSettings {
         log("Click 'Save and Close' button");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
-        Thread.sleep(2000);
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Confirmation popup was not found");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
         String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
         Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
@@ -194,7 +194,10 @@ public class AddCustomerPage extends BrowserSettings {
         searchField.sendKeys(customerFirstName);
         searchField.sendKeys(Keys.ENTER);
 
-        Thread.sleep(1000);
+        int numberOfElements = driver.findElements(numberOfCustomersLocator).size();
+
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 2).withMessage("Waiting popup was not found");
+        wait.until(ExpectedConditions.numberOfElementsToBeLessThan(numberOfCustomersLocator, numberOfElements));
 
         log("Compare Customer's data from the grid");
         Assert.assertEquals(driver.findElement(customerNameInTheGridLocator).getText(), customerFirstName + " " + customerLastName, "Unexpected Customer name");
