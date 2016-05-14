@@ -97,7 +97,7 @@ public class AddWarehousePage extends BrowserSettings {
         log("Open 'Add Bin' popup");
         driver.findElement(addWarehouseBinButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Add Bin' popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(addBinPopupTitleLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "Popup for the 'Add Bin' form is not displayed");

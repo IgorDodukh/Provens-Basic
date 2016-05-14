@@ -1,6 +1,7 @@
 package SmokeTests.Settings;
 
 import SmokeTests.Pages.LoginPage;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Reporter;
@@ -17,14 +18,14 @@ import java.util.concurrent.TimeUnit;
 
 public class BrowserSettings {
     protected WebDriver driver;
-    protected GenerateRandomData generateRandomData;
+    GenerateRandomData generateRandomData = new GenerateRandomData();
 
     protected String merchantEmail = "themerchant@dydacomp.biz";
     protected String merchantPassword = "78qa22!#";
 //    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
 
-    protected String customerFirstName = "TesterFirstName_16";
-    protected String customerLastName = "TesterLastName_16";
+    protected String customerFirstName = "TesterFirstName_"+generateRandomData.generateRandomNumber(4);
+    protected String customerLastName = "TesterLastName_";
     protected String customerPhone = "1234567890";
     protected String billingAddressTitle = "Billing Address";
     protected String billingAddressFirstName = "TesterBillingFirstName_11";
@@ -37,7 +38,7 @@ public class BrowserSettings {
     protected String visaTestCardNumber = "4005550000000019";
     protected String addCustomerPopupMessage = "The customer has been successfully created.";
 
-    protected String warehouseName = "Test Warehouse2";
+    protected String warehouseName = "Test Warehouse4" + generateRandomData.generateRandomNumber(3);
     protected String warehouseContactName = "Test Warehouse Contact Name";
     protected String startPickupTime = "08:00";
     protected String endPickupTime = "21:00";
@@ -58,7 +59,6 @@ public class BrowserSettings {
     public void tearDown() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logOutUser();
-
         driver.close();
     }
     public void log(String message) {
