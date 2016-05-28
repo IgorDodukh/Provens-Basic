@@ -14,7 +14,7 @@ public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
     @Test
     public void jira3675() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginMerchant();
+        loginPage.loginMerchant(email, merchantPassword);
 
         MainPage mainPage = new MainPage(driver);
         mainPage.openAddCustomerPage();
@@ -24,11 +24,11 @@ public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
 
 //        addCustomerPage.openAddCustomerPage();
 
-        addCustomerPage.addCustomerInfo();
-        addCustomerPage.addBillingAddress();
+        addCustomerPage.addCustomerInfo(firstName, lastName, email, phone);
+        addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();
-        addCustomerPage.addCreditCard();
+        addCustomerPage.addCreditCard(visaTestCardNumber);
         addCustomerPage.saveNewCustomer();
-        addCustomerPage.searchNewCustomerInTheGrid();
+        addCustomerPage.searchNewCustomerInTheGrid(firstName);
     }
 }

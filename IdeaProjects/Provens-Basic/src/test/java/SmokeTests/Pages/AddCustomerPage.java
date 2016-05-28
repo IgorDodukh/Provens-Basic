@@ -14,7 +14,7 @@ import org.testng.Assert;
  * Created by igor on 17.04.16.
  */
 public class AddCustomerPage extends BrowserSettings {
-    public WebDriver driver;
+    private WebDriver driver;
 
     public AddCustomerPage(WebDriver driver) {
         this.driver = driver;
@@ -49,7 +49,7 @@ public class AddCustomerPage extends BrowserSettings {
     private By cardExpiredYearLocator = By.xpath("(//*[@id='card_expYear'])[2]/option[7]");
     private By saveCardLinkLocator = By.xpath("(//*[@id='linkSaveCard'])[2]");
     private By editCardLinkLocator = By.xpath("(//*[@id='linkEditCard'])[2]");
-//    By saveContextualButton = By.xpath("//a[@id='btnSave']");
+//    private By saveContextualButton = By.xpath("//a[@id='btnSave']");
     private By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
     private By popupBoxMessageLocator = By.xpath("(//div[@id='customerMessageBox']//*)[1]");
     private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
@@ -60,7 +60,7 @@ public class AddCustomerPage extends BrowserSettings {
     private By customerEmailInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[5]");
     private By customerAddressInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[7]");
     private By customerCityInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[8]");
-//    By customerStateInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[9]");
+//    private By customerStateInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[9]");
     private By customerZipInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[10]/div[1]");
 
     private By waitingPopupLocator = By.xpath("//*[@id='waitingPopup']");
@@ -68,7 +68,7 @@ public class AddCustomerPage extends BrowserSettings {
     private By numberOfCustomersLocator = By.xpath("//*[@id='searchCustomerResult']//tbody/tr");
 
 
-    public void addCustomerInfo() {
+    public void addCustomerInfo(String customerFirstName, String customerLastName, String customerEmail, String customerPhone) {
         log("Add customer info");
         log("Add First Name");
         WebElement firstNameField = driver.findElement(firstNameFieldLocator);
@@ -86,7 +86,7 @@ public class AddCustomerPage extends BrowserSettings {
         WebElement emailField = driver.findElement(emailFieldLocator);
         emailField.clear();
         emailField.click();
-        emailField.sendKeys(merchantEmail);
+        emailField.sendKeys(customerEmail);
 
         log("Add phone");
         WebElement phoneField = driver.findElement(phoneFieldLocator);
@@ -94,7 +94,7 @@ public class AddCustomerPage extends BrowserSettings {
         phoneField.click();
         phoneField.sendKeys(customerPhone);
     }
-    public void addBillingAddress() {
+    public void addBillingAddress(String billingFirstName, String billingLastName, String billingAddressLine1, String billingZip) {
         log("Add Billing Address");
         log("Select Billing Address tab");
         driver.findElement(billingAddressTabLocator).click();
@@ -110,25 +110,25 @@ public class AddCustomerPage extends BrowserSettings {
         WebElement billingFirstNameField = driver.findElement(billingAddressFirstNameLocator);
         billingFirstNameField.clear();
         billingFirstNameField.click();
-        billingFirstNameField.sendKeys(billingAddressFirstName);
+        billingFirstNameField.sendKeys(billingFirstName);
 
         log("Add Billing Address Last Name");
         WebElement billingLastNameField = driver.findElement(billingAddressLastNameLocator);
         billingLastNameField.clear();
         billingLastNameField.click();
-        billingLastNameField.sendKeys(billingAddressLastName);
+        billingLastNameField.sendKeys(billingLastName);
 
-        log("Add Billing Address Addr line 1");
-        WebElement billingAddrLine1Field = driver.findElement(billingAddressAddr1Locator);
-        billingAddrLine1Field.clear();
-        billingAddrLine1Field.click();
-        billingAddrLine1Field.sendKeys(billingAddressAddrLine1);
+        log("Add Billing Address Address line 1");
+        WebElement billingAddressLine1Field = driver.findElement(billingAddressAddr1Locator);
+        billingAddressLine1Field.clear();
+        billingAddressLine1Field.click();
+        billingAddressLine1Field.sendKeys(billingAddressLine1);
 
         log("Add Billing Address Zip");
         WebElement billingZipField = driver.findElement(billingAddressZipLocator);
         billingZipField.clear();
         billingZipField.click();
-        billingZipField.sendKeys(billingAddressZip);
+        billingZipField.sendKeys(billingZip);
         driver.findElement(newBillingAddressSectionLocator).click();
     }
 
@@ -147,7 +147,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(sameAsBillingButtonLocator).click();
     }
 
-    public void addCreditCard() throws InterruptedException {
+    public void addCreditCard(String testCardNumber) throws InterruptedException {
         log("Add Credit Card");
         log("Select Payment Methods tab");
         driver.findElement(paymentDetailsTabLocator).click();
@@ -162,7 +162,7 @@ public class AddCustomerPage extends BrowserSettings {
         WebElement cardNumberField = driver.findElement(cardNumberFieldLocator);
         cardNumberField.clear();
         cardNumberField.click();
-        cardNumberField.sendKeys(visaTestCardNumber);
+        cardNumberField.sendKeys(testCardNumber);
 
         driver.findElement(cardExpiredYearLocator).click();
         driver.findElement(saveCardLinkLocator).click();
@@ -186,7 +186,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(popupOkBtnLocator).click();
     }
 
-    public void searchNewCustomerInTheGrid () throws InterruptedException {
+    public void searchNewCustomerInTheGrid (String customerFirstName) throws InterruptedException {
         log("Search new Customer in the grid");
         WebElement searchField = driver.findElement(filterCustomersFieldLocator);
         searchField.clear();
@@ -200,9 +200,9 @@ public class AddCustomerPage extends BrowserSettings {
         wait.until(ExpectedConditions.numberOfElementsToBeLessThan(numberOfCustomersLocator, numberOfElements));
 
         log("Compare Customer's data from the grid");
-        Assert.assertEquals(driver.findElement(customerNameInTheGridLocator).getText(), customerFirstName + " " + customerLastName, "Unexpected Customer name");
-        Assert.assertEquals(driver.findElement(customerEmailInTheGridLocator).getText(), merchantEmail, "Unexpected Customer Email");
-        Assert.assertEquals(driver.findElement(customerAddressInTheGridLocator).getText(), billingAddressAddrLine1, "Unexpected Customer address");
-        Assert.assertEquals(driver.findElement(customerZipInTheGridLocator).getText(), billingAddressZip, "Unexpected Customer Zip");
+        Assert.assertEquals(driver.findElement(customerNameInTheGridLocator).getText(), firstName + " " + lastName, "Unexpected Customer name");
+        Assert.assertEquals(driver.findElement(customerEmailInTheGridLocator).getText(), email, "Unexpected Customer Email");
+        Assert.assertEquals(driver.findElement(customerAddressInTheGridLocator).getText(), addressLine1, "Unexpected Customer address");
+        Assert.assertEquals(driver.findElement(customerZipInTheGridLocator).getText(), addressZip, "Unexpected Customer Zip");
     }
 }

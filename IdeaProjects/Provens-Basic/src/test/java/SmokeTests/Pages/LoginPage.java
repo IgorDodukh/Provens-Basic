@@ -30,17 +30,17 @@ public class LoginPage extends BrowserSettings{
     private By signInDropdown = By.xpath("//li[@id='SignIn']");
     private By logOutButton = By.xpath("//a[@href='/web/Home/Logout']");
 
-    public void loginMerchant() {
+    public void loginMerchant(String email, String pass) {
         log("Login Merchant user to FS");
         WebElement login = driver.findElement(emailInputLocator);
         login.click();
         login.clear();
-        login.sendKeys(merchantEmail);
+        login.sendKeys(email);
 
         WebElement password = driver.findElement(passwordInputLocator);
         password.click();
         password.clear();
-        password.sendKeys(merchantPassword);
+        password.sendKeys(pass);
 
         driver.findElement(loginButtonLocator).click();
 

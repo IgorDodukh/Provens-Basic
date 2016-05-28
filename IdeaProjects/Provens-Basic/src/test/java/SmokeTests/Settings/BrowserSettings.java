@@ -1,14 +1,15 @@
 package SmokeTests.Settings;
 
 import SmokeTests.Pages.LoginPage;
-import org.apache.commons.lang3.RandomStringUtils;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 
-import java.security.SecureRandom;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -18,20 +19,27 @@ import java.util.concurrent.TimeUnit;
 
 public class BrowserSettings {
     protected WebDriver driver;
-    GenerateRandomData generateRandomData = new GenerateRandomData();
 
-    protected String merchantEmail = "themerchant@dydacomp.biz";
+    private GenerateRandomData generateRandomData = new GenerateRandomData();
+
+//    Environments
+    protected String qa01 = "https://qa01.freestylecommerce.info/web/";
+    protected String qa03 = "https://qa03.freestylecommerce.info/web/";
+    protected String qa05 = "https://qa05.freestylecommerce.info/web/";
+    protected String production = "https://my.freestylecommerce.com/web/";
+
+    protected String email = "themerchant@dydacomp.biz";
     protected String merchantPassword = "78qa22!#";
 //    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
 
-    protected String customerFirstName = "TesterFirstName_"+generateRandomData.generateRandomNumber(4);
-    protected String customerLastName = "TesterLastName_";
-    protected String customerPhone = "1234567890";
+    protected String firstName = "TesterFirstName_" + generateRandomData.generateRandomNumber(4);
+    protected String lastName = "TesterLastName_";
+    protected String phone = "1234567890";
     protected String billingAddressTitle = "Billing Address";
-    protected String billingAddressFirstName = "TesterBillingFirstName_11";
-    protected String billingAddressLastName = "TesterBillingLastName_11";
-    protected String billingAddressAddrLine1 = "Tester Billing Address Line 11";
-    protected String billingAddressZip = "10113";
+    protected String addressFirstName = "TesterBillingFirstName_11";
+    protected String addressLastName = "TesterBillingLastName_11";
+    protected String addressLine1 = "Tester Billing Address Line 11";
+    protected String addressZip = "10113";
 
     protected String shippingAddressTitle = "Shipping Address";
     protected String paymentMethodsTitle = "Payment Method";
@@ -46,11 +54,34 @@ public class BrowserSettings {
     protected String newBinName = "Test Warehouse Bin";
     protected String saveWarehousePopupMessage = "Save warehouse successfully";
 
+    protected String productSku = "Product SKU" + generateRandomData.generateRandomNumber(4);
+    protected String productWeight = generateRandomData.generateRandomNumber(1);
+    protected String productDescription = productSku + generateRandomData.generateRandomString(10);
+    protected String productRetailPrice = generateRandomData.generateRandomNumber(3);
+    protected String productSalesChannel = "Call Center";
+
+//    Authorize credentials
+    protected String authApiLoginId = "3y8Z2fk5Z3n";
+    protected String authTransactionKey = "2s25qyDYe249uTRx";
+
+//    UPS credentials
+    protected String upsUserName = "Dev.api@dydacomp";
+    protected String upsPassword = "";
+    protected String upsLicenseNumber = "0C8701ECC4023070";
+    protected String upsShipperNumber = "08611E";
+
+//    USPS credentials
+    protected String uspsAccountId = "2502974";
+    protected String uspsPassPhrase = "";
+
+    //    create UPS Ground shipping method
+    protected String upsGroundMethodName = "UPS Ground" + generateRandomData.generateRandomNumber(2);
+    protected String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
     @BeforeTest
     public void setUp() {
         driver = new FirefoxDriver();
-        driver.get("https://qa03.freestylecommerce.info/web/");
+        driver.get(qa03);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -61,7 +92,7 @@ public class BrowserSettings {
         loginPage.logOutUser();
         driver.close();
     }
-    public void log(String message) {
+    protected void log(String message) {
         Reporter.log(new Date().toString() + "\t" + message + "\n");
     }
 }

@@ -20,32 +20,32 @@ public class AddWarehousePage extends BrowserSettings {
         this.driver = driver;
     }
 
-    By warehouseNameFieldLocator = By.xpath("//input[@id='warehouseName']");
-    By warehouseContactNameFieldLocator = By.xpath("//input[@id='contactName']");
-    By warehousePhoneFieldLocator = By.xpath("//input[@id='phoneNumber']");
-    By pickingReadyTimeFieldLocator = By.xpath("//input[@id='pickingReadyTime']");
-    By pickingCutoffTimeFieldLocator = By.xpath("//input[@id='pickingCutoffTime']");
-    By addressFieldLocator = By.xpath("//input[@id='address_warehouse']");
-    By zipFieldLocator = By.xpath("//input[@id='zip_warehouse']");
-    By warehouseInfoTitleLocator = By.xpath("//*[@id='subTitle']/h2/strong");
-    By binsTabLocator = By.xpath("//*[@id='leftNav']/ul/li[2]/a");
-    By addWarehouseBinButtonLocator = By.xpath("//input[@id='add_bin']");
-    By addBinPopupTitleLocator = By.xpath("//*[@class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable']");
+    private By warehouseNameFieldLocator = By.xpath("//input[@id='warehouseName']");
+    private By warehouseContactNameFieldLocator = By.xpath("//input[@id='contactName']");
+    private By warehousePhoneFieldLocator = By.xpath("//input[@id='phoneNumber']");
+    private By pickingReadyTimeFieldLocator = By.xpath("//input[@id='pickingReadyTime']");
+    private By pickingCutoffTimeFieldLocator = By.xpath("//input[@id='pickingCutoffTime']");
+    private By addressFieldLocator = By.xpath("//input[@id='address_warehouse']");
+    private By zipFieldLocator = By.xpath("//input[@id='zip_warehouse']");
+    private By warehouseInfoTitleLocator = By.xpath("//*[@id='subTitle']/h2/strong");
+    private By binsTabLocator = By.xpath("//*[@id='leftNav']/ul/li[2]/a");
+    private By addWarehouseBinButtonLocator = By.xpath("//input[@id='add_bin']");
+    private By addBinPopupTitleLocator = By.xpath("//*[@class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable']");
 
-    By newBinNameLocator = By.xpath("//*[@id='txtBinName']");
-    By pickBinTypeLocator = By.xpath("//*[@id='selectBinType']/option[@value='2']");
-    By saveNewBinBtnLocator = By.xpath("//*[@id='save_BinAddClone']");
-    By newBinNameInBinsGridLocator = By.xpath("((//*[@id='warehouseBinsResult']//tr/*)[6])");
+    private By newBinNameLocator = By.xpath("//*[@id='txtBinName']");
+    private By pickBinTypeLocator = By.xpath("//*[@id='selectBinType']/option[@value='2']");
+    private By saveNewBinBtnLocator = By.xpath("//*[@id='save_BinAddClone']");
+    private By newBinNameInBinsGridLocator = By.xpath("((//*[@id='warehouseBinsResult']//tr/*)[6])");
 
-    By saveContextualButton = By.xpath("//a[@id='btnSave']");
-//    By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private By saveContextualButton = By.xpath("//a[@id='btnSave']");
+//    private By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
 
-    By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
-    By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-    By currentPageModePopup = By.xpath(".//*[@id='breadCrumb']/ul/li[2]/h1");
+    private By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
+    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
+    private By currentPageModePopup = By.xpath(".//*[@id='breadCrumb']/ul/li[2]/h1");
 
 
-    public void addWarehouseInfo() {
+    public void addWarehouseInfo(String warehouseName, String contactName, String phone, String startTime, String endTime, String addressLine1, String zip) {
         log("Add Warehouse info");
         log("Add Warehouse Name");
         WebElement warehouseNameField = driver.findElement(warehouseNameFieldLocator);
@@ -57,41 +57,41 @@ public class AddWarehousePage extends BrowserSettings {
         WebElement contactNameField = driver.findElement(warehouseContactNameFieldLocator);
         contactNameField.clear();
         contactNameField.click();
-        contactNameField.sendKeys(warehouseContactName);
+        contactNameField.sendKeys(contactName);
 
         log("Add phone number");
         WebElement phoneField = driver.findElement(warehousePhoneFieldLocator);
         phoneField.clear();
         phoneField.click();
-        phoneField.sendKeys(customerPhone);
+        phoneField.sendKeys(phone);
 
         log("Add Earliest Pickup Time");
         WebElement startTimeField = driver.findElement(pickingReadyTimeFieldLocator);
         startTimeField.clear();
         startTimeField.click();
-        startTimeField.sendKeys(startPickupTime);
+        startTimeField.sendKeys(startTime);
 
         log("Add Latest Pickup Time");
         WebElement endTimeField = driver.findElement(pickingCutoffTimeFieldLocator);
         endTimeField.clear();
         endTimeField.click();
-        endTimeField.sendKeys(endPickupTime);
+        endTimeField.sendKeys(endTime);
 
         log("Add address line");
         WebElement addressLineField = driver.findElement(addressFieldLocator);
         addressLineField.clear();
         addressLineField.click();
-        addressLineField.sendKeys(billingAddressAddrLine1);
+        addressLineField.sendKeys(addressLine1);
 
         log("Add zip code");
         WebElement zipField = driver.findElement(zipFieldLocator);
         zipField.clear();
         zipField.click();
-        zipField.sendKeys(billingAddressZip);
+        zipField.sendKeys(zip);
         driver.findElement(warehouseInfoTitleLocator).click();
     }
 
-    public void addWarehouseBin () throws InterruptedException {
+    public void addWarehouseBin (String name) throws InterruptedException {
         log("Select Bins tab");
         driver.findElement(binsTabLocator).click();
         log("Open 'Add Bin' popup");
@@ -106,7 +106,7 @@ public class AddWarehousePage extends BrowserSettings {
         WebElement binName = driver.findElement(newBinNameLocator);
         binName.clear();
         binName.click();
-        binName.sendKeys(newBinName);
+        binName.sendKeys(name);
 
         log("Select Bin type");
         driver.findElement(pickBinTypeLocator).click();

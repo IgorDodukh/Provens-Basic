@@ -3,6 +3,7 @@ package SmokeTests.Pages;
 import SmokeTests.Settings.BrowserSettings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,22 +19,32 @@ public class MainPage extends BrowserSettings {
         this.driver = driver;
     }
 
-    By customersMenuButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/a");
-    By addCustomerMenuButtonLocator = By.xpath("//li/a[@href='/web/Customer/CreateCustomerView']");
+    private By customersMenuButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/a");
+    private By addCustomerMenuButtonLocator = By.xpath("//li/a[@href='/web/Customer/CreateCustomerView']");
 
-    By productsMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[2]");
-    By addProductMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/ProductCreate']");
+    private By productsMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[2]");
+    private By addProductMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/ProductCreate']");
 
-    By customersGridButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/ul/li[1]/a");
-    By customerInfoTabLocator = By.xpath("//h2[@tooltipid='Customer_CustomerInfo']");
+    private By customersGridButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/ul/li[1]/a");
+    private By customerInfoTabLocator = By.xpath("//h2[@tooltipid='Customer_CustomerInfo']");
 
-    By headerMenuLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[4]/a");
-    By searchWarehouseButtonLocator = By.xpath("//a[@href='/web/Inventory/SearchWarehouse']");
-    By addWarehouseButtonLocator = By.xpath("//button[@tooltipid='addWarehouse']");
-    By addPageBreadcrumpLocator = By.xpath("//*[@id='breadCrumb']/ul/li[2]/h1");
+    private By headerMenuLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[4]/a");
+    private By searchWarehouseButtonLocator = By.xpath("//a[@href='/web/Inventory/SearchWarehouse']");
+    private By addWarehouseButtonLocator = By.xpath("//button[@tooltipid='addWarehouse']");
+    private By addPageBreadcrumpLocator = By.xpath("//*[@id='breadCrumb']/ul/li[2]/h1");
 
-    By addCustomerPageTitleLocator = By.xpath("//*[@class='tabContainer columns']//h2/strong");
-    By productInfoTabLocator = By.xpath("//*[@id='productInfoTab']");
+    private By addCustomerPageTitleLocator = By.xpath("//*[@class='tabContainer columns']//h2/strong");
+    private By productInfoTabLocator = By.xpath("//*[@id='productInfoTab']");
+
+    private By setupButtonLocator = By.xpath("//li[@id='Help'][2]");
+    private By settingsButtonLocator = By.xpath("//a[@href='/web/Configuration/ConfigurationManagement']");
+    private By thirdPartyConnectionsButtonLocator = By.xpath("//a[@href='/web/Configuration/ThirdPartyConnectionsManagement']");
+    private By shippingMethodsButtonLocator = By.xpath("//a[@href='/web/Configuration/ShippingMethods']");
+    private By basicSettingTitleLocator = By.xpath("//section[@id='basicSettingTabpage']/div[1]");
+    private By authorizeNetTitleLocator = By.xpath("//section[@id='paymentGateTabpage']/div[1]");
+    private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
+
+    private By shippingMethodsPageTitleLocator = By.xpath("//button[@id='btnShippingMethods']");
 
 
     public void openAddCustomerPage() {
@@ -63,5 +74,42 @@ public class MainPage extends BrowserSettings {
         Assert.assertEquals(driver.findElement(addPageBreadcrumpLocator).getText(), "Add", "Customer creating page is not loaded");
         Assert.assertEquals(driver.findElement(addCustomerPageTitleLocator).getText(), "Product Details", "Unexpected page title");
         Thread.sleep(5000);
+    }
+
+    public void openSetUpPage() {
+        log("Open 'Settings' page");
+        driver.findElement(setupButtonLocator).click();
+        driver.findElement(settingsButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Basic Settings' page popup was not found");
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(basicSettingTitleLocator));
+
+        Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page title was not found");
+    }
+
+    public void openThirdPartyConnectionsPage() {
+        log("Open 'Third Party Connections' page");
+        driver.findElement(setupButtonLocator).click();
+        driver.findElement(thirdPartyConnectionsButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Third Party Connections' page popup was not found");
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeNetTitleLocator));
+
+        Assert.assertEquals(element.isDisplayed(), true, "'Third Party Connections' page title was not found");
+    }
+
+    public void openMainPage() {
+        log("Navigate to Main Page");
+        driver.findElement(siteLogoIconLocator).click();
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, 5).withMessage("Main Page is loaded for a long time");
+        wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
+    }
+
+    public void openShippingMethodsPage() {
+        log("Open 'Shipping Methods' page");
+        driver.findElement(setupButtonLocator).click();
+        driver.findElement(shippingMethodsButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Shipping Methods' page popup was not found");
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(shippingMethodsPageTitleLocator));
+
+        Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
     }
 }
