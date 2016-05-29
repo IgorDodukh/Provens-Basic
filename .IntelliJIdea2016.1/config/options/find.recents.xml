@@ -1,0 +1,11 @@
+<application>
+  <component name="FindRecents">
+    <findStrings>
+      <find>save</find>
+      <find>mess</find>
+      <find>messa</find>
+      <find>messageb</find>
+      <find>Password</find>
+    </findStrings>
+  </component>
+</application>
