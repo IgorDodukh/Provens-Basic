@@ -6,6 +6,7 @@
       <find>messa</find>
       <find>messageb</find>
       <find>Password</find>
+      <find>backgroundProperty</find>
     </findStrings>
   </component>
 </application>

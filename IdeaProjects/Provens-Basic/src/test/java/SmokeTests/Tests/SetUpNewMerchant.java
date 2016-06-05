@@ -1,9 +1,6 @@
 package SmokeTests.Tests;
 
-import SmokeTests.Pages.MainPage;
-import SmokeTests.Pages.SettingsPage;
-import SmokeTests.Pages.ShippingMethodsPage;
-import SmokeTests.Pages.ThirdPartyConnectionsPage;
+import SmokeTests.Pages.*;
 import SmokeTests.Settings.BrowserSettings;
 import org.testng.annotations.Test;
 
@@ -13,14 +10,17 @@ import org.testng.annotations.Test;
 public class SetUpNewMerchant extends BrowserSettings {
 
     @Test
-    public void setupNewMerchant() {
+    public void setupNewMerchant() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.loginMerchant(email, merchantPassword);
+
         MainPage mainPage = new MainPage(driver);
-        mainPage.openSetUpPage();
-
-        SettingsPage settingsPage = new SettingsPage(driver);
-        settingsPage.setShipaheadSetting();
-
-        mainPage.openMainPage();
+//        mainPage.openSetUpPage();
+//
+//        SettingsPage settingsPage = new SettingsPage(driver);
+//        settingsPage.setShipaheadSetting();
+//
+//        mainPage.openMainPage();
         mainPage.openThirdPartyConnectionsPage();
 
         ThirdPartyConnectionsPage thirdPartyConnectionsPage = new ThirdPartyConnectionsPage(driver);

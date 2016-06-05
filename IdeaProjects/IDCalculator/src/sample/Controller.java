@@ -1,29 +1,44 @@
 package sample;
 
-import com.sun.javafx.css.converters.FontConverter;
-import com.sun.javafx.font.FontResource;
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-
+import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class Controller {
+public class Controller extends Main implements KeyListener{
+
 
     public Label resultField;
     public Label operationField;
-    public Button button;
+    public Button acButton;
+    public TextField textField = new TextField();
+    public AnchorPane allApp;
+    public Button delButton;
+    public Button plusMinusButton;
+//    public Button divButton;
+//    public Button multiplyButton;
+//    public Button minusButton;
+//    public Button plusButton;
+//    public Button equalsButton;
+    public Button dotButton;
 
-    DropShadow shadow = new DropShadow();
+    public Button zeroButton;
+    public Button oneButton;
+    public Button twoButton;
+    public Button threeButton;
+    public Button fourButton;
+    public Button fiveButton;
+    public Button sixButton;
+    public Button sevenButton;
+    public Button eightButton;
+    public Button nineButton;
 
     private boolean plusForDigits = false;
     private boolean plusForEquals = false;
@@ -34,16 +49,48 @@ public class Controller {
     private boolean divideForDigits = false;
     private boolean divideForEquals = false;
     private boolean equals = false;
+    private boolean dotStatus = false;
 
     private String currentValue = "0";
     private String firstArgument = "0";
     private String secondArgument = "0";
-    private float resultValue = 0;
+    private double resultValue = 0;
 
     private int resultLength = 0;
 
     private float bufferValue = 0;
 
+    private GridPane gridPane = new GridPane();
+
+    public void keyEvent() {
+//        textField.setOnKeyTyped(event -> {
+//            if (event.getCode() == KeyCode.ENTER) {
+//                resultField.setText("Did It");
+//            }
+//        });
+
+        System.out.println("Key Event method");
+        textField.setOnKeyPressed(event -> {
+            System.out.println("Key Event lambda");
+            if (event.getCode() == KeyCode.F1) {
+                resultField.setText("Yes");
+            }
+        });
+    }
+
+    private void buttonClickAction(Button buttonName) {
+        buttonName.setOnMousePressed(me -> {
+            System.out.println("Mouse pressed");
+            buttonName.setStyle("-fx-background-color: #FFFFFF;");
+            //buttonName.setStyle("-fx-background-image: ");
+            //buttonName.setStyle("-fx-border-color:  #555;");
+        });
+        buttonName.setOnMouseReleased(me -> {
+            System.out.println("Mouse Released");
+            buttonName.setStyle("-fx-background-color: #EEEEE0;");
+            //buttonName.setStyle("-fx-border-color:  #555;");
+        });
+    }
 
     private void makeOperationsFalse() {
         plusForDigits = false;
@@ -53,10 +100,22 @@ public class Controller {
         equals = false;
     }
 
+
+
     private void checkForResultLength() {
         resultLength = currentValue.length();
         if (resultLength >= 6 && resultLength < 12) {
             resultField.setFont(Font.font("FreeMono", 30));
+//            resultField.setOnKeyPressed(event -> {
+//                ScaleTransition scale = new ScaleTransition(Duration.seconds(1), resultField);
+//                        resultField.setFont(Font.font("FreeMono", 30));
+//                        scale.setFromX(2);
+//                        scale.setFromY(2);
+//                        scale.setToX(1);
+//                        scale.setToY(1);
+//                        scale.play();
+//            }
+//            );
         }else if (resultLength >= 12) {
             resultField.setFont(Font.font("FreeMono", 20));
         }else if (resultLength > 0 && resultLength < 6) {
@@ -65,6 +124,7 @@ public class Controller {
     }
 
     public void acButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(acButton);
         resultField.setText("0");
         operationField.setText("");
         currentValue = "0";
@@ -76,6 +136,7 @@ public class Controller {
     }
 
     public void sevenButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(sevenButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("7");
@@ -89,6 +150,7 @@ public class Controller {
     }
 
     public void eightButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(eightButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("8");
@@ -102,6 +164,7 @@ public class Controller {
     }
 
     public void nineButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(nineButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("9");
@@ -115,6 +178,7 @@ public class Controller {
     }
 
     public void fourButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(fourButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("4");
@@ -128,6 +192,7 @@ public class Controller {
     }
 
     public void fiveButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(fiveButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("5");
@@ -141,6 +206,7 @@ public class Controller {
     }
 
     public void sixButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(sixButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("6");
@@ -154,6 +220,7 @@ public class Controller {
     }
 
     public void oneButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(oneButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("1");
@@ -167,6 +234,7 @@ public class Controller {
     }
 
     public void twoButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(twoButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("2");
@@ -180,6 +248,7 @@ public class Controller {
     }
 
     public void threeButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(threeButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("3");
@@ -193,6 +262,7 @@ public class Controller {
     }
 
     public void zeroButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(zeroButton);
         currentValue = resultField.getText();
         if (Objects.equals(currentValue, "0")) {
             resultField.setText("0");
@@ -206,22 +276,27 @@ public class Controller {
     }
 
     public void dotButtonAction(ActionEvent actionEvent) {
-        currentValue = resultField.getText();
-        if(currentValue.endsWith(".")){
-            System.out.println("extra dot");
-        }else if (Objects.equals(currentValue, "0")) {
-            resultField.setText(currentValue + ".");
-        }else if(Objects.equals(currentValue, currentValue)) {
-            resultField.setText(currentValue + ".");
-        }
-        checkForResultLength();
+        buttonClickAction(dotButton);
+        if (!dotStatus) {
+            currentValue = resultField.getText();
+            if (currentValue.endsWith(".")) {
+                System.out.println("extra dot");
+            } else if (Objects.equals(currentValue, "0")) {
+                resultField.setText(currentValue + ".");
+            } else if (Objects.equals(currentValue, currentValue)) {
+                resultField.setText(currentValue + ".");
+            }
+            checkForResultLength();
 
-        if (plusForDigits || minusForDigits || multiplyForDigits || divideForDigits) {
-            makeOperationsFalse();
+            if (plusForDigits || minusForDigits || multiplyForDigits || divideForDigits) {
+                makeOperationsFalse();
+            }
+            dotStatus = true;
         }
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
+        buttonClickAction(delButton);
         currentValue = resultField.getText();
         resultLength = currentValue.length();
         if (resultLength == 1) {
@@ -263,7 +338,8 @@ public class Controller {
             resultValue = Float.parseFloat(firstArgument) / Float.parseFloat(secondArgument);
         }
 
-        currentValue = Float.toString(resultValue);
+        DecimalFormat df = new DecimalFormat("################.###");
+        currentValue = df.format(resultValue);
         if (currentValue.endsWith(".0")) {
             currentValue = currentValue.replace(".0", "");
         }
@@ -272,6 +348,7 @@ public class Controller {
         checkForResultLength();
         makeOperationsFalse();
         equals = true;
+        dotStatus = false;
     }
 
     public void plusAction(ActionEvent actionEvent) {
@@ -280,6 +357,7 @@ public class Controller {
         minusForEquals = false;
         multiplyForEquals = false;
         divideForEquals = false;
+        dotStatus = false;
         operationField.setText("+");
         firstArgument = resultField.getText();
         currentValue = "0";
@@ -292,6 +370,7 @@ public class Controller {
         plusForEquals = false;
         multiplyForEquals = false;
         divideForEquals = false;
+        dotStatus = false;
         operationField.setText("-");
         firstArgument = resultField.getText();
         currentValue = "0";
@@ -303,7 +382,8 @@ public class Controller {
         plusForEquals = false;
         minusForEquals = false;
         divideForEquals = false;
-        operationField.setText("x");
+        dotStatus = false;
+        operationField.setText("×");
         firstArgument = resultField.getText();
         currentValue = "0";
     }
@@ -314,8 +394,29 @@ public class Controller {
         plusForEquals = false;
         minusForEquals = false;
         multiplyForEquals = false;
-        operationField.setText("/");
+        dotStatus = false;
+        operationField.setText("÷");
         firstArgument = resultField.getText();
         currentValue = "0";
+    }
+
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent e) {
+//        int keyCode = e.getKeyCode();
+//        if (keyCode == KeyEvent.) {
+//
+//        }
+    }
+
+    @Override
+    public void keyPressed(java.awt.event.KeyEvent e) {
+//        if (KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)) {
+//            System.out.println("Tratata");
+//        }
+    }
+
+    @Override
+    public void keyReleased(java.awt.event.KeyEvent e) {
+
     }
 }

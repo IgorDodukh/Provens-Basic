@@ -46,6 +46,9 @@ public class MainPage extends BrowserSettings {
 
     private By shippingMethodsPageTitleLocator = By.xpath("//button[@id='btnShippingMethods']");
 
+    private By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
+
+
 
     public void openAddCustomerPage() {
         log("Open 'Add customer' page");
@@ -82,8 +85,11 @@ public class MainPage extends BrowserSettings {
         driver.findElement(settingsButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Basic Settings' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(basicSettingTitleLocator));
+        WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page title was not found");
+        Assert.assertEquals(element2.isDisplayed(), true, "'Basic Settings' page was not loaded");
+
     }
 
     public void openThirdPartyConnectionsPage() {

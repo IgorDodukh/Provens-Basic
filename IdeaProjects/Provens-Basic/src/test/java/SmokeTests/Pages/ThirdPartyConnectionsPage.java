@@ -110,7 +110,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         driver.findElement(confirmPopupButtonLocator).click();
     }
 
-    public void configureUSPSAccount(String accountId, String passPhrase) {
+    public void configureUSPSAccount(String accountId, String passPhrase) throws InterruptedException {
         log("Click USPS checkbox");
         driver.findElement(uspsConfigurationCheckboxLocator).click();
 
@@ -133,8 +133,10 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
         String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
         Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "USPS test result unexpected popup message");
+        Thread.sleep(5000);
 
         driver.findElement(confirmPopupButtonLocator).click();
+        Thread.sleep(5000);
         driver.findElement(saveAndCloseContextualButtonLocator).click();
     }
 }

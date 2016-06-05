@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="IDCalculator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IDCalculator_jar</output-path>
+    <root id="archive" name="IDCalculator.jar">
+      <element id="module-output" name="IDCalculator" />
+    </root>
+  </artifact>
+</component>
