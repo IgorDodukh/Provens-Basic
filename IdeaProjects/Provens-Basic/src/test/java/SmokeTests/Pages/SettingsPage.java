@@ -2,7 +2,9 @@ package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,7 +35,11 @@ public class SettingsPage extends BrowserSettings {
 
         log("Set 'Always Ship Ahead, no setting changes allowed' setting");
         System.out.println("Set 'Always Ship Ahead, no setting changes allowed' setting");
-        driver.findElement(alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator).click();
+
+        WebElement element=driver.findElement(alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator);
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", element);
+        System.out.println("Tried to click One Way");
 
         log("Click 'Save and Close' button");
         System.out.println("Click 'Save and Close' button");
@@ -45,7 +51,7 @@ public class SettingsPage extends BrowserSettings {
         log("Confirm success popup");
         System.out.println("Confirm success popup");
         String currentPopupMessage = driver.findElement(saveSettingsSuccessPopupLocator).getText();
-        Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
+        Assert.assertEquals(currentPopupMessage, saveSettingsPopupMessage, "Unexpected popup message");
         driver.findElement(confirmPopupButtonLocator).click();
 
         log("Check displaying settings page after saving changes");

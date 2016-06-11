@@ -3,23 +3,24 @@ package SmokeTests.UI;
 /**
  * Created by igor on 05.06.16.
  */
-import SmokeTests.Pages.LoginPage;
 import SmokeTests.Settings.BrowserSettings;
 import SmokeTests.Tests.SetUpNewMerchant;
-import javafx.scene.layout.BorderPane;
-import org.openqa.selenium.WebDriver;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboPopup;
-
-import static java.awt.PageAttributes.ColorType.COLOR;
 
 public class SimpleGUI extends JFrame {
 
-    BrowserSettings browserSettings = new BrowserSettings();
-//    LoginPage loginPage = new LoginPage();
+    private BrowserSettings browserSettings = new BrowserSettings();
 
     SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
 
@@ -29,6 +30,8 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
+    private JLabel iconLabel = new JLabel("");
+
     private JTextField loginField = new JTextField("", 15);
     private JPasswordField passwordField = new JPasswordField("", 15);
 
@@ -39,14 +42,16 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<String>();
 
     private String[] browsers = {" Mozilla Firefox", " Google Chrome", " Internet Explorer", " Safari"};
-    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Warehouse and Bin"};
+    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production"};
 
-    SimpleGUI() {
+
+    SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
         this.setBounds(800,400,450,300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
 
         for (int i = 0; i < browsers.length; i++) {
             browsersComboBox.addItem(browsers[i]);
@@ -60,7 +65,7 @@ public class SimpleGUI extends JFrame {
             environmentsComboBox.addItem(environments[i]);
         }
 
-        Color redColor = new Color(175, 226, 255);
+        Color redColor = new Color(192, 224, 250);
 
         Object child = environmentsComboBox.getAccessibleContext().getAccessibleChild(0);
         BasicComboPopup popup = (BasicComboPopup)child;
@@ -77,8 +82,6 @@ public class SimpleGUI extends JFrame {
         JList list3 = popup3.getList();
         list3.setSelectionBackground(redColor);
 
-
-
         Container container = this.getContentPane();
         container.setLayout(new GridBagLayout());
 
@@ -88,59 +91,84 @@ public class SimpleGUI extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(8, 8, 8, 8);
 
+
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
+        browserLabel.setForeground(new Color(95, 131, 156));
+        browserLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
         container.add(browserLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         browsersComboBox.setPreferredSize(d);
+        browsersComboBox.setForeground(new Color(95, 131, 156));
         browsersComboBox.setBackground(Color.WHITE);
         container.add(browsersComboBox,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
+        entityTypeLabel.setForeground(new Color(95, 131, 156));
+        entityTypeLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
         container.add(entityTypeLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         entityTypeComboBox.setPreferredSize(d);
+        entityTypeComboBox.setForeground(new Color(95, 131, 156));
         entityTypeComboBox.setBackground(Color.WHITE);
         container.add(entityTypeComboBox, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
+        environmentLabel.setForeground(new Color(95, 131, 156));
+        environmentLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
         container.add(environmentLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         environmentsComboBox.setPreferredSize(d);
+        environmentsComboBox.setForeground(new Color(95, 131, 156));
         environmentsComboBox.setBackground(Color.WHITE);
         container.add(environmentsComboBox, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
+        loginLabel.setForeground(new Color(95, 131, 156));
+        loginLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
         container.add(loginLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
+        passwordLabel.setForeground(new Color(95, 131, 156));
+        passwordLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
         container.add(passwordLabel, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         loginField.setPreferredSize(d);
-        loginField.setFont(new java.awt.Font("Tahoma", 3, 12));
+        loginField.setForeground(new Color(95, 131, 156));
+        loginField.setFont(new java.awt.Font("Tahoma", Font.BOLD, 12));
         container.add(loginField, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         passwordField.setPreferredSize(d);
-        passwordField.setFont(new java.awt.Font("Tahoma", 3, 12));
+        passwordField.setForeground(new Color(95, 131, 156));
+        passwordField.setFont(new java.awt.Font("Tahoma", Font.BOLD, 12));
         container.add(passwordField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         startButton.setPreferredSize(d);
+        startButton.setBackground(new Color(70, 186, 103));
+
+        startButton.setForeground(Color.WHITE);
+
+        Border line = new LineBorder(null);
+        Border margin = new EmptyBorder(5, 15, 5, 15);
+        Border compound = new CompoundBorder(line, margin);
+        startButton.setBorder(compound);
+        startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         startButton.addActionListener(new ButtonEventListener());
         container.add(startButton, gbc);
     }
@@ -152,14 +180,14 @@ public class SimpleGUI extends JFrame {
             String loginValue = loginField.getText();
             char[] passwordValue = passwordField.getPassword();
 
-            String password = passwordValue.toString();
+            String password = Arrays.toString(passwordValue);
 
             String infoMessage = "";
             infoMessage += "Test will be started now\n\n";
             infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n\n";
             infoMessage += "Selected Test: " + entityTypeComboBox.getSelectedItem() + "\n\n";
             infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
-            infoMessage += "Performing the test will take some time. Please wait! \nMake a cup of tea for you and your friend :)\n\n";
+            infoMessage += "Performing the test will take some time. Please wait! \nMake a cup of tea or hug your cat :)\n\n";
 
             JOptionPane.showMessageDialog(null,
                     infoMessage,
@@ -168,7 +196,10 @@ public class SimpleGUI extends JFrame {
 
 
 
+
             browserSettings.setUp(environmentsComboBoxSelectedIndex);
+//            loginPage.loginMerchant(loginValue, password);
+
 
             String resultMessage = "";
             resultMessage += "Test has been finished\n";
@@ -181,7 +212,7 @@ public class SimpleGUI extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SimpleGUI app = new SimpleGUI();
         app.setVisible(true);
     }

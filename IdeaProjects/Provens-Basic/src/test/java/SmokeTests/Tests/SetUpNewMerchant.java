@@ -10,17 +10,17 @@ import org.testng.annotations.Test;
 public class SetUpNewMerchant extends BrowserSettings {
 
     @Test
-    public void setupNewMerchant() throws InterruptedException {
+    public void setupNewMerchant(String email, String merchantPassword) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 
         MainPage mainPage = new MainPage(driver);
-//        mainPage.openSetUpPage();
-//
-//        SettingsPage settingsPage = new SettingsPage(driver);
-//        settingsPage.setShipaheadSetting();
-//
-//        mainPage.openMainPage();
+        mainPage.openSetUpPage();
+
+        SettingsPage settingsPage = new SettingsPage(driver);
+        settingsPage.setShipaheadSetting();
+
+        mainPage.openMainPage();
         mainPage.openThirdPartyConnectionsPage();
 
         ThirdPartyConnectionsPage thirdPartyConnectionsPage = new ThirdPartyConnectionsPage(driver);

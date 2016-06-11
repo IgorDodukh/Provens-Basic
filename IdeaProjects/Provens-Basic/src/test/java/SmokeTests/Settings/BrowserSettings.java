@@ -19,15 +19,9 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class BrowserSettings {
-    protected WebDriver driver;
+    public WebDriver driver;
 
     private GenerateRandomData generateRandomData = new GenerateRandomData();
-
-    //    Environments
-    protected String qa01 = "https://qa01.freestylecommerce.info/web/";
-    protected String qa03 = "https://qa03.freestylecommerce.info/web/";
-    protected String qa05 = "https://qa05.freestylecommerce.info/web/";
-    protected String production = "https://my.freestylecommerce.com/web/";
 
     private ArrayList<String> enviroment = new ArrayList<String>(
             Arrays.asList("https://qa01.freestylecommerce.info/web/",
@@ -54,6 +48,8 @@ public class BrowserSettings {
     protected String paymentMethodsTitle = "Payment Method";
     protected String visaTestCardNumber = "4005550000000019";
     protected String addCustomerPopupMessage = "The customer has been successfully created.";
+    protected String saveSettingsPopupMessage = "Configuration has been saved successfully.";
+
 
     protected String warehouseName = "Test Warehouse4" + generateRandomData.generateRandomNumber(3);
     protected String warehouseContactName = "Test Warehouse Contact Name";
@@ -90,7 +86,6 @@ public class BrowserSettings {
     @BeforeTest
     public void setUp(int envIndex) {
         driver = new FirefoxDriver();
-//        env = enviroment.get(envIndex);
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }

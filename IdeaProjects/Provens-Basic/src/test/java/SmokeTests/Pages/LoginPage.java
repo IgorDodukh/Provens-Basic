@@ -22,11 +22,11 @@ public class LoginPage extends BrowserSettings{
     private By emailInputLocator = By.xpath("//input[@name='UserName']");
     private By passwordInputLocator = By.xpath("//input[@name='UserPassword']");
     private By loginButtonLocator = By.xpath("//input[@value='Login']");
-    private By siteLogoLocator = By.xpath("//img[@id='logoIcon']");
-    private By msgBox = By.xpath("//div[@id='dydacomp_messagebox']");
-    private By alreadyLoggedMsgBoxLocator = By.xpath("//div[@id='dydacomp_messagebox']/p");
-    private By msgBoxOkButton = By.xpath("//div [@class='ui-dialog-buttonset']/button[1]");
-    private By closeMsgBoxLocator = By.xpath("//span[@class='ui-icon ui-icon-closethick']");
+//    private By siteLogoLocator = By.xpath("//img[@id='logoIcon']");
+//    private By msgBox = By.xpath("//div[@id='dydacomp_messagebox']");
+//    private By alreadyLoggedMsgBoxLocator = By.xpath("//div[@id='dydacomp_messagebox']/p");
+//    private By msgBoxOkButton = By.xpath("//div [@class='ui-dialog-buttonset']/button[1]");
+//    private By closeMsgBoxLocator = By.xpath("//span[@class='ui-icon ui-icon-closethick']");
     private By signInDropdown = By.xpath("//li[@id='SignIn']");
     private By logOutButton = By.xpath("//a[@href='/web/Home/Logout']");
 
