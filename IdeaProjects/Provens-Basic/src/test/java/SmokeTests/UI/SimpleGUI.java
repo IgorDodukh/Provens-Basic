@@ -4,6 +4,9 @@ package SmokeTests.UI;
  * Created by igor on 05.06.16.
  */
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.Tests.Jira3006_MerchantWarehouseAndBinCreation;
+import SmokeTests.Tests.Jira3015_CreateProductAndBin;
+import SmokeTests.Tests.Jira3675_AddNewCustomerWithCreditCard;
 import SmokeTests.Tests.SetUpNewMerchant;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,12 +24,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Objects;
+
+import static javax.swing.BorderFactory.createLineBorder;
 
 public class SimpleGUI extends JFrame {
     public WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
 
     SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
+    Jira3675_AddNewCustomerWithCreditCard jira3675_AddNewCustomerWithCreditCard = new Jira3675_AddNewCustomerWithCreditCard();
+    Jira3015_CreateProductAndBin jira3015_CreateProductAndBin = new Jira3015_CreateProductAndBin();
+    Jira3006_MerchantWarehouseAndBinCreation jira3006_merchantWarehouseAndBinCreation = new Jira3006_MerchantWarehouseAndBinCreation();
 
     private JButton startButton = new JButton("Start Test");
     private JLabel browserLabel = new JLabel("Select Browser");
@@ -34,7 +43,8 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel(".....");
+    private JLabel iconLabel = new JLabel("Build version: 0.06");
+    private JLabel spaceLabel = new JLabel("...");
 
     private JTextField loginField = new JTextField("", 15);
     private JPasswordField passwordField = new JPasswordField("", 15);
@@ -53,7 +63,7 @@ public class SimpleGUI extends JFrame {
     SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
-        this.setBounds(800,400,500,400);
+        this.setBounds(800,400,500,420);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
@@ -91,21 +101,18 @@ public class SimpleGUI extends JFrame {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10);
-
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//
-//        container.add(iconLabel, gbc);
+        gbc.insets = new Insets(10, 20, 2, 20);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.weightx = 1;
         browserLabel.setForeground(new Color(95, 131, 156));
         browserLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(browserLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
+        gbc.weightx = 1;
         browsersComboBox.setPreferredSize(d);
         browsersComboBox.setForeground(new Color(95, 131, 156));
         browsersComboBox.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
@@ -142,34 +149,43 @@ public class SimpleGUI extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 4;
+        spaceLabel.setForeground(Color.WHITE);
+        container.add(spaceLabel, gbc);
+
+
+        gbc.insets = new Insets(4, 20, 4, 20);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
         loginLabel.setForeground(new Color(95, 131, 156));
         loginLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(loginLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 7;
+//        gbc.weighty = 0;
         passwordLabel.setForeground(new Color(95, 131, 156));
         passwordLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(passwordLabel, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridx = 1;
+        gbc.gridy = 6;
         loginField.setPreferredSize(d);
-        loginField.setForeground(new Color(95, 131, 156));
-        loginField.setFont(new java.awt.Font("Tahoma", Font.BOLD, 14));
+        //loginField.setForeground(new Color(95, 131, 156));
+        loginField.setFont(new java.awt.Font("Arial", Font.PLAIN, 14));
         container.add(loginField, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 5;
+        gbc.gridy = 8;
         passwordField.setPreferredSize(d);
-        passwordField.setForeground(new Color(95, 131, 156));
-        passwordField.setFont(new java.awt.Font("Tahoma", Font.BOLD, 14));
+        //passwordField.setForeground(new Color(95, 131, 156));
+        passwordField.setFont(new java.awt.Font("Arial", Font.PLAIN, 14));
         container.add(passwordField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridx = 1;
+        gbc.gridy = 9;
         startButton.setPreferredSize(d);
-        startButton.setBackground(new Color(70, 186, 103));
+        startButton.setBackground(new Color(74, 126, 145));
         startButton.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
 
         startButton.setForeground(Color.WHITE);
@@ -181,55 +197,93 @@ public class SimpleGUI extends JFrame {
         startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         startButton.addActionListener(new ButtonEventListener());
         container.add(startButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        iconLabel.setForeground(Color.GRAY);
+        iconLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
+        container.add(iconLabel, gbc);
     }
 
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
-            int environmentsComboBoxSelectedIndex = environmentsComboBox.getSelectedIndex();
-            int browsersComboBoxSelectedIndex = browsersComboBox.getSelectedIndex();
+            int browserComboBoxIndex = browsersComboBox.getSelectedIndex();
+            int environmentComboBoxIndex = environmentsComboBox.getSelectedIndex();
+            int entityTypeComboBoxIndex = entityTypeComboBox.getSelectedIndex();
 
             String loginValue = loginField.getText();
-            String password=String.valueOf(passwordField.getPassword());
+            String password = String.valueOf(passwordField.getPassword());
 
-            String infoMessage = "";
-            infoMessage += "Test will be started now\n\n";
-            infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n\n";
-            infoMessage += "Selected Test: " + entityTypeComboBox.getSelectedItem() + "\n\n";
-            infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
-            infoMessage += "Performing the test will take some time. Please wait! \nMake a cup of tea or hug your cat :)\n\n";
-
-            JOptionPane.showMessageDialog(null,
-                    infoMessage,
-                    "Confirmation",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            if (browsersComboBoxSelectedIndex == 0) {
-                driver = new FirefoxDriver();
-            } else if (browsersComboBoxSelectedIndex == 1) {
-                System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
-                driver = new ChromeDriver();
-            } else if (browsersComboBoxSelectedIndex == 2) {
-                System.setProperty("webdriver.ie.driver", "C:\\Program Files\\Internet Explorer\\iexplore.exe");
-                driver = new InternetExplorerDriver();
-            } else if (browsersComboBoxSelectedIndex == 3) {
-                System.setProperty("webdriver.opera.driver", "C:\\Program Files (x86)\\Opera\\launcher.exe");
-                driver = new OperaDriver();
-            } else driver = new FirefoxDriver();
-
-            browserSettings.setUp(environmentsComboBoxSelectedIndex, browsersComboBoxSelectedIndex, driver);
-            try {
-                setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
+            boolean loginFilled = false;
+            boolean passFilled = false;
+            if (Objects.equals(loginValue, "")){
+                loginField.setBorder(createLineBorder(Color.RED));
+                loginLabel.setForeground(Color.RED);
+                loginFilled = false;
+            } else if (!Objects.equals(loginValue, "")) {
+                loginField.setBorder(createLineBorder(Color.decode("#5f839c")));
+                loginLabel.setForeground(Color.decode("#5f839c"));
+                loginFilled = true;
             }
-//            loginPage.loginMerchant(loginValue, password);
-            String resultMessage = "";
-            resultMessage += "Test has been finished\n";
-            JOptionPane.showMessageDialog(null,
-                    resultMessage,
-                    "Process",
-                    JOptionPane.PLAIN_MESSAGE);
+            if (Objects.equals(password, "")) {
+                passwordField.setBorder(createLineBorder(Color.RED));
+                passwordLabel.setForeground(Color.RED);
+                passFilled = false;
+            } else if (!Objects.equals(password, "")) {
+                passwordField.setBorder(createLineBorder(Color.decode("#5f839c")));
+                passwordLabel.setForeground(Color.decode("#5f839c"));
+                passFilled = true;
+            }
+            if (loginFilled && passFilled) {
+                String infoMessage = "";
+                infoMessage += "Test will be started now\n\n";
+                infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n\n";
+                infoMessage += "Selected Test: " + entityTypeComboBox.getSelectedItem() + "\n\n";
+                infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
+                infoMessage += "Performing the test will take some time. Please wait! \nMake a cup of tea or hug your cat :)\n\n";
+
+                JOptionPane.showMessageDialog(null,
+                        infoMessage,
+                        "Confirmation",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                if (browserComboBoxIndex == 0) {
+                    driver = new FirefoxDriver();
+                } else if (browserComboBoxIndex == 1) {
+                    System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+                    driver = new ChromeDriver();
+                } else if (browserComboBoxIndex == 2) {
+                    System.setProperty("webdriver.ie.driver", "C:\\Program Files\\Internet Explorer\\iexplore.exe");
+                    driver = new InternetExplorerDriver();
+                } else if (browserComboBoxIndex == 3) {
+                    System.setProperty("webdriver.opera.driver", "C:\\Program Files (x86)\\Opera\\launcher.exe");
+                    driver = new OperaDriver();
+                } else driver = new FirefoxDriver();
+
+                browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
+
+                try {
+                    if (entityTypeComboBoxIndex == 0) {
+                        setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
+                    } else if (entityTypeComboBoxIndex == 1) {
+                        jira3675_AddNewCustomerWithCreditCard.jira3675(loginValue, password, driver);
+                    } else if (entityTypeComboBoxIndex == 2) {
+                        jira3015_CreateProductAndBin.jira3015(loginValue, password, driver);
+                    } else if (entityTypeComboBoxIndex == 3) {
+                        jira3006_merchantWarehouseAndBinCreation.jira3006(loginValue, password, driver);
+                    }
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                String resultMessage = "";
+                resultMessage += "Test has been finished\n";
+                JOptionPane.showMessageDialog(null,
+                        resultMessage,
+                        "Process",
+                        JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }
 

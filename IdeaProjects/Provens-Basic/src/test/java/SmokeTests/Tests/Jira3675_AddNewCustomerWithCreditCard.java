@@ -4,6 +4,7 @@ import SmokeTests.Pages.AddCustomerPage;
 import SmokeTests.Pages.LoginPage;
 import SmokeTests.Pages.MainPage;
 import SmokeTests.Settings.BrowserSettings;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
@@ -12,7 +13,7 @@ import org.testng.annotations.Test;
 public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
 
     @Test
-    public void jira3675() throws InterruptedException {
+    public void jira3675(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

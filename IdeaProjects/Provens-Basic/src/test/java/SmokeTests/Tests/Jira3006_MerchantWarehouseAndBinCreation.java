@@ -4,6 +4,7 @@ import SmokeTests.Pages.AddWarehousePage;
 import SmokeTests.Pages.LoginPage;
 import SmokeTests.Pages.MainPage;
 import SmokeTests.Settings.BrowserSettings;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
@@ -12,7 +13,7 @@ import org.testng.annotations.Test;
 public class Jira3006_MerchantWarehouseAndBinCreation extends BrowserSettings {
 
     @Test
-    public void jira3006() throws InterruptedException {
+    public void jira3006(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 
