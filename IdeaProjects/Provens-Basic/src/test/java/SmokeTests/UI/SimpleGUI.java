@@ -47,10 +47,9 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build version: 0.06");
-    private JLabel spaceLabel = new JLabel(" ");
-    private JPanel topPanelLeft = new JPanel();
-    private JPanel topPanelRight = new JPanel();
+    private JLabel iconLabel = new JLabel("Build version: 0.8");
+    private JLabel topSpaceLabel = new JLabel(" ");
+    private JLabel middleSpaceLabel = new JLabel(" ");
 
 
     private JTextField loginField = new JTextField("", 15);
@@ -66,14 +65,13 @@ public class SimpleGUI extends JFrame {
     private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production"};
 
-
-
     SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
-        this.setBounds(800,400,500,399);
+        this.setBounds(800,400,512,460);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+
 
         for (int i = 0; i < browsers.length; i++) {
             browsersComboBox.addItem(browsers[i]);
@@ -85,12 +83,10 @@ public class SimpleGUI extends JFrame {
             environmentsComboBox.addItem(environments[i]);
         }
 
-        BufferedImage myPicture = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\fs.png"));
+        BufferedImage myPicture = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\background.png"));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        //add(picLabel);
-       // picLabel.setPreferredSize(new Dimension(40, 20));
 
-        Color redColor = new Color(192, 224, 250);
+        Color redColor = new Color(64, 126, 245);
 
         Object child = environmentsComboBox.getAccessibleContext().getAccessibleChild(0);
         BasicComboPopup popup = (BasicComboPopup)child;
@@ -113,9 +109,14 @@ public class SimpleGUI extends JFrame {
         container.setBackground(Color.WHITE);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 20, 2, 20);
+        gbc.fill = GridBagConstraints.BASELINE;
+        gbc.insets = new Insets(7, 20, 2, 20);
 
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        container.add(topSpaceLabel, gbc);
+
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1;
@@ -160,11 +161,12 @@ public class SimpleGUI extends JFrame {
         environmentsComboBox.setBackground(Color.WHITE);
         container.add(environmentsComboBox, gbc);
 
+        gbc.insets = new Insets(14, 20, 2, 20);
+
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
-        spaceLabel.setForeground(Color.decode("#2a434d"));
-        container.add(spaceLabel, gbc);
+        container.add(middleSpaceLabel, gbc);
 
 
         gbc.insets = new Insets(4, 20, 4, 20);
@@ -218,23 +220,16 @@ public class SimpleGUI extends JFrame {
         iconLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
         container.add(iconLabel, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        topPanelLeft.setBackground(Color.decode("#2a434d"));
-        topPanelLeft.setPreferredSize(new Dimension(249,20));
-        container.add(topPanelLeft);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        topPanelRight.setBackground(Color.decode("#2a434d"));
-        topPanelRight.setPreferredSize(new Dimension(245,20));
-        container.add(topPanelRight);
 
+        gbc.insets = new Insets(0, 0, 0, 0);
         gbc.gridx = 0;
-        gbc.gridy = 7;
-        gbc.gridheight = 2;
+        gbc.gridy = 0;
+        gbc.gridheight = 12;
+        gbc.gridwidth= 2;
         picLabel.setBounds(0,0,0,0);
-        picLabel.setVisible(false);
+        picLabel.setVisible(true);
         container.add(picLabel, gbc);
+
     }
 
 
