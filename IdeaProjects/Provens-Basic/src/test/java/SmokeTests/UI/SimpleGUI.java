@@ -68,7 +68,7 @@ public class SimpleGUI extends JFrame {
     SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
-        this.setBounds(800,400,512,460);
+        this.setBounds(800,400,500,448);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
@@ -86,7 +86,7 @@ public class SimpleGUI extends JFrame {
         BufferedImage myPicture = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\background.png"));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 
-        Color redColor = new Color(64, 126, 245);
+        Color redColor = new Color(73, 134, 161);
 
         Object child = environmentsComboBox.getAccessibleContext().getAccessibleChild(0);
         BasicComboPopup popup = (BasicComboPopup)child;

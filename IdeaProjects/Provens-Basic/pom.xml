@@ -36,7 +36,7 @@
                 <version>2.10</version>
                 <configuration>
                     <includes>
-                        <include>AddRemoveProductTest.java</include>
+                        <include>*/UI/SimpleGUI.java</include>
                     </includes>
                 </configuration>
             </plugin>
