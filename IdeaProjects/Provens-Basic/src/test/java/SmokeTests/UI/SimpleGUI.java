@@ -3,6 +3,7 @@ package SmokeTests.UI;
 /**
  * Created by igor on 05.06.16.
  */
+
 import SmokeTests.Settings.BrowserSettings;
 import SmokeTests.Tests.Jira3006_MerchantWarehouseAndBinCreation;
 import SmokeTests.Tests.Jira3015_CreateProductAndBin;
@@ -14,6 +15,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -23,6 +25,8 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -44,7 +48,10 @@ public class SimpleGUI extends JFrame {
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
     private JLabel iconLabel = new JLabel("Build version: 0.06");
-    private JLabel spaceLabel = new JLabel("...");
+    private JLabel spaceLabel = new JLabel(" ");
+    private JPanel topPanelLeft = new JPanel();
+    private JPanel topPanelRight = new JPanel();
+
 
     private JTextField loginField = new JTextField("", 15);
     private JPasswordField passwordField = new JPasswordField("", 15);
@@ -55,15 +62,16 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> entityTypeComboBox = new JComboBox<String>();
     private JComboBox<String> environmentsComboBox = new JComboBox<String>();
 
-    private String[] browsers = {" Mozilla Firefox", " Google Chrome", " Internet Explorer", " Opera", " Safari"};
+    private String[] browsers = {" Mozilla Firefox", " Google Chrome", " Internet Explorer", " Opera"};
     private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production"};
+
 
 
     SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
-        this.setBounds(800,400,500,420);
+        this.setBounds(800,400,500,399);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
@@ -76,6 +84,11 @@ public class SimpleGUI extends JFrame {
         for (int i = 0; i < environments.length; i++) {
             environmentsComboBox.addItem(environments[i]);
         }
+
+        BufferedImage myPicture = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\fs.png"));
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        //add(picLabel);
+       // picLabel.setPreferredSize(new Dimension(40, 20));
 
         Color redColor = new Color(192, 224, 250);
 
@@ -149,7 +162,8 @@ public class SimpleGUI extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        spaceLabel.setForeground(Color.WHITE);
+        gbc.gridwidth = 2;
+        spaceLabel.setForeground(Color.decode("#2a434d"));
         container.add(spaceLabel, gbc);
 
 
@@ -203,7 +217,27 @@ public class SimpleGUI extends JFrame {
         iconLabel.setForeground(Color.GRAY);
         iconLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
         container.add(iconLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        topPanelLeft.setBackground(Color.decode("#2a434d"));
+        topPanelLeft.setPreferredSize(new Dimension(249,20));
+        container.add(topPanelLeft);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        topPanelRight.setBackground(Color.decode("#2a434d"));
+        topPanelRight.setPreferredSize(new Dimension(245,20));
+        container.add(topPanelRight);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridheight = 2;
+        picLabel.setBounds(0,0,0,0);
+        picLabel.setVisible(false);
+        container.add(picLabel, gbc);
     }
+
+
 
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -259,7 +293,7 @@ public class SimpleGUI extends JFrame {
                 } else if (browserComboBoxIndex == 3) {
                     System.setProperty("webdriver.opera.driver", "C:\\Program Files (x86)\\Opera\\launcher.exe");
                     driver = new OperaDriver();
-                } else driver = new FirefoxDriver();
+                }
 
                 browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
