@@ -2,15 +2,15 @@ package SmokeTests.Tests;
 
 import SmokeTests.Pages.*;
 import SmokeTests.Settings.BrowserSettings;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
  * Created by igor on 27.05.16.
  */
 public class SetUpNewMerchant extends BrowserSettings {
-
     @Test
-    public void setupNewMerchant(String email, String merchantPassword) throws InterruptedException {
+    public void setupNewMerchant(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

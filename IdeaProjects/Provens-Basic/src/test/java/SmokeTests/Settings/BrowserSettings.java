@@ -1,14 +1,11 @@
 package SmokeTests.Settings;
 
 import SmokeTests.Pages.LoginPage;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,7 +25,6 @@ public class BrowserSettings {
                     "https://qa03.freestylecommerce.info/web/",
                     "https://qa05.freestylecommerce.info/web/",
                     "https://my.freestylecommerce.com/web/"));
-
 
     //protected String email = "themerchant@dydacomp.biz";
     protected String email = "newadmin@dydacomp.biz";
@@ -84,8 +80,7 @@ public class BrowserSettings {
     protected String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
     @BeforeTest
-    public void setUp(int envIndex) {
-        driver = new FirefoxDriver();
+    public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
