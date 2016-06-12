@@ -11,15 +11,13 @@ import SmokeTests.Tests.Jira3675_AddNewCustomerWithCreditCard;
 import SmokeTests.Tests.SetUpNewMerchant;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboPopup;
 import java.awt.*;
@@ -47,10 +45,9 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build version: 0.8");
+    private JLabel iconLabel = new JLabel("Build Version: 0.8");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
-
 
     private JTextField loginField = new JTextField("", 15);
     private JPasswordField passwordField = new JPasswordField("", 15);
@@ -198,28 +195,29 @@ public class SimpleGUI extends JFrame {
         passwordField.setFont(new java.awt.Font("Arial", Font.PLAIN, 14));
         container.add(passwordField, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 9;
-        startButton.setPreferredSize(d);
-        startButton.setBackground(new Color(74, 126, 145));
-        startButton.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
-
-        startButton.setForeground(Color.WHITE);
-
-        Border line = new LineBorder(null);
-        Border margin = new EmptyBorder(5, 15, 5, 15);
-        Border compound = new CompoundBorder(line, margin);
-        startButton.setBorder(compound);
-        startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        startButton.addActionListener(new ButtonEventListener());
-        container.add(startButton, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 10;
         iconLabel.setForeground(Color.GRAY);
         iconLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
         container.add(iconLabel, gbc);
 
+
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        startButton.setPreferredSize(d);
+        startButton.setBounds(20, 20, 20, 20);
+        startButton.setBackground(new Color(74, 126, 145));
+        startButton.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
+
+        startButton.setForeground(Color.WHITE);
+
+//        Border line = new LineBorder(new LineBorder(Color.black, 2, true));
+//        Border margin = new EmptyBorder(5, 15, 5, 15);
+//        Border compound = new CompoundBorder(line, margin);
+        startButton.setBorder(new LineBorder(redColor, 1, true));
+        startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        startButton.addActionListener(new ButtonEventListener());
+        container.add(startButton, gbc);
 
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.gridx = 0;
@@ -229,10 +227,7 @@ public class SimpleGUI extends JFrame {
         picLabel.setBounds(0,0,0,0);
         picLabel.setVisible(true);
         container.add(picLabel, gbc);
-
     }
-
-
 
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -282,6 +277,9 @@ public class SimpleGUI extends JFrame {
                 } else if (browserComboBoxIndex == 1) {
                     System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
                     driver = new ChromeDriver();
+                    ChromeOptions option = new ChromeOptions();
+                    option.addArguments("--window-size=1500,1000");
+                    driver = new ChromeDriver(option);
                 } else if (browserComboBoxIndex == 2) {
                     System.setProperty("webdriver.ie.driver", "C:\\Program Files\\Internet Explorer\\iexplore.exe");
                     driver = new InternetExplorerDriver();
