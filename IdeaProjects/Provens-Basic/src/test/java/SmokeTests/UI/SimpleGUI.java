@@ -10,11 +10,6 @@ import SmokeTests.Tests.Jira3015_CreateProductAndBin;
 import SmokeTests.Tests.Jira3675_AddNewCustomerWithCreditCard;
 import SmokeTests.Tests.SetUpNewMerchant;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,6 +24,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static javax.swing.BorderFactory.createLineBorder;
+
 
 public class SimpleGUI extends JFrame {
     public WebDriver driver;
@@ -62,6 +58,8 @@ public class SimpleGUI extends JFrame {
     private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production"};
 
+//    BufferedImage grumpyCat = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\grumpy.png"));
+
     SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
@@ -80,8 +78,8 @@ public class SimpleGUI extends JFrame {
             environmentsComboBox.addItem(environments[i]);
         }
 
-        BufferedImage myPicture = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\background.png"));
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        BufferedImage background = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\background.png"));
+        JLabel picLabel = new JLabel(new ImageIcon(background));
 
         Color redColor = new Color(73, 134, 161);
 
@@ -267,30 +265,35 @@ public class SimpleGUI extends JFrame {
                 infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
                 infoMessage += "Performing the test will take some time. Please wait! \nMake a cup of tea or hug your cat :)\n\n";
 
+
+                final ImageIcon icon = new ImageIcon("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\grumpy.png");
+
+//                JPanel panel = new JPanel();
+//                //panel.add(new JButton("Click"));
+//                panel.add(new JSmartTextArea(infoMessage));
+////                panel.add(ne)
+//                JOptionPane.showMessageDialog(null,panel,"Information",JOptionPane.PLAIN_MESSAGE, icon);
                 JOptionPane.showMessageDialog(null,
                         infoMessage,
-                        "Confirmation",
-                        JOptionPane.INFORMATION_MESSAGE);
+                        "Grumpy Confirmation",
+                        JOptionPane.INFORMATION_MESSAGE, icon);
 
-                if (browserComboBoxIndex == 0) {
+/*                if (browserComboBoxIndex == 0) {
                     driver = new FirefoxDriver();
                 } else if (browserComboBoxIndex == 1) {
-                    System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+                    System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\chromedriver.exe");
                     driver = new ChromeDriver();
-                    ChromeOptions option = new ChromeOptions();
-                    option.addArguments("--window-size=1500,1000");
-                    driver = new ChromeDriver(option);
                 } else if (browserComboBoxIndex == 2) {
-                    System.setProperty("webdriver.ie.driver", "C:\\Program Files\\Internet Explorer\\iexplore.exe");
+                    System.setProperty("webdriver.ie.driver", "C:\\WebDriver\\IEDriverServer.exe");
                     driver = new InternetExplorerDriver();
                 } else if (browserComboBoxIndex == 3) {
-                    System.setProperty("webdriver.opera.driver", "C:\\Program Files (x86)\\Opera\\launcher.exe");
+                    System.setProperty("webdriver.opera.driver", "C:\\WebDriver\\operadriver.exe");
                     driver = new OperaDriver();
-                }
+                }*/
 
-                browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
+//                browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
-                try {
+/*                try {
                     if (entityTypeComboBoxIndex == 0) {
                         setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
                     } else if (entityTypeComboBoxIndex == 1) {
@@ -302,7 +305,7 @@ public class SimpleGUI extends JFrame {
                     }
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
-                }
+                }*/
 
                 String resultMessage = "";
                 resultMessage += "Test has been finished\n";
