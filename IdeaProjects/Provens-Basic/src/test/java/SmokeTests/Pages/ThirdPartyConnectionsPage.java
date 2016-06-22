@@ -60,7 +60,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
         log("Make Test for Authorize");
         driver.findElement(authorizeTestButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Authorize test result popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Authorize test result popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeTestResultPopupLocator));
 
         String currentPopupMessage = driver.findElement(authorizeTestResultPopupLocator).getText();
@@ -101,7 +101,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
         log("Make Test for UPS");
         driver.findElement(upsTestButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("UPS test result popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("UPS test result popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
 
         String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
@@ -128,7 +128,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
         log("Make Test for USPS");
         driver.findElement(uspsTestButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("USPS test result popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("USPS test result popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
 
         String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();

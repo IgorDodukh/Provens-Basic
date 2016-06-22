@@ -10,6 +10,10 @@ import SmokeTests.Tests.Jira3015_CreateProductAndBin;
 import SmokeTests.Tests.Jira3675_AddNewCustomerWithCreditCard;
 import SmokeTests.Tests.SetUpNewMerchant;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -41,12 +45,12 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build Version: 0.8");
+    private JLabel iconLabel = new JLabel("Build Version: 0.85");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
 
-    private JTextField loginField = new JTextField("", 15);
-    private JPasswordField passwordField = new JPasswordField("", 15);
+    private JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
+    private JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
 
     Dimension d = new Dimension(200,30);
 
@@ -55,8 +59,8 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<String>();
 
     private String[] browsers = {" Mozilla Firefox", " Google Chrome", " Internet Explorer", " Opera"};
-    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Warehouse & Bin"};
-    private String[] environments = {" QA01", " QA03", " QA05", " Production"};
+    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product (in progress)", " Add Warehouse & Bin"};
+    private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
 //    BufferedImage grumpyCat = ImageIO.read(new File("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\grumpy.png"));
 
@@ -230,6 +234,10 @@ public class SimpleGUI extends JFrame {
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
+            final ImageIcon icon = new ImageIcon("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\smile2.png");
+            final ImageIcon success = new ImageIcon("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\success.png");
+
+
             int browserComboBoxIndex = browsersComboBox.getSelectedIndex();
             int environmentComboBoxIndex = environmentsComboBox.getSelectedIndex();
             int entityTypeComboBoxIndex = entityTypeComboBox.getSelectedIndex();
@@ -260,25 +268,26 @@ public class SimpleGUI extends JFrame {
             if (loginFilled && passFilled) {
                 String infoMessage = "";
                 infoMessage += "Test will be started now\n\n";
-                infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n\n";
-                infoMessage += "Selected Test: " + entityTypeComboBox.getSelectedItem() + "\n\n";
+                infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n";
+                infoMessage += "Selected Test: " + entityTypeComboBox.getSelectedItem() + "\n";
                 infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
                 infoMessage += "Performing the test will take some time. Please wait! \nMake a cup of tea or hug your cat :)\n\n";
 
 
-                final ImageIcon icon = new ImageIcon("C:\\Users\\Ihor\\IdeaProjects\\Provens-Basic\\IdeaProjects\\Provens-Basic\\src\\test\\java\\SmokeTests\\UI\\grumpy.png");
+/*                JOptionPane.showInputDialog(null,
+                        infoMessage,
+                        "Lucky Confirmation",
+                        JOptionPane.PLAIN_MESSAGE
+                );*/
 
-//                JPanel panel = new JPanel();
-//                //panel.add(new JButton("Click"));
-//                panel.add(new JSmartTextArea(infoMessage));
-////                panel.add(ne)
-//                JOptionPane.showMessageDialog(null,panel,"Information",JOptionPane.PLAIN_MESSAGE, icon);
                 JOptionPane.showMessageDialog(null,
                         infoMessage,
-                        "Grumpy Confirmation",
+                        "Lucky Confirmation",
                         JOptionPane.INFORMATION_MESSAGE, icon);
 
-/*                if (browserComboBoxIndex == 0) {
+
+
+                if (browserComboBoxIndex == 0) {
                     driver = new FirefoxDriver();
                 } else if (browserComboBoxIndex == 1) {
                     System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\chromedriver.exe");
@@ -289,30 +298,39 @@ public class SimpleGUI extends JFrame {
                 } else if (browserComboBoxIndex == 3) {
                     System.setProperty("webdriver.opera.driver", "C:\\WebDriver\\operadriver.exe");
                     driver = new OperaDriver();
-                }*/
+                }
 
-//                browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
-/*                try {
+                browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
+
+                String resultMessage = "";
+                resultMessage += "Oh boy, you are lucky.\n\nTest has been finished.\nNew ";
+
+                try {
                     if (entityTypeComboBoxIndex == 0) {
                         setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
+                        resultMessage += "Merchant" + setUpNewMerchant.firstName + setUpNewMerchant.lastName +  "has been configured\n";
                     } else if (entityTypeComboBoxIndex == 1) {
                         jira3675_AddNewCustomerWithCreditCard.jira3675(loginValue, password, driver);
+                        resultMessage += "Customer has been created\n";
+                        resultMessage += "Customer name is:\n" + jira3675_AddNewCustomerWithCreditCard.firstName + " " + jira3675_AddNewCustomerWithCreditCard.lastName;
                     } else if (entityTypeComboBoxIndex == 2) {
                         jira3015_CreateProductAndBin.jira3015(loginValue, password, driver);
                     } else if (entityTypeComboBoxIndex == 3) {
                         jira3006_merchantWarehouseAndBinCreation.jira3006(loginValue, password, driver);
+                        resultMessage += "Warehouse and Bin have been created\n";
+                        resultMessage += "Warehouse name is: " + jira3006_merchantWarehouseAndBinCreation.warehouseName;
+                        resultMessage += "\nBin name is: " + jira3006_merchantWarehouseAndBinCreation.newBinName;
                     }
                 } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }*/
+            }
 
-                String resultMessage = "";
-                resultMessage += "Test has been finished\n";
+                browserSettings.tearDown(driver);
+
                 JOptionPane.showMessageDialog(null,
                         resultMessage,
-                        "Process",
-                        JOptionPane.PLAIN_MESSAGE);
+                        "Complete",
+                        JOptionPane.PLAIN_MESSAGE, success);
             }
         }
     }

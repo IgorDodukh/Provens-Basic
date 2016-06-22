@@ -25,7 +25,7 @@ public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
 
 //        addCustomerPage.openAddCustomerPage();
 
-        addCustomerPage.addCustomerInfo(firstName, lastName, email, phone);
+        addCustomerPage.addCustomerInfo(firstName, lastName, customerEmail, phone);
         addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();
         addCustomerPage.addCreditCard(visaTestCardNumber);

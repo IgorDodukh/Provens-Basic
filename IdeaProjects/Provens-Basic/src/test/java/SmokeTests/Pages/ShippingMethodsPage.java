@@ -35,7 +35,7 @@ public class ShippingMethodsPage extends BrowserSettings {
     public void openShippingMethodCreatingForm() {
         log("Open 'Add Shipping Method' form");
         driver.findElement(addShippingMethodButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Shipping Method Creating Form was not opened");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Shipping Method Creating Form was not opened");
         wait.until(ExpectedConditions.visibilityOfElementLocated(addShippingMethodTitleLocator));
         String currentTitle = driver.findElement(addShippingMethodTitleLocator).getText();
         Assert.assertEquals(currentTitle, "Shipping Method Information", "Unexpected page title for Shipping Method Creating Form");
@@ -60,7 +60,7 @@ public class ShippingMethodsPage extends BrowserSettings {
 
         log("Save 'UPS' method");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(saveSettingsSuccessPopupLocator));
 
         log("Confirm success popup");
@@ -69,7 +69,7 @@ public class ShippingMethodsPage extends BrowserSettings {
         driver.findElement(confirmPopupButtonLocator).click();
 
         log("Check displaying Shipping Methods grid after saving changes");
-        final Wait<WebDriver> wait1 = new WebDriverWait(driver, 5).withMessage("Success popup is not hidden for a long time");
+        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");
         wait1.until(ExpectedConditions.elementToBeClickable(addShippingMethodButtonLocator));
     }
 

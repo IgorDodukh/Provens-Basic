@@ -97,7 +97,7 @@ public class AddWarehousePage extends BrowserSettings {
         log("Open 'Add Bin' popup");
         driver.findElement(addWarehouseBinButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Add Bin' popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Bin' popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(addBinPopupTitleLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "Popup for the 'Add Bin' form is not displayed");
@@ -120,7 +120,7 @@ public class AddWarehousePage extends BrowserSettings {
         log("Save Warehouse");
         driver.findElement(saveContextualButton).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
         log("Confirm popup message");
@@ -129,7 +129,7 @@ public class AddWarehousePage extends BrowserSettings {
         driver.findElement(popupOkBtnLocator).click();
 
         log("Check displayed page with the created WH name");
-        final Wait<WebDriver> wait1 = new WebDriverWait(driver, 5).withMessage("Waiting popup is not hidden for a long time");
+        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
         wait1.until(ExpectedConditions.elementToBeClickable(binsTabLocator));
 
         Assert.assertEquals(driver.findElement(warehouseInfoTitleLocator).isDisplayed(), true, "Unexpected page title");

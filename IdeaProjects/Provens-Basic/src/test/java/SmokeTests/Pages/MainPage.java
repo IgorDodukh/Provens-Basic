@@ -83,7 +83,7 @@ public class MainPage extends BrowserSettings {
         log("Open 'Settings' page");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(settingsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Basic Settings' page popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Basic Settings' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(basicSettingTitleLocator));
         WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
 
@@ -96,7 +96,7 @@ public class MainPage extends BrowserSettings {
         log("Open 'Third Party Connections' page");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(thirdPartyConnectionsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Third Party Connections' page popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party Connections' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeNetTitleLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "'Third Party Connections' page title was not found");
@@ -105,7 +105,7 @@ public class MainPage extends BrowserSettings {
     public void openMainPage() {
         log("Navigate to Main Page");
         driver.findElement(siteLogoIconLocator).click();
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, 5).withMessage("Main Page is loaded for a long time");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");
         wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
     }
 
@@ -113,7 +113,7 @@ public class MainPage extends BrowserSettings {
         log("Open 'Shipping Methods' page");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(shippingMethodsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("'Shipping Methods' page popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(shippingMethodsPageTitleLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");

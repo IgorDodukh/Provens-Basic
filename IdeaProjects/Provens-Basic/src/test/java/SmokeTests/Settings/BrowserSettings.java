@@ -27,12 +27,12 @@ public class BrowserSettings {
                     "https://my.freestylecommerce.com/web/"));
 
     //protected String email = "themerchant@dydacomp.biz";
-    protected String email = "newadmin@dydacomp.biz";
     protected String merchantPassword = "78qa22!#";
 //    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
 
-    protected String firstName = "TesterFirstName_" + generateRandomData.generateRandomNumber(4);
-    protected String lastName = "TesterLastName_" + generateRandomData.generateRandomNumber(4);
+    public String firstName = "FirstName_" + generateRandomData.generateRandomNumber(4);
+    public String lastName = "LastName_" + generateRandomData.generateRandomNumber(4);
+    protected String customerEmail = firstName + "@dydacomp.biz";
     protected String phone = generateRandomData.generateRandomNumber(10);
     protected String billingAddressTitle = "Billing Address";
     protected String addressFirstName = "TesterBillingFirstName_11";
@@ -47,17 +47,19 @@ public class BrowserSettings {
     protected String saveSettingsPopupMessage = "Configuration has been saved successfully.";
 
 
-    protected String warehouseName = "Test Warehouse4" + generateRandomData.generateRandomNumber(3);
+    public String warehouseName = "Test Warehouse4" + generateRandomData.generateRandomNumber(3);
     protected String warehouseContactName = "Test Warehouse Contact Name";
     protected String startPickupTime = "08:00";
     protected String endPickupTime = "21:00";
 
-    protected String newBinName = "Test Warehouse Bin";
+    public String newBinName = "Test Warehouse Bin";
     protected String saveWarehousePopupMessage = "Save warehouse successfully";
 
-    protected String productSku = "Product SKU" + generateRandomData.generateRandomNumber(4);
+    protected String prodNum = generateRandomData.generateRandomNumber(4);
+    protected String productSku = "ProductSKU" + prodNum;
+    protected String productName = "ProductName" + prodNum;
     protected String productWeight = generateRandomData.generateRandomNumber(1);
-    protected String productDescription = productSku + generateRandomData.generateRandomString(10);
+    protected String productDescription = productSku + "Description";
     protected String productRetailPrice = generateRandomData.generateRandomNumber(3);
     protected String productSalesChannel = "Call Center";
 
@@ -79,6 +81,8 @@ public class BrowserSettings {
     protected String upsGroundMethodName = "UPS Ground" + generateRandomData.generateRandomNumber(2);
     protected String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
+    protected int timeoutVariable = 10;
+
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         driver.get(enviroment.get(envIndex));
@@ -87,13 +91,13 @@ public class BrowserSettings {
 
     @AfterClass
 
-    public void tearDown() {
+    public void tearDown(WebDriver driver) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logOutUser();
         driver.close();
     }
 
-    protected void log(String message) {
+    public void log(String message) {
         Reporter.log(new Date().toString() + "\t" + message + "\n");
     }
 }

@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 /**
  * Created by igor on 17.04.16.
@@ -62,7 +61,7 @@ public class LoginPage extends BrowserSettings{
     }
 
     public void logOutUser() {
-        final Wait<WebDriver> wait1 = new WebDriverWait(driver, 5).withMessage("'Sign In' dropdown is not clickable for a long time");
+        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("'Sign In' dropdown is not clickable for a long time");
         wait1.until(ExpectedConditions.elementToBeClickable(signInDropdown));
         driver.findElement(signInDropdown).click();
         driver.findElement(logOutButton).click();

@@ -45,7 +45,7 @@ public class SettingsPage extends BrowserSettings {
         System.out.println("Click 'Save and Close' button");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(saveSettingsSuccessPopupLocator));
 
         log("Confirm success popup");
@@ -56,7 +56,7 @@ public class SettingsPage extends BrowserSettings {
 
         log("Check displaying settings page after saving changes");
         System.out.println("Check displaying settings page after saving changes");
-        final Wait<WebDriver> wait1 = new WebDriverWait(driver, 5).withMessage("Success popup is not hidden for a long time");
+        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");
         wait1.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
     }
 }
