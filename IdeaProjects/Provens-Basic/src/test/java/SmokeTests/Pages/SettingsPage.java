@@ -29,6 +29,10 @@ public class SettingsPage extends BrowserSettings {
 
 
     public void setShipaheadSetting() throws InterruptedException {
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Basic Settings' page popup was not found");
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
+        Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page was not loaded");
+
         log("Open 'Order Processing' tab locator");
         System.out.println("Open 'Order Processing' tab locator");
         driver.findElement(orderProcessingTabLocator).click();
@@ -36,16 +40,18 @@ public class SettingsPage extends BrowserSettings {
         log("Set 'Always Ship Ahead, no setting changes allowed' setting");
         System.out.println("Set 'Always Ship Ahead, no setting changes allowed' setting");
 
-        WebElement element=driver.findElement(alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator);
+        WebElement element2=driver.findElement(alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", element);
+        executor.executeScript("arguments[0].click();", element2);
 
         log("Click 'Save and Close' button");
         System.out.println("Click 'Save and Close' button");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(saveSettingsSuccessPopupLocator));
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        wait2.until(ExpectedConditions.visibilityOfElementLocated(saveSettingsSuccessPopupLocator));
+
+        Thread.sleep(2000);
 
         log("Confirm success popup");
         System.out.println("Confirm success popup");
@@ -54,6 +60,7 @@ public class SettingsPage extends BrowserSettings {
         driver.findElement(confirmPopupButtonLocator).click();
 
         Thread.sleep(2000);
+
 //        log("Check displaying settings page after saving changes");
 //        System.out.println("Check displaying settings page after saving changes");
 //        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");

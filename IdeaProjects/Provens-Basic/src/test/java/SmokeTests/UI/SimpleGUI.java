@@ -316,13 +316,20 @@ public class SimpleGUI extends JFrame {
                         try {
                             if (browserComboBoxIndex == 0) {
                                 driverWarning += "Firefox";
+//                                ProfilesIni allProfiles = new ProfilesIni();
+//                                FirefoxProfile myProfile = allProfiles.getProfile("default");
+//                                myProfile.setAcceptUntrustedCertificates(true);
+//                                myProfile.setAssumeUntrustedCertificateIssuer(true);
+//                                driver = new FirefoxDriver(myProfile);
                                 driver = new FirefoxDriver();
+
                             } else if (browserComboBoxIndex == 1) {
                                 driverWarning += "Chrome";
                                 System.setProperty("webdriver.chrome.driver", "C:\\appFiles\\drivers\\chromedriver.exe");
                                 driver = new ChromeDriver();
                             }
                         } catch (IllegalStateException e1) {
+
                             JOptionPane.showMessageDialog(null,
                                     driverWarning + " WebDriver was not found",
                                     "Failed",
@@ -337,22 +344,21 @@ public class SimpleGUI extends JFrame {
                         String exceptionMessage = "";
                         String resultMessage = "";
                         resultMessage += "Oh boy, you are lucky.\n" + "\n" + "Test has been finished.\nNew ";
-
                         try {
                             if (entityTypeComboBoxIndex == 0) {
                                 setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
                                 resultMessage += "Merchant " + setUpNewMerchant.firstName + " " + setUpNewMerchant.lastName + " has been configured\n";
                             } else if (entityTypeComboBoxIndex == 1) {
                                 jira3675_AddNewCustomerWithCreditCard.jira3675(loginValue, password, driver);
-                                resultMessage += "Customer has been created\n";
+                                resultMessage += "Customer has been created\n" + "\n";
                                 resultMessage += "Customer name is:\n" + jira3675_AddNewCustomerWithCreditCard.firstName + " " + jira3675_AddNewCustomerWithCreditCard.lastName;
                             } else if (entityTypeComboBoxIndex == 2) {
                                 jira3015_CreateProductAndBin.jira3015(loginValue, password, driver);
-                                resultMessage += "Product has been created\n";
+                                resultMessage += "Product has been created\n" + "\n";
 //                        resultMessage += "Product SKU is:" + jira3015_CreateProductAndBin.;
                             } else if (entityTypeComboBoxIndex == 3) {
                                 jira3006_merchantWarehouseAndBinCreation.jira3006(loginValue, password, driver);
-                                resultMessage += "Warehouse and Bin have been created\n";
+                                resultMessage += "Warehouse and Bin have been created\n" + "\n";
                                 resultMessage += "Warehouse name is: " + jira3006_merchantWarehouseAndBinCreation.warehouseName;
                                 resultMessage += "\nBin name is: " + jira3006_merchantWarehouseAndBinCreation.newBinName;
                             }
@@ -395,7 +401,7 @@ public class SimpleGUI extends JFrame {
                                 resultMessage,
                                 "Complete",
                                 JOptionPane.PLAIN_MESSAGE, success);
-                    } else if (mainConfirmationPopupOption == JOptionPane.CANCEL_OPTION) {
+                    } else if (mainConfirmationPopupOption == JOptionPane.CANCEL_OPTION || mainConfirmationPopupOption == JOptionPane.CLOSED_OPTION) {
                         startButton.setEnabled(true);
                         waitingLabel.setVisible(false);
                         waitingAnimation.setVisible(false);

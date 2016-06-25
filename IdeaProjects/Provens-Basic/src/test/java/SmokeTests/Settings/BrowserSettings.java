@@ -2,7 +2,7 @@ package SmokeTests.Settings;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.util.ArrayList;
@@ -89,14 +89,16 @@ public class BrowserSettings {
 
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
+        System.out.println("Run WebDriver");
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
     }
 
-    @AfterClass
-
+    @AfterTest
     public void tearDown(WebDriver driver) {
+        System.out.println("Close WebDriver");
         driver.close();
+//        driver.quit();
     }
 
     public void log(String message) {

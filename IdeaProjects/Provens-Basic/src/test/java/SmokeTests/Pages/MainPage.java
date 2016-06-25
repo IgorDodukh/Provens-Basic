@@ -104,6 +104,7 @@ public class MainPage extends BrowserSettings {
 
     public void openMainPage() {
         log("Navigate to Main Page");
+        System.out.println("Navigate to Main Page");
         driver.findElement(siteLogoIconLocator).click();
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");
         wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
@@ -111,6 +112,7 @@ public class MainPage extends BrowserSettings {
 
     public void openShippingMethodsPage() {
         log("Open 'Shipping Methods' page");
+        System.out.println("Open 'Shipping Methods' page");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(shippingMethodsButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not found");

@@ -15,10 +15,10 @@ public class SetUpNewMerchant extends BrowserSettings {
         loginPage.loginMerchant(email, merchantPassword);
 
         MainPage mainPage = new MainPage(driver);
-        mainPage.openSetUpPage();
-
-        SettingsPage settingsPage = new SettingsPage(driver);
-        settingsPage.setShipaheadSetting();
+//        mainPage.openSetUpPage();
+//
+//        SettingsPage settingsPage = new SettingsPage(driver);
+//        settingsPage.setShipaheadSetting();
 
         mainPage.openMainPage();
         mainPage.openThirdPartyConnectionsPage();
