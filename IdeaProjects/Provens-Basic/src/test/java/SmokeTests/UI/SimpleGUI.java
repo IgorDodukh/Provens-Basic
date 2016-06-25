@@ -43,7 +43,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build Version: 0.91");
+    private JLabel iconLabel = new JLabel("Build Version: 0.94");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -362,7 +362,9 @@ public class SimpleGUI extends JFrame {
                             waitingLabel.setVisible(false);
                             waitingAnimation.setVisible(false);
 
-                            String exceptionName = e1.getClass().getSimpleName();
+//          Exceptions handler
+
+                            /*String exceptionName = e1.getClass().getSimpleName();
 
                             if (exceptionName.equals("NoSuchWindowException")) {
                                 exceptionMessage += "Browser has been closed.";
@@ -376,9 +378,10 @@ public class SimpleGUI extends JFrame {
                                 exceptionMessage += "InvalidElementStateException.";
                             } else if (exceptionName.equals("NullPointerException")) {
                                 exceptionMessage += "NullPointerException.";
-                            } else exceptionMessage += e1.getClass().getSimpleName();
+                            } else */
+                            exceptionMessage += e1.getClass().getSimpleName();
                             JOptionPane.showMessageDialog(null,
-                                    "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\nReason:\n" + exceptionMessage,
+                                    "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage,
                                     "Failed",
                                     JOptionPane.PLAIN_MESSAGE, sad);
                         }

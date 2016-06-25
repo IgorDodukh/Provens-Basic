@@ -27,6 +27,7 @@ public class SetUpNewMerchant extends BrowserSettings {
         thirdPartyConnectionsPage.configureAuthorizeAccount(authApiLoginId, authTransactionKey);
         thirdPartyConnectionsPage.configureUPSAccount(upsUserName, upsPassword, upsLicenseNumber, upsShipperNumber);
         thirdPartyConnectionsPage.configureUSPSAccount(uspsAccountId, uspsPassPhrase);
+        thirdPartyConnectionsPage.saveThirdPartyConnectionSettings();
 
         mainPage.openMainPage();
         mainPage.openShippingMethodsPage();

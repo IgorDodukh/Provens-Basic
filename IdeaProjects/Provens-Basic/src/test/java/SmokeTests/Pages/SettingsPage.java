@@ -53,10 +53,10 @@ public class SettingsPage extends BrowserSettings {
         Assert.assertEquals(currentPopupMessage, saveSettingsPopupMessage, "Unexpected popup message");
         driver.findElement(confirmPopupButtonLocator).click();
 
-        Thread.sleep(5000);
-        log("Check displaying settings page after saving changes");
-        System.out.println("Check displaying settings page after saving changes");
-        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");
-        wait1.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
+        Thread.sleep(2000);
+//        log("Check displaying settings page after saving changes");
+//        System.out.println("Check displaying settings page after saving changes");
+//        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");
+//        wait1.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
     }
 }
