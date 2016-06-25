@@ -22,7 +22,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
     private By authorizeLoginFieldLocator = By.xpath("//input[@id='passwordAuthorizenetLoginId']");
     private By authorizeKeyFieldLocator = By.xpath("//input[@id='passwordTransactionKey']");
     private By authorizeTestButtonLocator = By.xpath("//input[@id='btnPaymentGatewaryTestConnect']");
-    private By authorizeTestResultPopupLocator = By.xpath("//div[@id='ThirdPartyConnectionsManagement']");
+//    private By authorizeTestResultPopupLocator = By.xpath("//div[@id='ThirdPartyConnectionsManagement']");
     private By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
 
     private By carrierGetawayTabLocator = By.xpath("//a[@id='leftNav_item_2']");
@@ -33,7 +33,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
     private By upsLicenseNumberFieldLocator = By.xpath("//input[@id='txtUPSAccessLicenseNumber']");
 
     private By upsTestButtonLocator = By.xpath("//input[@id='btnUPSTestConnect']");
-    private By testResultPopupLocator = By.xpath("//div[@id='ThirdPartyConnectionsManagement']");
+    private By testResultPopupLocator = By.xpath("//div[@id='ThirdPartyConnectionsManagement']/*");
 
     private By uspsConfigurationCheckboxLocator = By.xpath("//input[@id='uspsConnectionsChk']");
     private By uspsAccountIdFieldLocator = By.xpath("//input[@id='txtUSPSAccountID']");
@@ -61,10 +61,10 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         log("Make Test for Authorize");
         driver.findElement(authorizeTestButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Authorize test result popup was not found");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeTestResultPopupLocator));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
 
-        String currentPopupMessage = driver.findElement(authorizeTestResultPopupLocator).getText();
-        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "Authorize test result unexpected popup message");
+        String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
+        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "Authorize test result unexpected popup message.");
 
         driver.findElement(confirmPopupButtonLocator).click();
     }
@@ -105,7 +105,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
 
         String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
-        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "UPS test result unexpected popup message");
+        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "UPS test result unexpected popup message.");
 
         driver.findElement(confirmPopupButtonLocator).click();
     }

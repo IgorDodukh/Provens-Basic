@@ -28,7 +28,7 @@ public class SettingsPage extends BrowserSettings {
 
 
 
-    public void setShipaheadSetting() {
+    public void setShipaheadSetting() throws InterruptedException {
         log("Open 'Order Processing' tab locator");
         System.out.println("Open 'Order Processing' tab locator");
         driver.findElement(orderProcessingTabLocator).click();
@@ -39,7 +39,6 @@ public class SettingsPage extends BrowserSettings {
         WebElement element=driver.findElement(alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
-        System.out.println("Tried to click One Way");
 
         log("Click 'Save and Close' button");
         System.out.println("Click 'Save and Close' button");
@@ -54,6 +53,7 @@ public class SettingsPage extends BrowserSettings {
         Assert.assertEquals(currentPopupMessage, saveSettingsPopupMessage, "Unexpected popup message");
         driver.findElement(confirmPopupButtonLocator).click();
 
+        Thread.sleep(5000);
         log("Check displaying settings page after saving changes");
         System.out.println("Check displaying settings page after saving changes");
         final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");

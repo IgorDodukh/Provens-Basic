@@ -12,7 +12,6 @@ import SmokeTests.Tests.SetUpNewMerchant;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -50,7 +49,14 @@ public class SimpleGUI extends JFrame {
     private JLabel waitingLabel = new JLabel("Test is running...");
 
     final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
-    JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
+    final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\8-512.png"));
+    final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
+    final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
+    final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
+    final ImageIcon sad = new ImageIcon("C:\\appFiles\\pic\\sad.png");
+    final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
+
+    private JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
     private JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
     private JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
 
@@ -60,16 +66,17 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> entityTypeComboBox = new JComboBox<>();
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
-    private String[] browsers = {" Mozilla Firefox", " Google Chrome", " Opera"};
+    private String[] browsers = {" Mozilla Firefox", " Google Chrome"};
     private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product (in progress)", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
-    SimpleGUI() throws IOException {
+    public SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
         this.setBounds(800,400,500,448);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+        this.setIconImage(appIcon);
         waitingAnimation.setVisible(false);
         waitingLabel.setVisible(false);
 
@@ -83,7 +90,7 @@ public class SimpleGUI extends JFrame {
             environmentsComboBox.addItem(environment);
         }
 
-        BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
+
         JLabel picLabel = new JLabel(new ImageIcon(background));
 
         Color redColor = new Color(73, 134, 161);
@@ -239,10 +246,7 @@ public class SimpleGUI extends JFrame {
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
-            final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
-            final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
-            final ImageIcon sad = new ImageIcon("C:\\appFiles\\pic\\sad.png");
-            final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
+
 
 
             int browserComboBoxIndex = browsersComboBox.getSelectedIndex();
@@ -296,7 +300,7 @@ public class SimpleGUI extends JFrame {
                 if (authorizePopupOption == JOptionPane.OK_OPTION) {
                     String driverWarning = "";
                     String infoMessage = "";
-                    infoMessage += "Test will be started now\n\n";
+                    infoMessage += "Test is starting now\n\n";
                     infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n";
                     infoMessage += "Selected Test: " + entityTypeComboBox.getSelectedItem() + "\n";
                     infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
@@ -317,10 +321,6 @@ public class SimpleGUI extends JFrame {
                                 driverWarning += "Chrome";
                                 System.setProperty("webdriver.chrome.driver", "C:\\appFiles\\drivers\\chromedriver.exe");
                                 driver = new ChromeDriver();
-                            } else if (browserComboBoxIndex == 2) {
-                                driverWarning += "Opera";
-                                System.setProperty("webdriver.opera.driver", "C:\\appFiles\\drivers\\operadriver.exe");
-                                driver = new OperaDriver();
                             }
                         } catch (IllegalStateException e1) {
                             JOptionPane.showMessageDialog(null,

@@ -131,8 +131,5 @@ public class AddWarehousePage extends BrowserSettings {
         log("Check displayed page with the created WH name");
         final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
         wait1.until(ExpectedConditions.elementToBeClickable(binsTabLocator));
-
-        Assert.assertEquals(driver.findElement(warehouseInfoTitleLocator).isDisplayed(), true, "Unexpected page title");
-        Assert.assertEquals(driver.findElement(currentPageModePopup).getText(), "View " + warehouseName, "Unexpected page mode. Should be view.");
     }
 }
