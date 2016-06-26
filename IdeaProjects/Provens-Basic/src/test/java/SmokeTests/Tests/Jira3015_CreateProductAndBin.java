@@ -23,7 +23,7 @@ public class Jira3015_CreateProductAndBin extends BrowserSettings{
 
         AddProductPage addProductPage = new AddProductPage(driver);
         addProductPage.addProductInfo(productSku, productName, productWeight, productDescription);
-        addProductPage.addProductPrices(productRetailPrice);
+//        addProductPage.addProductPrices(productRetailPrice);
         addProductPage.addProductSalesChannel(productSalesChannel);
         addProductPage.addProductSupplier(productRetailPrice);
         addProductPage.saveProduct();
