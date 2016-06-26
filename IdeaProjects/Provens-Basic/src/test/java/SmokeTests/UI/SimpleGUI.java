@@ -417,10 +417,10 @@ public class SimpleGUI extends JFrame {
 
 //  Generate Failed message
                                 exceptionStatus = true;
-                                browserSettings.tearDown(driver);
                                 startButton.setEnabled(true);
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
+//                                browserSettings.tearDown(driver);
 //  Exceptions handler
 
 //                            String exceptionName = e1.getClass().getSimpleName();
@@ -446,6 +446,7 @@ public class SimpleGUI extends JFrame {
 //                                            JOptionPane.PLAIN_MESSAGE, sad);
 //                                } else {
                                     exceptionMessage += e1.getClass().getSimpleName();
+                                    browserSettings.tearDown(driver);
                                     JOptionPane.showMessageDialog(null,
                                             "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage,
                                             "Failed",

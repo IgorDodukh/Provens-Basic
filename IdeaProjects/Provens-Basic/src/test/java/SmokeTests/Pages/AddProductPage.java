@@ -27,7 +27,10 @@ public class AddProductPage extends BrowserSettings{
 
     private By productPricingTabLocator = By.xpath("//li[@id='pricingTab']");
     private By productPricingTabTitleLocator = By.xpath("//*[@id='pricingModule']//h4/strong");
-    private By productRetailPriceLocator = By.cssSelector("#retail-price");
+//    private By productRetailPriceLocator = By.cssSelector("input[autotest-id='retail-price-value']");
+//    private By productRetailPriceLocator = By.id("retail-price");
+    private By productRetailPriceLocator = By.className("form-control text-right ng-pristine ng-untouched ng-valid");
+//    private By productRetailPriceLocator = By.xpath("//input");
 
     private By salesChannelsTabTitleLocator = By.xpath("//*[@id='subTitle']/h2");
     private By productSalesChannelsTabLocator = By.xpath("//li[@id='salesChannelsTab']");
@@ -91,6 +94,11 @@ public class AddProductPage extends BrowserSettings{
         log("Select 'Pricing' tab");
         System.out.println("Select 'Pricing' tab");
         driver.findElement(productPricingTabLocator).click();
+
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Retail Price' field was not found");
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(productRetailPriceLocator));
+
+        Assert.assertEquals(element.isDisplayed(), true, "'Retail Price' field is not displayed");
 
         log("Add product Retail Price");
         System.out.println("Add product Retail Price");
