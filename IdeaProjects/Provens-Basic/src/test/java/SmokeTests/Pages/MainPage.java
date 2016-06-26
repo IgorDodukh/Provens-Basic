@@ -45,6 +45,7 @@ public class MainPage extends BrowserSettings {
     private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
 
     private By shippingMethodsPageTitleLocator = By.xpath("//button[@id='btnShippingMethods']");
+    private By addShippingMethodButtonLocator = By.xpath("//button[@id='add_shippingMethod']");
 
     private By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
 
@@ -115,8 +116,8 @@ public class MainPage extends BrowserSettings {
         System.out.println("Open 'Shipping Methods' page");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(shippingMethodsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not found");
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(shippingMethodsPageTitleLocator));
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not loaded");
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(addShippingMethodButtonLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
     }

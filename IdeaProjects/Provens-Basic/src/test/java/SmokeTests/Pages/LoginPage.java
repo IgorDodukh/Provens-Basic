@@ -33,19 +33,23 @@ public class LoginPage extends BrowserSettings{
     public void loginMerchant(String email, String pass) throws InterruptedException {
         log("Login Merchant user to FS");
         System.out.println("Login Merchant user to FS");
+        resultLog += "Login Merchant user to FS\n";
         System.out.println("Enter Login");
+        resultLog += "Enter Login\n";
         WebElement login = driver.findElement(emailInputLocator);
         login.click();
         login.clear();
         login.sendKeys(email);
 
         System.out.println("Enter Password");
+        resultLog += "Enter Password\n";
         WebElement password = driver.findElement(passwordInputLocator);
         password.click();
         password.clear();
         password.sendKeys(pass);
 
         System.out.println("Click 'Login' button");
+        resultLog += "Click 'Login' button\n";
         driver.findElement(loginButtonLocator).click();
 
         Thread.sleep(1000);

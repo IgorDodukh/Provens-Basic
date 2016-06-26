@@ -37,17 +37,19 @@ public class SimpleGUI extends JFrame {
     Jira3015_CreateProductAndBin jira3015_CreateProductAndBin = new Jira3015_CreateProductAndBin();
     Jira3006_MerchantWarehouseAndBinCreation jira3006_merchantWarehouseAndBinCreation = new Jira3006_MerchantWarehouseAndBinCreation();
 
+//    Main window elements
     private JButton startButton = new JButton("Start Test");
     private JLabel browserLabel = new JLabel("Select Browser");
     private JLabel entityTypeLabel = new JLabel("Select Type");
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build Version: 0.95");
+    private JLabel iconLabel = new JLabel("Build Version: 0.96");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
 
+//    graphic resources
     final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
     final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\8-512.png"));
     final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
@@ -246,9 +248,6 @@ public class SimpleGUI extends JFrame {
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
-
-
-
             int browserComboBoxIndex = browsersComboBox.getSelectedIndex();
             int environmentComboBoxIndex = environmentsComboBox.getSelectedIndex();
             int entityTypeComboBoxIndex = entityTypeComboBox.getSelectedIndex();
@@ -256,6 +255,7 @@ public class SimpleGUI extends JFrame {
             String loginValue = loginField.getText();
             String password = String.valueOf(passwordField.getPassword());
 
+//            Login/Password fields validation
             boolean loginFilled = false;
             boolean passFilled = false;
             if (Objects.equals(loginValue, "")){
@@ -338,8 +338,9 @@ public class SimpleGUI extends JFrame {
                             waitingLabel.setVisible(false);
                             waitingAnimation.setVisible(false);
                         }
-
                         browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
+
+                        String logMessage = browserSettings.resultLog;
 
                         String exceptionMessage = "";
                         String resultMessage = "";
@@ -347,7 +348,7 @@ public class SimpleGUI extends JFrame {
                         try {
                             if (entityTypeComboBoxIndex == 0) {
                                 setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
-                                resultMessage += "Merchant " + setUpNewMerchant.firstName + " " + setUpNewMerchant.lastName + " has been configured\n";
+                                resultMessage += "Merchant\n " + loginValue + " \nhas been configured\n";
                             } else if (entityTypeComboBoxIndex == 1) {
                                 jira3675_AddNewCustomerWithCreditCard.jira3675(loginValue, password, driver);
                                 resultMessage += "Customer has been created\n" + "\n";
@@ -387,7 +388,7 @@ public class SimpleGUI extends JFrame {
                             } else */
                             exceptionMessage += e1.getClass().getSimpleName();
                             JOptionPane.showMessageDialog(null,
-                                    "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage,
+                                    "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage/* + "  \n" + logMessage*/,
                                     "Failed",
                                     JOptionPane.PLAIN_MESSAGE, sad);
                         }
