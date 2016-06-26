@@ -320,17 +320,15 @@ public class SimpleGUI extends JFrame {
                         browserSettings.authApiLoginId = field1.getText();
                     } else {
                         transactionFailed = true;
-                        System.out.println("'API Login ID' field is blank");
                         transactionWarning += "'API Login ID'";
                     }
                     if (field2.getText().length() > 0){
                         browserSettings.authTransactionKey = field2.getText();
+                        transactionWarning += " field.";
                     } else {
                         if(transactionFailed){
-                            System.out.println("'Transaction Key' field is blank");
                             transactionWarning += " and 'Transaction Key' fields.";
                         } else {
-                            System.out.println("'Transaction Key' field is blank");
                             transactionWarning += "'Transaction Key' field.";
                             transactionFailed = true;
                         }
@@ -343,7 +341,7 @@ public class SimpleGUI extends JFrame {
                                     JOptionPane.PLAIN_MESSAGE, hmm);
                         }
                     }
-                    System.out.println(browserSettings.authApiLoginId + " " + browserSettings.authTransactionKey);
+//                    System.out.println(browserSettings.authApiLoginId + " " + browserSettings.authTransactionKey);
                 }
 
 //  Show "Lucky Confirmation" popup
