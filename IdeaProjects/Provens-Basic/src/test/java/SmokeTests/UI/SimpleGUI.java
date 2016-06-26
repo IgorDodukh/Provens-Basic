@@ -335,11 +335,13 @@ public class SimpleGUI extends JFrame {
                             transactionFailed = true;
                         }
                     }
-                    if (transactionFailed){
-                        JOptionPane.showMessageDialog(null,
-                                transactionWarning + "\nOk, I'll give you another try.",
-                                "Warning",
-                                JOptionPane.PLAIN_MESSAGE, hmm);
+                    if (authorizePopupOption == JOptionPane.YES_OPTION){
+                        if (transactionFailed){
+                            JOptionPane.showMessageDialog(null,
+                                    transactionWarning + "\nOk, I'll give you another try.",
+                                    "Warning",
+                                    JOptionPane.PLAIN_MESSAGE, hmm);
+                        }
                     }
                     System.out.println(browserSettings.authApiLoginId + " " + browserSettings.authTransactionKey);
                 }
