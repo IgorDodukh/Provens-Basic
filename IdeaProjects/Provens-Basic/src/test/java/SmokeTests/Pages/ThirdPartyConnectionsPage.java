@@ -52,14 +52,12 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         System.out.println("Add API login ID");
         WebElement loginField = driver.findElement(authorizeLoginFieldLocator);
         loginField.clear();
-        loginField.click();
         loginField.sendKeys(apiLoginId);
 
         log("Add Transaction Key");
         System.out.println("Add Transaction Key");
         WebElement keyField = driver.findElement(authorizeKeyFieldLocator);
         keyField.clear();
-        keyField.click();
         keyField.sendKeys(transactionKey);
 
 //        log("Make Test for Authorize");
@@ -180,6 +178,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 //        Thread.sleep(5000);
 
     }
+
     public void saveThirdPartyConnectionSettings () {
         log("Click 'Save and Close' button");
         System.out.println("Click 'Save and Close' button");

@@ -72,25 +72,21 @@ public class AddCustomerPage extends BrowserSettings {
         log("Add First Name");
         WebElement firstNameField = driver.findElement(firstNameFieldLocator);
         firstNameField.clear();
-        firstNameField.click();
         firstNameField.sendKeys(customerFirstName);
 
         log("Add Last Name");
         WebElement lastNameField = driver.findElement(lastNameFieldLocator);
         lastNameField.clear();
-        lastNameField.click();
         lastNameField.sendKeys(customerLastName);
 
         log("Add email");
         WebElement emailField = driver.findElement(emailFieldLocator);
         emailField.clear();
-        emailField.click();
         emailField.sendKeys(customerEmail);
 
         log("Add phone");
         WebElement phoneField = driver.findElement(phoneFieldLocator);
         phoneField.clear();
-        phoneField.click();
         phoneField.sendKeys(customerPhone);
     }
 
@@ -109,25 +105,21 @@ public class AddCustomerPage extends BrowserSettings {
         log("Add Billing Address First Name");
         WebElement billingFirstNameField = driver.findElement(billingAddressFirstNameLocator);
         billingFirstNameField.clear();
-        billingFirstNameField.click();
         billingFirstNameField.sendKeys(billingFirstName);
 
         log("Add Billing Address Last Name");
         WebElement billingLastNameField = driver.findElement(billingAddressLastNameLocator);
         billingLastNameField.clear();
-        billingLastNameField.click();
         billingLastNameField.sendKeys(billingLastName);
 
         log("Add Billing Address Address line 1");
         WebElement billingAddressLine1Field = driver.findElement(billingAddressAddr1Locator);
         billingAddressLine1Field.clear();
-        billingAddressLine1Field.click();
         billingAddressLine1Field.sendKeys(billingAddressLine1);
 
         log("Add Billing Address Zip");
         WebElement billingZipField = driver.findElement(billingAddressZipLocator);
         billingZipField.clear();
-        billingZipField.click();
         billingZipField.sendKeys(billingZip);
         driver.findElement(billingAddressAddr1Locator).click();
     }
@@ -161,7 +153,6 @@ public class AddCustomerPage extends BrowserSettings {
         log("Add Card info");
         WebElement cardNumberField = driver.findElement(cardNumberFieldLocator);
         cardNumberField.clear();
-        cardNumberField.click();
         cardNumberField.sendKeys(testCardNumber);
 
         driver.findElement(cardExpiredYearLocator).click();

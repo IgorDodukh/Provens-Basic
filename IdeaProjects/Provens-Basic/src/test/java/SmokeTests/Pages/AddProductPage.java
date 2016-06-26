@@ -63,25 +63,21 @@ public class AddProductPage extends BrowserSettings{
         log("Add product info");
         log("Add product SKU");
         WebElement productSkuField = driver.findElement(productSkuFieldLocator);
-        productSkuField.click();
         productSkuField.clear();
         productSkuField.sendKeys(sku);
 
         log("Add product Name");
         WebElement productNameField = driver.findElement(productNameFieldLocator);
-        productNameField.click();
         productNameField.clear();
         productNameField.sendKeys(name);
 
         log("Add product weight");
         WebElement productWeightField = driver.findElement(productWeightFieldLocator);
-        productWeightField.click();
         productWeightField.clear();
         productWeightField.sendKeys(weight);
 
         log("Add product Short Description");
         WebElement productShortDescriptionField = driver.findElement(productShortDescriptionLocator);
-        //productShortDescriptionField.click();
         productShortDescriptionField.clear();
         productShortDescriptionField.sendKeys(shortDescription);
     }
@@ -92,7 +88,6 @@ public class AddProductPage extends BrowserSettings{
 
         log("Add product Retail Price");
         WebElement productRetailPriceField = driver.findElement(productRetailPriceLocator);
-        productRetailPriceField.click();
         productRetailPriceField.clear();
         productRetailPriceField.sendKeys(retailPrice);
     }
@@ -103,7 +98,6 @@ public class AddProductPage extends BrowserSettings{
 
         log("Add 'Call Center' sales channel");
         WebElement productChannelNameField = driver.findElement(salesChannelNameFieldLocator);
-        productChannelNameField.click();
         productChannelNameField.clear();
         productChannelNameField.sendKeys(channelName);
         driver.findElement(salesChannelTooltipLocator).click();
@@ -129,7 +123,6 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(warehouseTabLocator).click();
 
         WebElement supplierWHUnitCostField = driver.findElement(unitCostFieldLocator);
-        supplierWHUnitCostField.click();
         supplierWHUnitCostField.clear();
         supplierWHUnitCostField.sendKeys(unitCost);
 

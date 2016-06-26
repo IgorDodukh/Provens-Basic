@@ -50,43 +50,36 @@ public class AddWarehousePage extends BrowserSettings {
         log("Add Warehouse Name");
         WebElement warehouseNameField = driver.findElement(warehouseNameFieldLocator);
         warehouseNameField.clear();
-        warehouseNameField.click();
         warehouseNameField.sendKeys(warehouseName);
 
         log("Add contact name");
         WebElement contactNameField = driver.findElement(warehouseContactNameFieldLocator);
         contactNameField.clear();
-        contactNameField.click();
         contactNameField.sendKeys(contactName);
 
         log("Add phone number");
         WebElement phoneField = driver.findElement(warehousePhoneFieldLocator);
         phoneField.clear();
-        phoneField.click();
         phoneField.sendKeys(phone);
 
         log("Add Earliest Pickup Time");
         WebElement startTimeField = driver.findElement(pickingReadyTimeFieldLocator);
         startTimeField.clear();
-        startTimeField.click();
         startTimeField.sendKeys(startTime);
 
         log("Add Latest Pickup Time");
         WebElement endTimeField = driver.findElement(pickingCutoffTimeFieldLocator);
         endTimeField.clear();
-        endTimeField.click();
         endTimeField.sendKeys(endTime);
 
         log("Add address line");
         WebElement addressLineField = driver.findElement(addressFieldLocator);
         addressLineField.clear();
-        addressLineField.click();
         addressLineField.sendKeys(addressLine1);
 
         log("Add zip code");
         WebElement zipField = driver.findElement(zipFieldLocator);
         zipField.clear();
-        zipField.click();
         zipField.sendKeys(zip);
         driver.findElement(warehouseInfoTitleLocator).click();
     }
@@ -105,7 +98,6 @@ public class AddWarehousePage extends BrowserSettings {
         log("Put Bin name");
         WebElement binName = driver.findElement(newBinNameLocator);
         binName.clear();
-        binName.click();
         binName.sendKeys(name);
 
         log("Select Bin type");

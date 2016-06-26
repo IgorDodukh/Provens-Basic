@@ -4,7 +4,6 @@ package SmokeTests.UI;
  * Created by igor on 05.06.16.
  */
 
-import SmokeTests.Pages.LoginPage;
 import SmokeTests.Settings.BrowserSettings;
 import SmokeTests.Tests.Jira3006_MerchantWarehouseAndBinCreation;
 import SmokeTests.Tests.Jira3015_CreateProductAndBin;
@@ -28,7 +27,6 @@ import java.util.Objects;
 
 import static javax.swing.BorderFactory.createLineBorder;
 
-
 public class SimpleGUI extends JFrame {
     public WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
@@ -37,21 +35,21 @@ public class SimpleGUI extends JFrame {
     Jira3675_AddNewCustomerWithCreditCard jira3675_AddNewCustomerWithCreditCard = new Jira3675_AddNewCustomerWithCreditCard();
     Jira3015_CreateProductAndBin jira3015_CreateProductAndBin = new Jira3015_CreateProductAndBin();
     Jira3006_MerchantWarehouseAndBinCreation jira3006_merchantWarehouseAndBinCreation = new Jira3006_MerchantWarehouseAndBinCreation();
-    LoginPage loginPage = new LoginPage(driver);
+//    LoginPage loginPage = new LoginPage(driver);
 
-//    Main window elements
+//  Main window elements
     private JButton startButton = new JButton("Start Test");
     private JLabel browserLabel = new JLabel("Select Browser");
-    private JLabel entityTypeLabel = new JLabel("Select Type");
+    private JLabel entityTypeLabel = new JLabel("Select Test Type");
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build Version: 0.97");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 0.97");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
 
-//    graphic resources
+//  Graphical resources
     final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
     final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\8-512.png"));
     final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
@@ -71,7 +69,7 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
     private String[] browsers = {" Mozilla Firefox", " Google Chrome"};
-    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product (in progress)", " Add Warehouse & Bin"};
+    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product (not ready)", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
     boolean exceptionStatus = false;
@@ -80,6 +78,7 @@ public class SimpleGUI extends JFrame {
     public SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
+//  Main app configs
         this.setBounds(800,400,500,448);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -87,6 +86,7 @@ public class SimpleGUI extends JFrame {
         waitingAnimation.setVisible(false);
         waitingLabel.setVisible(false);
 
+//  Add items to dropdown-lists
         for (String browser : browsers) {
             browsersComboBox.addItem(browser);
         }
@@ -96,7 +96,6 @@ public class SimpleGUI extends JFrame {
         for (String environment : environments) {
             environmentsComboBox.addItem(environment);
         }
-
 
         JLabel picLabel = new JLabel(new ImageIcon(background));
 
@@ -117,6 +116,7 @@ public class SimpleGUI extends JFrame {
         JList list3 = popup3.getList();
         list3.setSelectionBackground(redColor);
 
+// Define container for all UI objects
         Container container = this.getContentPane();
         container.setLayout(new GridBagLayout());
 
@@ -153,6 +153,7 @@ public class SimpleGUI extends JFrame {
         entityTypeLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(entityTypeLabel, gbc);
 
+//  Object type position
         gbc.gridx = 1;
         gbc.gridy = 2;
         entityTypeComboBox.setPreferredSize(d);
@@ -161,12 +162,14 @@ public class SimpleGUI extends JFrame {
         entityTypeComboBox.setBackground(Color.WHITE);
         container.add(entityTypeComboBox, gbc);
 
+//  Environments label position
         gbc.gridx = 0;
         gbc.gridy = 3;
         environmentLabel.setForeground(new Color(95, 131, 156));
         environmentLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(environmentLabel, gbc);
 
+//  Environments dropdown position
         gbc.gridx = 1;
         gbc.gridy = 3;
         environmentsComboBox.setPreferredSize(d);
@@ -175,45 +178,54 @@ public class SimpleGUI extends JFrame {
         environmentsComboBox.setBackground(Color.WHITE);
         container.add(environmentsComboBox, gbc);
 
+//  Size parameters for the middle section
         gbc.insets = new Insets(14, 20, 2, 20);
 
+//  Middle space position
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
         container.add(middleSpaceLabel, gbc);
 
+//  Size parameters for the bottom section
         gbc.insets = new Insets(4, 20, 4, 20);
 
+//  "Login" field position
         gbc.gridx = 1;
         gbc.gridy = 5;
         loginLabel.setForeground(new Color(95, 131, 156));
         loginLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(loginLabel, gbc);
 
+//  "Password" label position
         gbc.gridx = 1;
         gbc.gridy = 7;
         passwordLabel.setForeground(new Color(95, 131, 156));
         passwordLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 16));
         container.add(passwordLabel, gbc);
 
+//  "Login" field position
         gbc.gridx = 1;
         gbc.gridy = 6;
         loginField.setPreferredSize(d);
         loginField.setFont(new java.awt.Font("Arial", Font.PLAIN, 14));
         container.add(loginField, gbc);
 
+//  "Password" field position
         gbc.gridx = 1;
         gbc.gridy = 8;
         passwordField.setPreferredSize(d);
         passwordField.setFont(new java.awt.Font("Arial", Font.PLAIN, 14));
         container.add(passwordField, gbc);
 
+//  "Build Version" label position
         gbc.gridx = 0;
         gbc.gridy = 10;
-        iconLabel.setForeground(Color.GRAY);
-        iconLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
-        container.add(iconLabel, gbc);
+        buildVersionLabel.setForeground(Color.GRAY);
+        buildVersionLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
+        container.add(buildVersionLabel, gbc);
 
+//  "Start Button" position
         gbc.gridx = 1;
         gbc.gridy = 9;
         startButton.setPreferredSize(d);
@@ -227,11 +239,13 @@ public class SimpleGUI extends JFrame {
         startButton.addActionListener(new ButtonEventListener());
         container.add(startButton, gbc);
 
+//  Waiting animation position
         gbc.gridx = 0;
         gbc.gridy = 11;
         gbc.gridwidth = 1;
         container.add(waitingAnimation, gbc);
 
+//  "Test is running" label position
         gbc.gridx = 1;
         gbc.gridy = 11;
         gbc.weighty = 1;
@@ -239,7 +253,7 @@ public class SimpleGUI extends JFrame {
         waitingLabel.setFont(new java.awt.Font("Arial", Font.BOLD, 20));
         container.add(waitingLabel, gbc);
 
-//        Main Window Background
+//  Main Window Background
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -260,7 +274,7 @@ public class SimpleGUI extends JFrame {
             String loginValue = loginField.getText();
             String password = String.valueOf(passwordField.getPassword());
 
-//            Login/Password fields validation
+//  Login/Password fields validation
             boolean loginFilled = false;
             boolean passFilled = false;
             if (Objects.equals(loginValue, "")){
@@ -282,14 +296,15 @@ public class SimpleGUI extends JFrame {
                 passFilled = true;
             }
 
+//  Accept login/password
             if (loginFilled && passFilled) {
                 int authorizePopupOption = 0;
                 int mainConfirmationPopupOption = 0;
                 JTextField field1 = new JTextField();
                 JTextField field2 = new JTextField();
 
+//  Show "Authorize Credentials" popup
                 if (entityTypeComboBoxIndex == 0) {
-
                     field1.setText(browserSettings.authApiLoginId);
                     field2.setText(browserSettings.authTransactionKey);
                     Object[] message = {
@@ -302,6 +317,8 @@ public class SimpleGUI extends JFrame {
                     browserSettings.authTransactionKey = field2.getText();
                     System.out.println(browserSettings.authApiLoginId + " " + browserSettings.authTransactionKey);
                 }
+
+//  Show "Lucky Confirmation" popup
                 if (authorizePopupOption == JOptionPane.OK_OPTION) {
                     String driverWarning = "";
                     String infoMessage = "";
@@ -317,6 +334,7 @@ public class SimpleGUI extends JFrame {
 
                     mainConfirmationPopupOption = JOptionPane.showConfirmDialog(null, infoMessage, "Lucky Confirmation", JOptionPane.OK_CANCEL_OPTION, 0, icon);
 
+//  Run new WebDriver
                     if (mainConfirmationPopupOption == JOptionPane.OK_OPTION) {
                         try {
                             if (browserComboBoxIndex == 0) {
@@ -338,8 +356,10 @@ public class SimpleGUI extends JFrame {
                             waitingLabel.setVisible(false);
                             waitingAnimation.setVisible(false);
                         }
+//  Call "Browser Settings" class
                         browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
+//  Generate Result message
                         String exceptionMessage = "";
                         String resultMessage = "";
                         resultMessage += "Oh boy, you are lucky.\n" + "\n" + "Test has been finished.\nNew ";
@@ -363,10 +383,10 @@ public class SimpleGUI extends JFrame {
                             }
                         } catch (Exception e1) {
 //                            credentialsValid = Boolean.getBoolean(loginPage.credentialsStatus);
+
+//  Generate Failed message
                             exceptionStatus = true;
-                            if (driver != null) {
-                                browserSettings.tearDown(driver);
-                            }
+                            browserSettings.tearDown(driver);
                             startButton.setEnabled(true);
                             waitingLabel.setVisible(false);
                             waitingAnimation.setVisible(false);
@@ -403,6 +423,7 @@ public class SimpleGUI extends JFrame {
                             }
                         }
 
+//  Run Complete message
                         if (!exceptionStatus) {
                             browserSettings.tearDown(driver);
                             startButton.setEnabled(true);
@@ -413,6 +434,7 @@ public class SimpleGUI extends JFrame {
                                     "Complete",
                                     JOptionPane.PLAIN_MESSAGE, success);
                         }
+//  Behavior on Close/Cancel confirmation popup
                     } else if (mainConfirmationPopupOption == JOptionPane.CANCEL_OPTION || mainConfirmationPopupOption == JOptionPane.CLOSED_OPTION) {
                         startButton.setEnabled(true);
                         waitingLabel.setVisible(false);

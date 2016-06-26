@@ -36,13 +36,11 @@ public class LoginPage extends BrowserSettings{
         System.out.println("Login Merchant user to FS");
         System.out.println("Enter Login");
         WebElement login = driver.findElement(emailInputLocator);
-        login.click();
         login.clear();
         login.sendKeys(email);
 
         System.out.println("Enter Password");
         WebElement password = driver.findElement(passwordInputLocator);
-        password.click();
         password.clear();
         password.sendKeys(pass);
 

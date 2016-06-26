@@ -49,7 +49,6 @@ public class ShippingMethodsPage extends BrowserSettings {
         System.out.println("Set 'UPS Ground' method name");
         WebElement shippingMethodNameField = driver.findElement(shippingMethodNameFieldLocator);
         shippingMethodNameField.clear();
-        shippingMethodNameField.click();
         shippingMethodNameField.sendKeys(methodName);
 
         System.out.println("Set Shipping Method parameters");
@@ -59,7 +58,6 @@ public class ShippingMethodsPage extends BrowserSettings {
 
         WebElement shippingChargeField = driver.findElement(shippingChargeFieldLocator);
         shippingChargeField.clear();
-        shippingChargeField.click();
         shippingChargeField.sendKeys(shippingCharge);
 
         log("Save 'UPS' method");
