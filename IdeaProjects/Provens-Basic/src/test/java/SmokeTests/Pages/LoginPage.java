@@ -1,10 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,38 +26,53 @@ public class LoginPage extends BrowserSettings{
     private By closeMsgBoxLocator = By.xpath("//span[@class='ui-icon ui-icon-closethick']");
     private By signInDropdown = By.xpath("//li[@id='SignIn']");
     private By logOutButton = By.xpath("//a[@href='/web/Home/Logout']");
+    private By wrongCredentialsLocator = By.xpath("//div[@id='LoginMessage']");
+
+//    public String credentialsStatus = "";
+
 
     public void loginMerchant(String email, String pass) throws InterruptedException {
         log("Login Merchant user to FS");
         System.out.println("Login Merchant user to FS");
-        resultLog += "Login Merchant user to FS\n";
         System.out.println("Enter Login");
-        resultLog += "Enter Login\n";
         WebElement login = driver.findElement(emailInputLocator);
         login.click();
         login.clear();
         login.sendKeys(email);
 
         System.out.println("Enter Password");
-        resultLog += "Enter Password\n";
         WebElement password = driver.findElement(passwordInputLocator);
         password.click();
         password.clear();
         password.sendKeys(pass);
 
         System.out.println("Click 'Login' button");
-        resultLog += "Click 'Login' button\n";
         driver.findElement(loginButtonLocator).click();
 
-        Thread.sleep(1000);
-        try {
-            driver.findElement(msgBox);
-            System.out.println("Message box appears");
-            driver.findElement(msgBoxOkButton).click();
-            System.out.println("'User is logged' popup is confirmed");
-        } catch (NoSuchElementException e) {
-            System.out.println("Now User is logged");
-        }
+//        String title = driver.findElement(wrongCredentialsLocator).getText();
+//        if (Objects.equals(title, "Incorrect Userame or Password.")){
+//            System.out.println("Your credentials are not valid");
+//            validCredentials = false;
+////            tearDown(driver);
+//        } else {
+//            validCredentials = true;
+//            System.out.println("Your credentials are valid");
+//        }
+//
+//        if(validCredentials){
+            Thread.sleep(1000);
+            try {
+                driver.findElement(msgBox);
+                System.out.println("Message box appears");
+                driver.findElement(msgBoxOkButton).click();
+                System.out.println("'User is logged' popup is confirmed");
+            } catch (NoSuchElementException e) {
+                System.out.println("Now User is logged");
+            }
+//        }
+//        credentialsStatus = String.valueOf(validCredentials);
+
+
     }
 
     public void logOutUser() {

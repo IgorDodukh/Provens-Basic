@@ -93,6 +93,7 @@ public class AddCustomerPage extends BrowserSettings {
         phoneField.click();
         phoneField.sendKeys(customerPhone);
     }
+
     public void addBillingAddress(String billingFirstName, String billingLastName, String billingAddressLine1, String billingZip) {
         log("Add Billing Address");
         log("Select Billing Address tab");

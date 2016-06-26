@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 public class SetUpNewMerchant extends BrowserSettings {
     @Test
     public void setupNewMerchant(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
+
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

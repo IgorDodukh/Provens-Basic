@@ -4,6 +4,7 @@ package SmokeTests.UI;
  * Created by igor on 05.06.16.
  */
 
+import SmokeTests.Pages.LoginPage;
 import SmokeTests.Settings.BrowserSettings;
 import SmokeTests.Tests.Jira3006_MerchantWarehouseAndBinCreation;
 import SmokeTests.Tests.Jira3015_CreateProductAndBin;
@@ -36,6 +37,7 @@ public class SimpleGUI extends JFrame {
     Jira3675_AddNewCustomerWithCreditCard jira3675_AddNewCustomerWithCreditCard = new Jira3675_AddNewCustomerWithCreditCard();
     Jira3015_CreateProductAndBin jira3015_CreateProductAndBin = new Jira3015_CreateProductAndBin();
     Jira3006_MerchantWarehouseAndBinCreation jira3006_merchantWarehouseAndBinCreation = new Jira3006_MerchantWarehouseAndBinCreation();
+    LoginPage loginPage = new LoginPage(driver);
 
 //    Main window elements
     private JButton startButton = new JButton("Start Test");
@@ -44,7 +46,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel iconLabel = new JLabel("Build Version: 0.96");
+    private JLabel iconLabel = new JLabel("Build Version: 0.97");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -71,6 +73,9 @@ public class SimpleGUI extends JFrame {
     private String[] browsers = {" Mozilla Firefox", " Google Chrome"};
     private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product (in progress)", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
+
+    boolean exceptionStatus = false;
+//    boolean credentialsValid = false;
 
     public SimpleGUI() throws IOException {
         super("Secret app for our team :)");
@@ -316,11 +321,6 @@ public class SimpleGUI extends JFrame {
                         try {
                             if (browserComboBoxIndex == 0) {
                                 driverWarning += "Firefox";
-//                                ProfilesIni allProfiles = new ProfilesIni();
-//                                FirefoxProfile myProfile = allProfiles.getProfile("default");
-//                                myProfile.setAcceptUntrustedCertificates(true);
-//                                myProfile.setAssumeUntrustedCertificateIssuer(true);
-//                                driver = new FirefoxDriver(myProfile);
                                 driver = new FirefoxDriver();
 
                             } else if (browserComboBoxIndex == 1) {
@@ -329,7 +329,7 @@ public class SimpleGUI extends JFrame {
                                 driver = new ChromeDriver();
                             }
                         } catch (IllegalStateException e1) {
-
+                            exceptionStatus = true;
                             JOptionPane.showMessageDialog(null,
                                     driverWarning + " WebDriver was not found",
                                     "Failed",
@@ -340,15 +340,13 @@ public class SimpleGUI extends JFrame {
                         }
                         browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
-                        String logMessage = browserSettings.resultLog;
-
                         String exceptionMessage = "";
                         String resultMessage = "";
                         resultMessage += "Oh boy, you are lucky.\n" + "\n" + "Test has been finished.\nNew ";
                         try {
                             if (entityTypeComboBoxIndex == 0) {
                                 setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
-                                resultMessage += "Merchant\n " + loginValue + " \nhas been configured\n";
+                                resultMessage += "Merchant '" + loginValue + "' has been configured\n";
                             } else if (entityTypeComboBoxIndex == 1) {
                                 jira3675_AddNewCustomerWithCreditCard.jira3675(loginValue, password, driver);
                                 resultMessage += "Customer has been created\n" + "\n";
@@ -364,44 +362,57 @@ public class SimpleGUI extends JFrame {
                                 resultMessage += "\nBin name is: " + jira3006_merchantWarehouseAndBinCreation.newBinName;
                             }
                         } catch (Exception e1) {
+//                            credentialsValid = Boolean.getBoolean(loginPage.credentialsStatus);
+                            exceptionStatus = true;
+                            if (driver != null) {
+                                browserSettings.tearDown(driver);
+                            }
+                            startButton.setEnabled(true);
+                            waitingLabel.setVisible(false);
+                            waitingAnimation.setVisible(false);
+//          Exceptions handler
+
+//                            String exceptionName = e1.getClass().getSimpleName();
+//
+//                            if (exceptionName.equals("NoSuchWindowException")) {
+//                                exceptionMessage += "Browser has been closed.";
+//                            } else if (exceptionName.equals("NoSuchElementException")) {
+//                                exceptionMessage += "Desired element was not found on the web page.";
+//                            } else if (exceptionName.equals("TimeoutException")) {
+//                                exceptionMessage += "Timeout has expired.";
+//                            } else if (exceptionName.equals("WebDriverException")) {
+//                                exceptionMessage += "WebDriverException.";
+//                            } else if (exceptionName.equals("InvalidElementStateException")) {
+//                                exceptionMessage += "InvalidElementStateException.";
+//                            } else if (exceptionName.equals("NullPointerException")) {
+//                                exceptionMessage += "NullPointerException.";
+//                            } else
+                            if (exceptionStatus) {
+//                                if (credentialsValid) {
+//                                    JOptionPane.showMessageDialog(null,
+//                                            "Your credentials are not valid",
+//                                            "Failed",
+//                                            JOptionPane.PLAIN_MESSAGE, sad);
+//                                } else {
+                                    exceptionMessage += e1.getClass().getSimpleName();
+                                    JOptionPane.showMessageDialog(null,
+                                            "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage,
+                                            "Failed",
+                                            JOptionPane.PLAIN_MESSAGE, sad);
+//                                }
+                            }
+                        }
+
+                        if (!exceptionStatus) {
                             browserSettings.tearDown(driver);
                             startButton.setEnabled(true);
                             waitingLabel.setVisible(false);
                             waitingAnimation.setVisible(false);
-
-//          Exceptions handler
-
-                            /*String exceptionName = e1.getClass().getSimpleName();
-
-                            if (exceptionName.equals("NoSuchWindowException")) {
-                                exceptionMessage += "Browser has been closed.";
-                            } else if (exceptionName.equals("NoSuchElementException")) {
-                                exceptionMessage += "Desired element was not found on the web page.";
-                            } else if (exceptionName.equals("TimeoutException")) {
-                                exceptionMessage += "Timeout has expired.";
-                            } else if (exceptionName.equals("WebDriverException")) {
-                                exceptionMessage += "WebDriverException.";
-                            } else if (exceptionName.equals("InvalidElementStateException")) {
-                                exceptionMessage += "InvalidElementStateException.";
-                            } else if (exceptionName.equals("NullPointerException")) {
-                                exceptionMessage += "NullPointerException.";
-                            } else */
-                            exceptionMessage += e1.getClass().getSimpleName();
                             JOptionPane.showMessageDialog(null,
-                                    "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage/* + "  \n" + logMessage*/,
-                                    "Failed",
-                                    JOptionPane.PLAIN_MESSAGE, sad);
+                                    resultMessage,
+                                    "Complete",
+                                    JOptionPane.PLAIN_MESSAGE, success);
                         }
-
-                        browserSettings.tearDown(driver);
-                        startButton.setEnabled(true);
-                        waitingLabel.setVisible(false);
-                        waitingAnimation.setVisible(false);
-
-                        JOptionPane.showMessageDialog(null,
-                                resultMessage,
-                                "Complete",
-                                JOptionPane.PLAIN_MESSAGE, success);
                     } else if (mainConfirmationPopupOption == JOptionPane.CANCEL_OPTION || mainConfirmationPopupOption == JOptionPane.CLOSED_OPTION) {
                         startButton.setEnabled(true);
                         waitingLabel.setVisible(false);

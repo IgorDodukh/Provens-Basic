@@ -51,7 +51,7 @@ public class SettingsPage extends BrowserSettings {
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait2.until(ExpectedConditions.visibilityOfElementLocated(saveSettingsSuccessPopupLocator));
 
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
 
         log("Confirm success popup");
         System.out.println("Confirm success popup");

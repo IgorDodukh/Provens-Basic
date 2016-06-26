@@ -87,22 +87,19 @@ public class BrowserSettings {
 
     protected int timeoutVariable = 10;
 
-    public String resultLog = "";
+//    public boolean validCredentials = true;
 
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         System.out.println("Run WebDriver");
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
-        resultLog += "WebDriver is started\n";
     }
 
     @AfterTest
     public void tearDown(WebDriver driver) {
         System.out.println("Close WebDriver");
-        resultLog += "Close WebDriver\n";
         driver.close();
-//        driver.quit();
     }
 
     public static void log(String message) {

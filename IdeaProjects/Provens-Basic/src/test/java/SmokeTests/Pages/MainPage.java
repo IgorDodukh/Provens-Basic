@@ -111,11 +111,13 @@ public class MainPage extends BrowserSettings {
         wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
     }
 
-    public void openShippingMethodsPage() {
+    public void openShippingMethodsPage() throws InterruptedException {
         log("Open 'Shipping Methods' page");
         System.out.println("Open 'Shipping Methods' page");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(shippingMethodsButtonLocator).click();
+
+        Thread.sleep(2000);
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not loaded");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(addShippingMethodButtonLocator));
 
