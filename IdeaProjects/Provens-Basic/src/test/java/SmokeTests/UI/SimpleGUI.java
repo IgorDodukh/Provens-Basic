@@ -315,6 +315,7 @@ public class SimpleGUI extends JFrame {
                     };
                     authorizePopupOption = JOptionPane.showConfirmDialog(null, message, "Authorize.Net credentials", JOptionPane.OK_CANCEL_OPTION, 0, authorize);
 
+//  Authorize credentials fields validation
                     String transactionWarning = "It seems you forgot to fill ";
                     if (field1.getText().length() > 0){
                         browserSettings.authApiLoginId = field1.getText();
