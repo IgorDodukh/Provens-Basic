@@ -44,7 +44,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 0.97");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 0.98");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -56,6 +56,7 @@ public class SimpleGUI extends JFrame {
     final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
     final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
     final ImageIcon sad = new ImageIcon("C:\\appFiles\\pic\\sad.png");
+    final ImageIcon hmm = new ImageIcon("C:\\appFiles\\pic\\hmm.png");
     final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
 
     private JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
@@ -304,6 +305,7 @@ public class SimpleGUI extends JFrame {
                 JTextField field2 = new JTextField();
 
 //  Show "Authorize Credentials" popup
+                boolean transactionFailed = false;
                 if (entityTypeComboBoxIndex == 0) {
                     field1.setText(browserSettings.authApiLoginId);
                     field2.setText(browserSettings.authTransactionKey);
@@ -313,13 +315,37 @@ public class SimpleGUI extends JFrame {
                     };
                     authorizePopupOption = JOptionPane.showConfirmDialog(null, message, "Authorize.Net credentials", JOptionPane.OK_CANCEL_OPTION, 0, authorize);
 
-                    browserSettings.authApiLoginId = field1.getText();
-                    browserSettings.authTransactionKey = field2.getText();
+                    String transactionWarning = "It seems you forgot to fill ";
+                    if (field1.getText().length() > 0){
+                        browserSettings.authApiLoginId = field1.getText();
+                    } else {
+                        transactionFailed = true;
+                        System.out.println("'API Login ID' field is blank");
+                        transactionWarning += "'API Login ID'";
+                    }
+                    if (field2.getText().length() > 0){
+                        browserSettings.authTransactionKey = field2.getText();
+                    } else {
+                        if(transactionFailed){
+                            System.out.println("'Transaction Key' field is blank");
+                            transactionWarning += " and 'Transaction Key' fields.";
+                        } else {
+                            System.out.println("'Transaction Key' field is blank");
+                            transactionWarning += "'Transaction Key' field.";
+                            transactionFailed = true;
+                        }
+                    }
+                    if (transactionFailed){
+                        JOptionPane.showMessageDialog(null,
+                                transactionWarning + "\nOk, I'll give you another try.",
+                                "Warning",
+                                JOptionPane.PLAIN_MESSAGE, hmm);
+                    }
                     System.out.println(browserSettings.authApiLoginId + " " + browserSettings.authTransactionKey);
                 }
 
 //  Show "Lucky Confirmation" popup
-                if (authorizePopupOption == JOptionPane.OK_OPTION) {
+                if (authorizePopupOption == JOptionPane.OK_OPTION && !transactionFailed) {
                     String driverWarning = "";
                     String infoMessage = "";
                     infoMessage += "Test is starting now\n\n";
