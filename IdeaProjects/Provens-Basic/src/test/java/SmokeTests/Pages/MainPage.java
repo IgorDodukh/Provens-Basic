@@ -25,6 +25,10 @@ public class MainPage extends BrowserSettings {
     private By productsMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[2]");
     private By addProductMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/ProductCreate']");
 
+    private By suppliersMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/SearchSupplier']");
+    private By addSupplierButtonLocator = By.xpath("//button[@id='add_supplier']");
+    private By supplierAccountNumberFieldLocator = By.xpath("//input[@id='acct_no']");
+
     private By customersGridButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/ul/li[1]/a");
     private By customerInfoTabLocator = By.xpath("//h2[@tooltipid='Customer_CustomerInfo']");
 
@@ -52,20 +56,20 @@ public class MainPage extends BrowserSettings {
 
 
     public void openAddCustomerPage() {
-        log("Open 'Add customer' page");
+        totalResultMessage += "Open 'Add Customer' page\n";
         driver.findElement(customersMenuButtonLocator).click();
         driver.findElement(addCustomerMenuButtonLocator).click();
         Assert.assertEquals(driver.findElement(customerInfoTabLocator).isDisplayed(), true, "Customer creating page is not loaded");
     }
 
     public void openCustomersGrid () {
-        log("Open Customers grid");
+        totalResultMessage += "Open Customers grid\n";
         driver.findElement(customersMenuButtonLocator).click();
         driver.findElement(customersGridButtonLocator).click();
     }
 
     public void openAddWarehousePage () {
-        log("Open 'Add warehouse' page");
+        totalResultMessage += "Open 'Add Warehouse' page\n";
         driver.findElement(headerMenuLocator).click();
         driver.findElement(searchWarehouseButtonLocator).click();
         driver.findElement(addWarehouseButtonLocator).click();
@@ -73,6 +77,7 @@ public class MainPage extends BrowserSettings {
         }
 
     public void openAddProductPage() throws InterruptedException {
+        totalResultMessage += "Open 'Add Product' page\n";
         driver.findElement(productsMenuButtonLocator).click();
         driver.findElement(addProductMenuButtonLocator).click();
         Assert.assertEquals(driver.findElement(addPageBreadcrumpLocator).getText(), "Add", "Customer creating page is not loaded");
@@ -81,20 +86,19 @@ public class MainPage extends BrowserSettings {
     }
 
     public void openSetUpPage() {
-        log("Open 'Settings' page");
+        totalResultMessage += "Open 'Settings' page\n";
         driver.findElement(setupButtonLocator).click();
         driver.findElement(settingsButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Basic Settings' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(basicSettingTitleLocator));
         WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
-
         Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page title was not found");
         Assert.assertEquals(element2.isDisplayed(), true, "'Basic Settings' page was not loaded");
 
     }
 
     public void openThirdPartyConnectionsPage() {
-        log("Open 'Third Party Connections' page");
+        totalResultMessage += "Open 'Third Party Connections' page\n";
         driver.findElement(setupButtonLocator).click();
         driver.findElement(thirdPartyConnectionsButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party Connections' page popup was not found");
@@ -104,16 +108,14 @@ public class MainPage extends BrowserSettings {
     }
 
     public void openMainPage() {
-        log("Navigate to Main Page");
-        System.out.println("Navigate to Main Page");
+        totalResultMessage += "Navigate to Main Page\n";
         driver.findElement(siteLogoIconLocator).click();
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");
         wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
     }
 
     public void openShippingMethodsPage() throws InterruptedException {
-        log("Open 'Shipping Methods' page");
-        System.out.println("Open 'Shipping Methods' page");
+        totalResultMessage += "Open 'Shipping Methods' page\n";
         driver.findElement(setupButtonLocator).click();
         driver.findElement(shippingMethodsButtonLocator).click();
 
@@ -123,4 +125,18 @@ public class MainPage extends BrowserSettings {
 
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
     }
+
+    public void openSuppliersPage() {
+        totalResultMessage += "Open 'Suppliers' page\n";
+        driver.findElement(productsMenuButtonLocator).click();
+        driver.findElement(suppliersMenuButtonLocator).click();
+    }
+
+    public void openAddSupplierPage() {
+        totalResultMessage += "Open 'Add Supplier' page\n";
+        driver.findElement(addSupplierButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' page popup was not loaded");
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
+
+        Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");    }
 }

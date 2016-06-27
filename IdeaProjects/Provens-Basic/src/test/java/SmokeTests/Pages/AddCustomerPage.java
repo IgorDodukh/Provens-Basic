@@ -68,56 +68,55 @@ public class AddCustomerPage extends BrowserSettings {
 
 
     public void addCustomerInfo(String customerFirstName, String customerLastName, String customerEmail, String customerPhone) {
-        log("Add customer info");
-        log("Add First Name");
+        totalResultMessage += "Adding customer info:\n";
+        totalResultMessage += " - Add First Name\n";
         WebElement firstNameField = driver.findElement(firstNameFieldLocator);
         firstNameField.clear();
         firstNameField.sendKeys(customerFirstName);
 
-        log("Add Last Name");
+        totalResultMessage += " - Add Last Name\n";
         WebElement lastNameField = driver.findElement(lastNameFieldLocator);
         lastNameField.clear();
         lastNameField.sendKeys(customerLastName);
 
-        log("Add email");
+        totalResultMessage += " - Add email\n";
         WebElement emailField = driver.findElement(emailFieldLocator);
         emailField.clear();
         emailField.sendKeys(customerEmail);
 
-        log("Add phone");
+        totalResultMessage += " - Add phone\n";
         WebElement phoneField = driver.findElement(phoneFieldLocator);
         phoneField.clear();
         phoneField.sendKeys(customerPhone);
     }
 
     public void addBillingAddress(String billingFirstName, String billingLastName, String billingAddressLine1, String billingZip) {
-        log("Add Billing Address");
-        log("Select Billing Address tab");
+        totalResultMessage += "Adding Billing Address:\n";
+        totalResultMessage += " - Select Billing Address tab\n";
         driver.findElement(billingAddressTabLocator).click();
         String currentBillingAddressTitle = driver.findElement(billingAddressTitleLocator).getText();
         Assert.assertEquals(currentBillingAddressTitle, billingAddressTitle, "Unexpected Billing Address tab title");
 
-        log("Click 'Add Billing Address' button");
+        totalResultMessage += " - Click 'Add Billing Address' button\n";
         driver.findElement(getBillingAddressBtnLocator).click();
         Assert.assertEquals(driver.findElement(newBillingAddressSectionLocator).isDisplayed(), true, "Add new billing address form does not appear");
 
-        log("Add Billing Address info");
-        log("Add Billing Address First Name");
+        totalResultMessage += " - Add Billing Address First Name\n";
         WebElement billingFirstNameField = driver.findElement(billingAddressFirstNameLocator);
         billingFirstNameField.clear();
         billingFirstNameField.sendKeys(billingFirstName);
 
-        log("Add Billing Address Last Name");
+        totalResultMessage += " - Add Billing Address Last Name\n";
         WebElement billingLastNameField = driver.findElement(billingAddressLastNameLocator);
         billingLastNameField.clear();
         billingLastNameField.sendKeys(billingLastName);
 
-        log("Add Billing Address Address line 1");
+        totalResultMessage += " - Add Billing Address Address line 1\n";
         WebElement billingAddressLine1Field = driver.findElement(billingAddressAddr1Locator);
         billingAddressLine1Field.clear();
         billingAddressLine1Field.sendKeys(billingAddressLine1);
 
-        log("Add Billing Address Zip");
+        totalResultMessage += " - Add Billing Address Zip\n";
         WebElement billingZipField = driver.findElement(billingAddressZipLocator);
         billingZipField.clear();
         billingZipField.sendKeys(billingZip);
@@ -125,39 +124,40 @@ public class AddCustomerPage extends BrowserSettings {
     }
 
     public void addShippingAddress() {
-        log("Add Shipping Address");
-        log("Select Shipping Address tab");
+        totalResultMessage += "Adding Shipping Address:\n";
+        totalResultMessage += " - Select Shipping Address tab\n";
         driver.findElement(shippingAddressTabLocator).click();
         String currentShippingAddressTitle = driver.findElement(shippingAddressTitleLocator).getText();
         Assert.assertEquals(currentShippingAddressTitle, shippingAddressTitle, "Unexpected Shipping Address tab title");
 
-        log("Click 'Add Shipping Address' button");
+        totalResultMessage += " - Click 'Add Shipping Address' button\n";
         driver.findElement(getShippingAddressBtnLocator).click();
         Assert.assertEquals(driver.findElement(newShippingAddressSectionLocator).isDisplayed(), true, "Add new Shipping address form does not appear");
 
-        log("Add Shipping Address info. Same as Billing Address");
+        totalResultMessage += " - Add Shipping Address info. Same as Billing Address\n";
         driver.findElement(sameAsBillingButtonLocator).click();
     }
 
     public void addCreditCard(String testCardNumber) throws InterruptedException {
-        log("Add Credit Card");
-        log("Select Payment Methods tab");
+        totalResultMessage += "Adding Credit Card:\n";
+        totalResultMessage += " - Select Payment Methods tab\n";
         driver.findElement(paymentDetailsTabLocator).click();
         String currentPaymentMethodsTitle = driver.findElement(paymentDetailsTabTitleLocator).getText();
         Assert.assertEquals(currentPaymentMethodsTitle, paymentMethodsTitle, "Unexpected Payment Methods tab title");
 
-        log("Add Credit Card");
+        totalResultMessage += " - Click 'Add New Card' button\n";
         driver.findElement(addNewCardBtnLocator).click();
         Assert.assertEquals(driver.findElement(cardStackLocator).isDisplayed(), true, "New Card stack does not appear");
 
-        log("Add Card info");
+        totalResultMessage += " - Add Card info\n";
         WebElement cardNumberField = driver.findElement(cardNumberFieldLocator);
         cardNumberField.clear();
         cardNumberField.sendKeys(testCardNumber);
 
         driver.findElement(cardExpiredYearLocator).click();
-        driver.findElement(saveCardLinkLocator).click();
 
+        totalResultMessage += " - Click 'Save Card' button\n";
+        driver.findElement(saveCardLinkLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
         wait.until(ExpectedConditions.elementToBeClickable(editCardLinkLocator));
 
@@ -165,20 +165,21 @@ public class AddCustomerPage extends BrowserSettings {
     }
 
     public void saveNewCustomer() throws InterruptedException {
-        log("Save new Customer");
-        log("Click 'Save and Close' button");
+        totalResultMessage += "Saving new Customer:\n";
+        totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
+        totalResultMessage += " - Confirm success popup\n";
         String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
         Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
         driver.findElement(popupOkBtnLocator).click();
     }
 
     public void searchNewCustomerInTheGrid (String customerFirstName) throws InterruptedException {
-        log("Search new Customer in the grid");
+//        log("Search new Customer in the grid");
 /*        WebElement searchField = driver.findElement(filterCustomersFieldLocator);
         searchField.clear();
         searchField.click();

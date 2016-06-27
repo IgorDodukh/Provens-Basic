@@ -27,10 +27,7 @@ public class AddProductPage extends BrowserSettings{
 
     private By productPricingTabLocator = By.xpath("//li[@id='pricingTab']");
     private By productPricingTabTitleLocator = By.xpath("//*[@id='pricingModule']//h4/strong");
-//    private By productRetailPriceLocator = By.cssSelector("input[autotest-id='retail-price-value']");
-//    private By productRetailPriceLocator = By.id("retail-price");
-    private By productRetailPriceLocator = By.className("form-control text-right ng-pristine ng-untouched ng-valid");
-//    private By productRetailPriceLocator = By.xpath("//input");
+    private By productRetailPriceLocator = By.cssSelector("#retail-price");
 
     private By salesChannelsTabTitleLocator = By.xpath("//*[@id='subTitle']/h2");
     private By productSalesChannelsTabLocator = By.xpath("//li[@id='salesChannelsTab']");
@@ -55,82 +52,72 @@ public class AddProductPage extends BrowserSettings{
 
     private By productMessageBoxLocator = By.xpath("//*[@id='productMessageBox']");
     private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-    private By saveProductPopupMessage = By.xpath("(//div[@id='customerMessageBox']//*)[1]");
+    private By saveProductPopupMessage = By.xpath("(//div[@id='productMessageBox']//*)[1]");
     private By filterProductsFieldLocator = By.xpath("//*[@id='searchProductResult_filter']/label/input");
     private By productSkuInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[2]");
     private By productNameInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[3]");
     private By productRetailPriceInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[4]");
 
-
     public void addProductInfo(String sku, String name, String weight, String shortDescription) {
-        log("Add product info");
-        System.out.println("Add product info");
-        log("Add product SKU");
-        System.out.println("Add product SKU");
+        totalResultMessage += "Adding product info:\n";
+        totalResultMessage += " - Add product SKU\n";
         WebElement productSkuField = driver.findElement(productSkuFieldLocator);
         productSkuField.clear();
         productSkuField.sendKeys(sku);
 
-        log("Add product Name");
-        System.out.println("Add product Name");
+        totalResultMessage += " - Add product Name\n";
         WebElement productNameField = driver.findElement(productNameFieldLocator);
         productNameField.clear();
         productNameField.sendKeys(name);
 
-        log("Add product weight");
-        System.out.println("Add product weight");
+        totalResultMessage += " - Add product weight\n";
         WebElement productWeightField = driver.findElement(productWeightFieldLocator);
         productWeightField.clear();
         productWeightField.sendKeys(weight);
 
-        log("Add product Short Description");
-        System.out.println("Add product Short Description");
+        totalResultMessage += " - Add product Short Description\n";
         WebElement productShortDescriptionField = driver.findElement(productShortDescriptionLocator);
         productShortDescriptionField.clear();
         productShortDescriptionField.sendKeys(shortDescription);
     }
 
     public void addProductPrices(String retailPrice) {
-        log("Select 'Pricing' tab");
-        System.out.println("Select 'Pricing' tab");
+        totalResultMessage += "Adding product prices:\n";
+        totalResultMessage += " - Select 'Pricing' tab\n";
         driver.findElement(productPricingTabLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Retail Price' field was not found");
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(productRetailPriceLocator));
-
-        Assert.assertEquals(element.isDisplayed(), true, "'Retail Price' field is not displayed");
-
-        log("Add product Retail Price");
-        System.out.println("Add product Retail Price");
+        totalResultMessage += " - Add product Retail Price\n";
+        driver.switchTo().frame("pricingIframe");
         WebElement productRetailPriceField = driver.findElement(productRetailPriceLocator);
         productRetailPriceField.clear();
         productRetailPriceField.sendKeys(retailPrice);
+
+        driver.switchTo().defaultContent();
     }
 
     public void addProductSalesChannel(String channelName) {
-        log("Select 'Sales Channels' tab");
-        System.out.println("Select 'Sales Channels' tab");
+        totalResultMessage += "Adding Sales Channel:\n";
+        totalResultMessage += " - Select 'Sales Channels' tab\n";
         driver.findElement(productSalesChannelsTabLocator).click();
 
-        log("Add 'Call Center' sales channel");
-        System.out.println("Add 'Call Center' sales channel");
+        totalResultMessage += " - Type 'Call Center' name to the field\n";
         WebElement productChannelNameField = driver.findElement(salesChannelNameFieldLocator);
         productChannelNameField.clear();
         productChannelNameField.sendKeys(channelName);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Call Center' tooltip was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(salesChannelTooltipLocator));
-
         Assert.assertEquals(element.isDisplayed(), true, "'Call Center' tooltip is not displayed");
 
-        System.out.println("Click 'Call Center' tooltip");
+        totalResultMessage += " - Click 'Call Center' tooltip\n";
         driver.findElement(salesChannelTooltipLocator).click();
+        totalResultMessage += " - Click 'Plus' icon\n";
         driver.findElement(salesChannelAddButtonLocator).click();
     }
 
     public void addProductSupplier(String unitCost) throws InterruptedException {
-        log("Select 'Suppliers' tab");
-        System.out.println("Select 'Suppliers' tab");
+        totalResultMessage += "Adding Supplier:\n";
+        totalResultMessage += " - Select 'Suppliers' tab\n";
         driver.findElement(productSuppliersTabLocator).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Add Supplier tab was not loaded");
@@ -139,47 +126,41 @@ public class AddProductPage extends BrowserSettings{
 
         Thread.sleep(2000);
 
-        log("Add default Supplier");
-        System.out.println("Add default Supplier");
+        totalResultMessage += " - Click 'Add Supplier' button\n";
         driver.findElement(addSupplierButtonLocator).click();
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' popup was not found");
         WebElement element2 = wait2.until(ExpectedConditions.elementToBeClickable(selectSupplierCheckboxLocator));
-
         Assert.assertEquals(element2.isDisplayed(), true, "Popup for the 'Add Supplier' form is not displayed");
 
-        System.out.println("Add Supplier info");
+        totalResultMessage += " - Select Supplier from the list\n";
         driver.findElement(selectSupplierCheckboxLocator).click();
+        totalResultMessage += " - Add selected Supplier\n";
         driver.findElement(addSelectedSupplierButtonLocator).click();
         driver.findElement(selectAddedSupplierLocator).click();
+        totalResultMessage += " - Open Supplier in edit mode\n";
         driver.findElement(openAddedSupplierToEditButtonLocator).click();
         driver.findElement(warehouseTabLocator).click();
 
-        System.out.println("Add Supplier Unit Cost");
+        totalResultMessage += " - Add Supplier Unit Cost\n";
         WebElement supplierWHUnitCostField = driver.findElement(unitCostFieldLocator);
         supplierWHUnitCostField.clear();
         supplierWHUnitCostField.sendKeys(unitCost);
 
         driver.findElement(unitCostAddButtonLocator).click();
+        totalResultMessage += " - Save Supplier changes\n";
         driver.findElement(supplierSaveOkButton).click();
     }
 
     public void saveProduct() {
-        log("Save Product");
-        System.out.println("Save Product");
+        totalResultMessage += "Saving Product:\n";
+        totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseProductButtonLocator).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(productMessageBoxLocator));
 
-        log("Confirm popup message");
-        System.out.println("Confirm popup message");
-        String currentMessage = driver.findElement(productMessageBoxLocator).getText();
-        Assert.assertEquals(currentMessage, saveProductPopupMessage, "Unexpected popup message");
+        totalResultMessage += " - Confirm success popup\n";
         driver.findElement(popupOkBtnLocator).click();
-
-//        log("Check displayed page with the created WH name");
-//        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
-//        wait1.until(ExpectedConditions.elementToBeClickable(filterProductsFieldLocator));
     }
 }

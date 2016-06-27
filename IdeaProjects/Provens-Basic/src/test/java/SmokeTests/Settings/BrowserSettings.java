@@ -19,7 +19,7 @@ public class BrowserSettings {
 
     private GenerateRandomData generateRandomData = new GenerateRandomData();
 
-//    List of Environments
+    //    List of Environments
     private ArrayList<String> enviroment = new ArrayList<String>(
             Arrays.asList("https://qa01.freestylecommerce.info/web/",
                     "https://qa03.freestylecommerce.info/web/",
@@ -36,20 +36,22 @@ public class BrowserSettings {
 
 //    Billing Address data
     protected String billingAddressTitle = "Billing Address";
-    protected String addressFirstName = "TesterBillingFirstName_11";
-    protected String addressLastName = "TesterBillingLastName_11";
+    protected String addressFirstName = "TesterBillingFirstName";
+    protected String addressLastName = "TesterBillingLastName";
     protected String addressLine1 = "Tester Billing Address Line 11";
     protected String addressZip = "10113";
 
-//Shipping Address data
+//    Shipping Address data
     protected String shippingAddressTitle = "Shipping Address";
     protected String paymentMethodsTitle = "Payment Method";
+
+//    CreditCard info
     protected String visaTestCardNumber = "4005550000000019";
     protected String addCustomerPopupMessage = "The customer has been successfully created.";
     protected String saveSettingsPopupMessage = "Configuration has been saved successfully.";
 
 //    Warehouse data
-    public String warehouseName = "Test Warehouse4" + generateRandomData.generateRandomNumber(3);
+    public String warehouseName = "Test Warehouse_" + generateRandomData.generateRandomNumber(3);
     protected String warehouseContactName = "Test Warehouse Contact Name";
     protected String startPickupTime = "08:00";
     protected String endPickupTime = "21:00";
@@ -60,12 +62,19 @@ public class BrowserSettings {
 
 //    Product data
     protected String prodNum = generateRandomData.generateRandomNumber(4);
-    protected String productSku = "ProductSKU" + prodNum;
-    protected String productName = "ProductName" + prodNum;
+    public String productSku = "ProductSKU_" + prodNum;
+    protected String productName = "ProductName_" + prodNum;
     protected String productWeight = generateRandomData.generateRandomNumber(1);
-    protected String productDescription = productSku + "Description";
+    protected String productDescription = productSku + " Description";
     protected String productRetailPrice = generateRandomData.generateRandomNumber(3);
     protected String productSalesChannel = "Call Center";
+
+//    Supplier data
+    protected String supplierAccountNumber = generateRandomData.generateRandomNumber(5);
+    protected String supplierName = "MySupplier_" + supplierAccountNumber;
+    protected String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.aa";
+    protected String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
+    protected String supplierEmail = supplierName + "@dydacomp.biz";
 
 //    Authorize credentials
     public String authApiLoginId = "3y8Z2fk5Z3n";
@@ -82,16 +91,18 @@ public class BrowserSettings {
     protected String uspsPassPhrase = "EliManningHOF!1?";
 
 //    create UPS Ground shipping method
-    protected String upsGroundMethodName = "UPS Ground" + generateRandomData.generateRandomNumber(2);
+    protected String upsGroundMethodName = "UPS Ground_" + generateRandomData.generateRandomNumber(2);
     protected String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
     protected int timeoutVariable = 10;
 
-//    public boolean validCredentials = true;
+    //    public boolean validCredentials = true;
+    public static String totalResultMessage = "";
 
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         System.out.println("Run WebDriver");
+        totalResultMessage += "Run WebDriver\n";
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
     }
@@ -99,6 +110,7 @@ public class BrowserSettings {
     @AfterTest
     public void tearDown(WebDriver driver) {
         System.out.println("Close WebDriver");
+        totalResultMessage += "Close WebDriver";
         driver.close();
     }
 

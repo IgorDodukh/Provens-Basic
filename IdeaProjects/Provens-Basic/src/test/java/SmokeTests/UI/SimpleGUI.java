@@ -4,11 +4,9 @@ package SmokeTests.UI;
  * Created by igor on 05.06.16.
  */
 
+import SmokeTests.Pages.*;
 import SmokeTests.Settings.BrowserSettings;
-import SmokeTests.Tests.Jira3006_MerchantWarehouseAndBinCreation;
-import SmokeTests.Tests.Jira3015_CreateProductAndBin;
-import SmokeTests.Tests.Jira3675_AddNewCustomerWithCreditCard;
-import SmokeTests.Tests.SetUpNewMerchant;
+import SmokeTests.Tests.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -31,11 +29,21 @@ public class SimpleGUI extends JFrame {
     public WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
 
+//  Define objects of all classes
     SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
-    Jira3675_AddNewCustomerWithCreditCard jira3675_AddNewCustomerWithCreditCard = new Jira3675_AddNewCustomerWithCreditCard();
-    Jira3015_CreateProductAndBin jira3015_CreateProductAndBin = new Jira3015_CreateProductAndBin();
-    Jira3006_MerchantWarehouseAndBinCreation jira3006_merchantWarehouseAndBinCreation = new Jira3006_MerchantWarehouseAndBinCreation();
-//    LoginPage loginPage = new LoginPage(driver);
+    Jira3675_AddNewCustomer addNewCustomer = new Jira3675_AddNewCustomer();
+    Jira3015_AddProductAndBin addProductAndBin = new Jira3015_AddProductAndBin();
+    Jira3006_AddWarehouseAndBin addWarehouseAndBin = new Jira3006_AddWarehouseAndBin();
+    Jira3012_CreateSupplier createSupplier = new Jira3012_CreateSupplier();
+    LoginPage loginPage = new LoginPage(driver);
+    MainPage mainPage = new MainPage(driver);
+    SettingsPage settingsPage = new SettingsPage(driver);
+    AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+    AddProductPage addProductPage = new AddProductPage(driver);
+    AddWarehousePage addWarehousePage = new AddWarehousePage(driver);
+    ShippingMethodsPage shippingMethodsPage = new ShippingMethodsPage(driver);
+    ThirdPartyConnectionsPage thirdPartyConnectionsPage = new ThirdPartyConnectionsPage(driver);
+
 
 //  Main window elements
     private JButton startButton = new JButton("Start Test");
@@ -44,7 +52,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 0.99");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.00");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -70,10 +78,13 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
     private String[] browsers = {" Mozilla Firefox", " Google Chrome"};
-    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product (not ready)", " Add Warehouse & Bin"};
+    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Supplier", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
     boolean exceptionStatus = false;
+    public int browserComboBoxIndex;
+    public int environmentComboBoxIndex;
+    public int entityTypeComboBoxIndex;
 //    boolean credentialsValid = false;
 
 
@@ -271,9 +282,9 @@ public class SimpleGUI extends JFrame {
     private class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
-            int browserComboBoxIndex = browsersComboBox.getSelectedIndex();
-            int environmentComboBoxIndex = environmentsComboBox.getSelectedIndex();
-            int entityTypeComboBoxIndex = entityTypeComboBox.getSelectedIndex();
+            browserComboBoxIndex = browsersComboBox.getSelectedIndex();
+            environmentComboBoxIndex = environmentsComboBox.getSelectedIndex();
+            entityTypeComboBoxIndex = entityTypeComboBox.getSelectedIndex();
 
             String loginValue = loginField.getText();
             String password = String.valueOf(passwordField.getPassword());
@@ -393,51 +404,39 @@ public class SimpleGUI extends JFrame {
 //  Generate Result message
                             String exceptionMessage = "";
                             String resultMessage = "";
-                            resultMessage += "Oh boy, you are lucky.\n" + "\n" + "Test has been finished.\nNew ";
+                            resultMessage += "Oh boy, you are lucky.\n" + "Test has been finished.\nNew ";
                             try {
                                 if (entityTypeComboBoxIndex == 0) {
                                     setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
-                                    resultMessage += "Merchant '" + loginValue + "' has been configured\n";
+                                    resultMessage += "Merchant '" + loginValue + "' has been configured";
                                 } else if (entityTypeComboBoxIndex == 1) {
-                                    jira3675_AddNewCustomerWithCreditCard.jira3675(loginValue, password, driver);
+                                    addNewCustomer.jira3675(loginValue, password, driver);
                                     resultMessage += "Customer has been created\n" + "\n";
-                                    resultMessage += "Customer name is:\n" + jira3675_AddNewCustomerWithCreditCard.firstName + " " + jira3675_AddNewCustomerWithCreditCard.lastName;
+                                    resultMessage += "Customer name is:\n" + addNewCustomer.firstName + " " + addNewCustomer.lastName;
                                 } else if (entityTypeComboBoxIndex == 2) {
-                                    jira3015_CreateProductAndBin.jira3015(loginValue, password, driver);
+                                    addProductAndBin.jira3015(loginValue, password, driver);
                                     resultMessage += "Product has been created\n" + "\n";
-//                        resultMessage += "Product SKU is:" + jira3015_CreateProductAndBin.;
-                                } else if (entityTypeComboBoxIndex == 3) {
-                                    jira3006_merchantWarehouseAndBinCreation.jira3006(loginValue, password, driver);
+                                    resultMessage += "Product SKU is: " + addProductAndBin.productSku;
+                                } else if (entityTypeComboBoxIndex == 4) {
+                                    addWarehouseAndBin.jira3006(loginValue, password, driver);
                                     resultMessage += "Warehouse and Bin have been created\n" + "\n";
-                                    resultMessage += "Warehouse name is: " + jira3006_merchantWarehouseAndBinCreation.warehouseName;
-                                    resultMessage += "\nBin name is: " + jira3006_merchantWarehouseAndBinCreation.newBinName;
+                                    resultMessage += "Warehouse name is: " + addWarehouseAndBin.warehouseName;
+                                    resultMessage += "\nBin name is: " + addWarehouseAndBin.newBinName;
+                                } else if (entityTypeComboBoxIndex == 3) {
+                                    createSupplier.jira3012(loginValue, password, driver);
+                                    resultMessage += "Supplier has been created\n" + "\n";
+//                                    resultMessage += "Supplier name is: " + createSupplier.;
                                 }
                             } catch (Exception e1) {
 //                            credentialsValid = Boolean.getBoolean(loginPage.credentialsStatus);
 
 //  Generate Failed message
                                 exceptionStatus = true;
+                                browserSettings.tearDown(driver);
                                 startButton.setEnabled(true);
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
-//                                browserSettings.tearDown(driver);
 //  Exceptions handler
-
-//                            String exceptionName = e1.getClass().getSimpleName();
-//
-//                            if (exceptionName.equals("NoSuchWindowException")) {
-//                                exceptionMessage += "Browser has been closed.";
-//                            } else if (exceptionName.equals("NoSuchElementException")) {
-//                                exceptionMessage += "Desired element was not found on the web page.";
-//                            } else if (exceptionName.equals("TimeoutException")) {
-//                                exceptionMessage += "Timeout has expired.";
-//                            } else if (exceptionName.equals("WebDriverException")) {
-//                                exceptionMessage += "WebDriverException.";
-//                            } else if (exceptionName.equals("InvalidElementStateException")) {
-//                                exceptionMessage += "InvalidElementStateException.";
-//                            } else if (exceptionName.equals("NullPointerException")) {
-//                                exceptionMessage += "NullPointerException.";
-//                            } else
                                 if (exceptionStatus) {
 //                                if (credentialsValid) {
 //                                    JOptionPane.showMessageDialog(null,
@@ -445,10 +444,21 @@ public class SimpleGUI extends JFrame {
 //                                            "Failed",
 //                                            JOptionPane.PLAIN_MESSAGE, sad);
 //                                } else {
+                                    exceptionMessage += "You are not lucky enough today.\n";
+                                    exceptionMessage += "\n";
+                                    exceptionMessage += "Test has been stopped unexpectedly.\n";
+                                    exceptionMessage += "\n";
+                                    exceptionMessage += "Reason:\n";
                                     exceptionMessage += e1.getClass().getSimpleName();
-                                    browserSettings.tearDown(driver);
+//  Exception detailed message
+//                                    exceptionMessage += "\n" + "\n";
+//                                    exceptionMessage += e1.getCause();
+                                    exceptionMessage += "\n";
+                                    exceptionMessage += "\nExecution log:\n";
+                                    exceptionMessage += BrowserSettings.totalResultMessage;
+
                                     JOptionPane.showMessageDialog(null,
-                                            "You are not lucky enough today.\n" + "  \n" + "Test has been stopped unexpectedly.\n" + "  \n" + "Reason:\n" + exceptionMessage,
+                                            exceptionMessage,
                                             "Failed",
                                             JOptionPane.PLAIN_MESSAGE, sad);
 //                                }
@@ -462,7 +472,7 @@ public class SimpleGUI extends JFrame {
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
                                 JOptionPane.showMessageDialog(null,
-                                        resultMessage,
+                                        resultMessage + "\n" + browserSettings.totalResultMessage,
                                         "Complete",
                                         JOptionPane.PLAIN_MESSAGE, success);
                             }

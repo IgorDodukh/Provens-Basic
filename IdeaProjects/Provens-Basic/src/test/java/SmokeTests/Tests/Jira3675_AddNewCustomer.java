@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 /**
  * Created by igor on 17.04.16.
  */
-public class Jira3675_AddNewCustomerWithCreditCard extends BrowserSettings{
+public class Jira3675_AddNewCustomer extends BrowserSettings{
 
     @Test
     public void jira3675(String email, String merchantPassword, WebDriver driver) throws InterruptedException {

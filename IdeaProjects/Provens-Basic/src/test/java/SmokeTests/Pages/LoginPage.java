@@ -32,19 +32,18 @@ public class LoginPage extends BrowserSettings{
 
 
     public void loginMerchant(String email, String pass) throws InterruptedException {
-        log("Login Merchant user to FS");
-        System.out.println("Login Merchant user to FS");
-        System.out.println("Enter Login");
+        totalResultMessage += "Login user to FS:\n";
+        totalResultMessage += " - Enter Login\n";
         WebElement login = driver.findElement(emailInputLocator);
         login.clear();
         login.sendKeys(email);
 
-        System.out.println("Enter Password");
+        totalResultMessage += " - Enter Password\n";
         WebElement password = driver.findElement(passwordInputLocator);
         password.clear();
         password.sendKeys(pass);
 
-        System.out.println("Click 'Login' button");
+        totalResultMessage += " - Click 'Login' button\n";
         driver.findElement(loginButtonLocator).click();
 
 //        String title = driver.findElement(wrongCredentialsLocator).getText();
@@ -61,11 +60,12 @@ public class LoginPage extends BrowserSettings{
             Thread.sleep(1000);
             try {
                 driver.findElement(msgBox);
-                System.out.println("Message box appears");
+                totalResultMessage += "'This user is already logged in' message box appears\n";
                 driver.findElement(msgBoxOkButton).click();
-                System.out.println("'User is logged' popup is confirmed");
+                totalResultMessage += "'This user is already logged in' popup is confirmed\n";
             } catch (NoSuchElementException e) {
                 System.out.println("Now User is logged");
+                totalResultMessage += "Now User is logged\n";
             }
 //        }
 //        credentialsStatus = String.valueOf(validCredentials);

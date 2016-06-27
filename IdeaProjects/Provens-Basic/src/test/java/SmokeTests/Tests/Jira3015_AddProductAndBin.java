@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 /**
  * Created by igor on 21.04.16.
  */
-public class Jira3015_CreateProductAndBin extends BrowserSettings{
+public class Jira3015_AddProductAndBin extends BrowserSettings{
 
     @Test
     public void jira3015(String email, String merchantPassword, WebDriver driver) throws InterruptedException{
