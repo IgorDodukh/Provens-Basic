@@ -1,8 +1,6 @@
 package SmokeTests.Tests;
 
-import SmokeTests.Pages.AddProductPage;
-import SmokeTests.Pages.LoginPage;
-import SmokeTests.Pages.MainPage;
+import SmokeTests.Pages.*;
 import SmokeTests.Settings.BrowserSettings;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
@@ -27,6 +25,22 @@ public class Jira3015_AddProductAndBin extends BrowserSettings{
         addProductPage.addProductSalesChannel(productSalesChannel);
         addProductPage.addProductSupplier(productRetailPrice);
         addProductPage.saveProduct();
+
+//        mainPage.openMainPage();
+//        mainPage.openBinsPage();
+//
+//        BinsPage binsPage = new BinsPage(driver);
+//        binsPage.clickAddBinButton();
+//        binsPage.addBinInfo();
+//        binsPage.saveBin();
+
+        mainPage.openMainPage();
+        mainPage.openInventoryPage();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.openAddInventoryForm();
+        inventoryPage.addInventoryInfo();
+        inventoryPage.saveInventory();
     }
 
 }

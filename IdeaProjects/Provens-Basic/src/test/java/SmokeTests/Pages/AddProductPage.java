@@ -61,24 +61,16 @@ public class AddProductPage extends BrowserSettings{
     public void addProductInfo(String sku, String name, String weight, String shortDescription) {
         totalResultMessage += "Adding product info:\n";
         totalResultMessage += " - Add product SKU\n";
-        WebElement productSkuField = driver.findElement(productSkuFieldLocator);
-        productSkuField.clear();
-        productSkuField.sendKeys(sku);
+        driver.findElement(productSkuFieldLocator).sendKeys(sku);
 
         totalResultMessage += " - Add product Name\n";
-        WebElement productNameField = driver.findElement(productNameFieldLocator);
-        productNameField.clear();
-        productNameField.sendKeys(name);
+        driver.findElement(productNameFieldLocator).sendKeys(name);
 
         totalResultMessage += " - Add product weight\n";
-        WebElement productWeightField = driver.findElement(productWeightFieldLocator);
-        productWeightField.clear();
-        productWeightField.sendKeys(weight);
+        driver.findElement(productWeightFieldLocator).sendKeys(weight);
 
         totalResultMessage += " - Add product Short Description\n";
-        WebElement productShortDescriptionField = driver.findElement(productShortDescriptionLocator);
-        productShortDescriptionField.clear();
-        productShortDescriptionField.sendKeys(shortDescription);
+        driver.findElement(productShortDescriptionLocator).sendKeys(shortDescription);
     }
 
     public void addProductPrices(String retailPrice) {
@@ -88,9 +80,7 @@ public class AddProductPage extends BrowserSettings{
 
         totalResultMessage += " - Add product Retail Price\n";
         driver.switchTo().frame("pricingIframe");
-        WebElement productRetailPriceField = driver.findElement(productRetailPriceLocator);
-        productRetailPriceField.clear();
-        productRetailPriceField.sendKeys(retailPrice);
+        driver.findElement(productRetailPriceLocator).sendKeys(retailPrice);
 
         driver.switchTo().defaultContent();
     }
@@ -101,9 +91,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(productSalesChannelsTabLocator).click();
 
         totalResultMessage += " - Type 'Call Center' name to the field\n";
-        WebElement productChannelNameField = driver.findElement(salesChannelNameFieldLocator);
-        productChannelNameField.clear();
-        productChannelNameField.sendKeys(channelName);
+        driver.findElement(salesChannelNameFieldLocator).sendKeys(channelName);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Call Center' tooltip was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(salesChannelTooltipLocator));
@@ -121,13 +109,14 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(productSuppliersTabLocator).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Add Supplier tab was not loaded");
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(addSupplierButtonLocator));
-        Assert.assertEquals(element.isDisplayed(), true, "Add Supplier tab was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(addSupplierButtonLocator));
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         totalResultMessage += " - Click 'Add Supplier' button\n";
         driver.findElement(addSupplierButtonLocator).click();
+
+        Thread.sleep(2000);
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' popup was not found");
         WebElement element2 = wait2.until(ExpectedConditions.elementToBeClickable(selectSupplierCheckboxLocator));
@@ -143,9 +132,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(warehouseTabLocator).click();
 
         totalResultMessage += " - Add Supplier Unit Cost\n";
-        WebElement supplierWHUnitCostField = driver.findElement(unitCostFieldLocator);
-        supplierWHUnitCostField.clear();
-        supplierWHUnitCostField.sendKeys(unitCost);
+        driver.findElement(unitCostFieldLocator).sendKeys(unitCost);
 
         driver.findElement(unitCostAddButtonLocator).click();
         totalResultMessage += " - Save Supplier changes\n";

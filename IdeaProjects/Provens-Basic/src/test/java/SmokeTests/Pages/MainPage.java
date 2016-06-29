@@ -53,6 +53,12 @@ public class MainPage extends BrowserSettings {
 
     private By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
 
+    private By inventoryMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[4]");
+    private By binsButtonLocator = By.xpath("//a[@href='/web/Inventory/SearchWarehouseBin']");
+    private By productInventoryButtonLocator = By.xpath("//a[@href='/web/Inventory/ProductInventory']");
+    private By addBinButtonLocator = By.xpath("//button[@id='add_bin']");
+    private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
+
 
 
     public void openAddCustomerPage() {
@@ -139,4 +145,20 @@ public class MainPage extends BrowserSettings {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");    }
+
+    public void openBinsPage() {
+        totalResultMessage += "Open 'Bins' page\n";
+        driver.findElement(inventoryMenuButtonLocator).click();
+        driver.findElement(binsButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Bins' page popup was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(addBinButtonLocator));
+    }
+
+    public void openInventoryPage() {
+        totalResultMessage += "Open 'Product Inventory' page\n";
+        driver.findElement(inventoryMenuButtonLocator).click();
+        driver.findElement(productInventoryButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
+    }
 }

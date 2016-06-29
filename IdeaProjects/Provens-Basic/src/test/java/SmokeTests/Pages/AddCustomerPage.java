@@ -66,7 +66,6 @@ public class AddCustomerPage extends BrowserSettings {
     private By waitingPopupTextLocator = By.xpath("//*[@id='waitingPopup']//*[@id='waiting-popup-text']");
     private By numberOfCustomersLocator = By.xpath("//*[@id='searchCustomerResult']//tbody/tr");
 
-
     public void addCustomerInfo(String customerFirstName, String customerLastName, String customerEmail, String customerPhone) {
         totalResultMessage += "Adding customer info:\n";
         totalResultMessage += " - Add First Name\n";

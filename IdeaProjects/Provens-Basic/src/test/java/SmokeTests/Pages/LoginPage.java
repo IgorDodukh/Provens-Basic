@@ -28,6 +28,9 @@ public class LoginPage extends BrowserSettings{
     private By logOutButton = By.xpath("//a[@href='/web/Home/Logout']");
     private By wrongCredentialsLocator = By.xpath("//div[@id='LoginMessage']");
 
+    private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
+
+
 //    public String credentialsStatus = "";
 
 
@@ -60,16 +63,16 @@ public class LoginPage extends BrowserSettings{
             Thread.sleep(1000);
             try {
                 driver.findElement(msgBox);
-                totalResultMessage += "'This user is already logged in' message box appears\n";
+                totalResultMessage += "'This user is already logged in' popup appears\n";
                 driver.findElement(msgBoxOkButton).click();
                 totalResultMessage += "'This user is already logged in' popup is confirmed\n";
             } catch (NoSuchElementException e) {
-                System.out.println("Now User is logged");
-                totalResultMessage += "Now User is logged\n";
+                totalResultMessage += "User is logging now\n";
             }
 //        }
 //        credentialsStatus = String.valueOf(validCredentials);
-
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("User was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
 
     }
 

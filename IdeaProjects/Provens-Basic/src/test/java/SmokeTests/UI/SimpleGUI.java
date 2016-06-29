@@ -52,7 +52,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.08");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.10");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -77,7 +77,7 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> entityTypeComboBox = new JComboBox<>();
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
-    private String[] browsers = {" Mozilla Firefox", " Google Chrome"};
+    private String[] browsers = {" Google Chrome", " Mozilla Firefox"};
     private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Supplier", " Add Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
@@ -376,27 +376,35 @@ public class SimpleGUI extends JFrame {
                     mainConfirmationPopupOption = JOptionPane.showConfirmDialog(null, infoMessage, "Lucky Confirmation", JOptionPane.OK_CANCEL_OPTION, 0, icon);
 
                     final int finalMainConfirmationPopupOption = mainConfirmationPopupOption;
+                    final String[] driverExceptionMessage = {""};
                     Runnable runnable = () -> {
                         if (finalMainConfirmationPopupOption == JOptionPane.OK_OPTION) {
                             try {
                                 if (browserComboBoxIndex == 0) {
-                                    driverWarning[0] += "Firefox";
-                                    driver = new FirefoxDriver();
-
-                                } else if (browserComboBoxIndex == 1) {
                                     driverWarning[0] += "Chrome";
                                     System.setProperty("webdriver.chrome.driver", "C:\\appFiles\\drivers\\chromedriver.exe");
                                     driver = new ChromeDriver();
+
+                                } else if (browserComboBoxIndex == 1) {
+                                    driverWarning[0] += "Firefox";
+                                    driver = new FirefoxDriver();
                                 }
-                            } catch (IllegalStateException e1) {
+                            } catch (Exception e1) {
                                 exceptionStatus = true;
-                                JOptionPane.showMessageDialog(null,
-                                        driverWarning[0] + " WebDriver was not found",
-                                        "Failed",
-                                        JOptionPane.PLAIN_MESSAGE, sad);
                                 startButton.setEnabled(true);
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
+                                if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
+                                    driverExceptionMessage[0] += " session has been stopped unexpectedly.";
+                                } else if (!Objects.equals(e1.getClass().getSimpleName(), "IllegalStateException")){
+                                    driverExceptionMessage[0] += " WebDriver was not found";
+                                } else {
+                                    driverExceptionMessage[0] += " browser has been stopped unexpectedly.";
+                                }
+                                JOptionPane.showMessageDialog(null,
+                                        driverWarning[0] + driverExceptionMessage[0],
+                                        "Failed",
+                                        JOptionPane.PLAIN_MESSAGE, sad);
                             }
 //  Call "Browser Settings" class
                             browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
@@ -412,30 +420,35 @@ public class SimpleGUI extends JFrame {
                                 } else if (entityTypeComboBoxIndex == 1) {
                                     addNewCustomer.jira3675(loginValue, password, driver);
                                     resultMessage += "Customer has been created\n" + "\n";
-                                    resultMessage += "Customer name is:\n" + addNewCustomer.firstName + " " + addNewCustomer.lastName;
+                                    resultMessage += "Customer name is:\n" + BrowserSettings.firstName + " " + BrowserSettings.lastName;
                                 } else if (entityTypeComboBoxIndex == 2) {
                                     addProductAndBin.jira3015(loginValue, password, driver);
                                     resultMessage += "Product has been created\n" + "\n";
-                                    resultMessage += "Product SKU is: " + addProductAndBin.productSku;
+                                    resultMessage += "Product SKU is: " + BrowserSettings.productSku;
+                                    resultMessage += "\nProduct Bin name is: " + BrowserSettings.binName;
+                                    resultMessage += "\nProduct qty is: " + BrowserSettings.inventoryQty;
                                 } else if (entityTypeComboBoxIndex == 4) {
                                     addWarehouseAndBin.jira3006(loginValue, password, driver);
                                     resultMessage += "Warehouse and Bin have been created\n" + "\n";
-                                    resultMessage += "Warehouse name is: " + addWarehouseAndBin.warehouseName;
-                                    resultMessage += "\nBin name is: " + addWarehouseAndBin.newBinName;
+                                    resultMessage += "Warehouse name is: " + BrowserSettings.warehouseName;
+                                    resultMessage += "\nBin name is: " + BrowserSettings.newBinName;
                                 } else if (entityTypeComboBoxIndex == 3) {
                                     createSupplier.jira3012(loginValue, password, driver);
                                     resultMessage += "Supplier has been created\n" + "\n";
-//                                    resultMessage += "Supplier name is: " + createSupplier.;
+                                    resultMessage += "Supplier name is: " + BrowserSettings.supplierName;
                                 }
                             } catch (Exception e1) {
 //                            credentialsValid = Boolean.getBoolean(loginPage.credentialsStatus);
 
 //  Generate Failed message
                                 exceptionStatus = true;
-                                browserSettings.tearDown(driver);
                                 startButton.setEnabled(true);
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
+                                if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException")){
+                                    browserSettings.tearDown(driver);
+                                }
+
 //  Exceptions handler
                                 if (exceptionStatus) {
 //                                if (credentialsValid) {
@@ -452,7 +465,14 @@ public class SimpleGUI extends JFrame {
                                     exceptionMessage += e1.getClass().getSimpleName();
 //  Exception detailed message
 //                                    exceptionMessage += "\n" + "\n";
+//                                    exceptionMessage += "\nGetCause: ";
 //                                    exceptionMessage += e1.getCause();
+//                                    if (Objects.equals(e1.getClass().getSimpleName(), "WebDriverException")) {
+//                                        exceptionMessage += "\nInitCause: ";
+//                                        exceptionMessage += e1.initCause(new WebDriverException("web driver exception"));
+//
+//                                    }
+
                                     exceptionMessage += "\n";
                                     exceptionMessage += "\nExecution log:\n";
                                     exceptionMessage += BrowserSettings.totalResultMessage;
@@ -472,7 +492,7 @@ public class SimpleGUI extends JFrame {
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
                                 JOptionPane.showMessageDialog(null,
-                                        resultMessage + "\n" + browserSettings.totalResultMessage,
+                                        resultMessage,
                                         "Complete",
                                         JOptionPane.PLAIN_MESSAGE, success);
                             }

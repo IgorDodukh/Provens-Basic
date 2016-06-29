@@ -4,6 +4,9 @@ import SmokeTests.Settings.BrowserSettings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Ihor on 6/27/2016.
@@ -25,85 +28,79 @@ public class AddSupplierPage extends BrowserSettings {
     private By supplierEmailBCCFieldLocator = By.xpath("//input[@id='email_bcc']");
     private By supplierEmailCCFieldLocator = By.xpath("//input[@id='email_cc']");
 
-    private By contactFirstNameFieldLocator = By.xpath("//input[@id='zip']");
-    private By contactLastNameFieldLocator = By.xpath("//input[@id='zip']");
-    private By contactPhoneFieldLocator = By.xpath("//input[@id='zip']");
-    private By contactEmailFieldLocator = By.xpath("//input[@id='zip']");
-    private By contactJobTitleFieldLocator = By.xpath("//input[@id='zip']");
-    private By contactFaxFieldLocator = By.xpath("//input[@id='zip']");
+    private By contactFirstNameFieldLocator = By.xpath("//input[@id='first_name']");
+    private By contactLastNameFieldLocator = By.xpath("//input[@id='last_name']");
+    private By contactPhoneFieldLocator = By.xpath("//input[@id='phone']");
+    private By contactEmailFieldLocator = By.xpath("//input[@id='email']");
+    private By contactJobTitleFieldLocator = By.xpath("//input[@id='job_title']");
+    private By contactFaxFieldLocator = By.xpath("//input[@id='fax']");
+
+    private By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private By popupBoxMessageLocator = By.xpath("//div[@id='dydacomp_messagebox']");
+    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
 
-    public void addSupplierContactInfo(String accountNumber, String name, String url, String address1, String zip, String email, String first, String last) {
+    public void addSupplierContactInfo(String accountNumber, String name, String url, String address1, String zip, String email, String first, String last) throws InterruptedException {
         totalResultMessage += "Adding Supplier info:\n";
         totalResultMessage += " - Add Supplier Account Number\n";
-        WebElement accountNumberField = driver.findElement(supplierAccountNumberFieldLocator);
-        accountNumberField.clear();
-        accountNumberField.sendKeys(accountNumber);
+        driver.findElement(supplierAccountNumberFieldLocator).sendKeys(accountNumber);
 
         totalResultMessage += " - Add Supplier Name\n";
-        WebElement nameField = driver.findElement(supplierNameFieldLocator);
-        nameField.clear();
-        nameField.sendKeys(name);
+        driver.findElement(supplierNameFieldLocator).sendKeys(name);
 
         totalResultMessage += " - Add Supplier URL\n";
         WebElement urlField = driver.findElement(supplierURLFieldLocator);
-        urlField.clear();
+        urlField.click();
+        Thread.sleep(500);
         urlField.sendKeys(url);
 
         totalResultMessage += " - Add Supplier Address\n";
-        WebElement addressField = driver.findElement(supplierAddressFieldLocator);
-        addressField.clear();
-        addressField.sendKeys(address1);
+        driver.findElement(supplierAddressFieldLocator).sendKeys(address1);
 
         totalResultMessage += " - Add Supplier Zip code\n";
-        WebElement zipField = driver.findElement(supplierZipFieldLocator);
-        zipField.clear();
-        zipField.sendKeys(zip);
+        driver.findElement(supplierZipFieldLocator).sendKeys(zip);
 
         totalResultMessage += " - Add Supplier Email To\n";
         WebElement emailToField = driver.findElement(supplierEmailToFieldLocator);
         emailToField.click();
-        emailToField.clear();
         emailToField.sendKeys(email);
 
         totalResultMessage += " - Add Supplier Email BCC\n";
-        WebElement emailBccField = driver.findElement(supplierEmailBCCFieldLocator);
-        emailBccField.clear();
-        emailBccField.sendKeys(email);
+        driver.findElement(supplierEmailBCCFieldLocator).sendKeys(email);
 
         totalResultMessage += " - Add Supplier Email CC\n";
-        WebElement emailCcField = driver.findElement(supplierEmailCCFieldLocator);
-        emailCcField.clear();
-        emailCcField.sendKeys(email);
+        driver.findElement(supplierEmailCCFieldLocator).sendKeys(email);
 
         totalResultMessage += " - Add Contact First Name\n";
-        WebElement firstNameField = driver.findElement(contactFirstNameFieldLocator);
-        firstNameField.clear();
-        firstNameField.sendKeys(first);
+        driver.findElement(contactFirstNameFieldLocator).sendKeys(first);
 
         totalResultMessage += " - Add Contact Last Name\n";
-        WebElement lastNameField = driver.findElement(contactLastNameFieldLocator);
-        lastNameField.clear();
-        lastNameField.sendKeys(last);
+        driver.findElement(contactLastNameFieldLocator).sendKeys(last);
 
         totalResultMessage += " - Add Contact Job Title\n";
-        WebElement jobTitleField = driver.findElement(contactJobTitleFieldLocator);
-        jobTitleField.clear();
-        jobTitleField.sendKeys("QA");
+        driver.findElement(contactJobTitleFieldLocator).sendKeys("QA");
 
         totalResultMessage += " - Add Contact Phone\n";
-        WebElement phoneField = driver.findElement(contactPhoneFieldLocator);
-        phoneField.clear();
-        phoneField.sendKeys("8888888888");
+        driver.findElement(contactPhoneFieldLocator).sendKeys("8888888888");
 
         totalResultMessage += " - Add Contact Email\n";
-        WebElement emailField = driver.findElement(contactEmailFieldLocator);
-        emailField.clear();
-        emailField.sendKeys(email);
+        driver.findElement(contactEmailFieldLocator).sendKeys(email);
 
         totalResultMessage += " - Add Contact Fax\n";
-        WebElement faxField = driver.findElement(contactFaxFieldLocator);
-        faxField.clear();
-        faxField.sendKeys("4444444444");
+        driver.findElement(contactFaxFieldLocator).sendKeys("4444444444");
+    }
+
+    public void saveSupplier() throws InterruptedException {
+        totalResultMessage += "Saving new Supplier:\n";
+        totalResultMessage += " - Click 'Save and Close' button\n";
+        driver.findElement(saveAndCloseContextualButtonLocator).click();
+
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
+
+        totalResultMessage += " - Confirm success popup\n";
+//        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
+//        Assert.assertEquals(currentPopupMessage, saveSupplierPopupMessage, "Unexpected popup message");
+        driver.findElement(popupOkBtnLocator).click();
     }
 }

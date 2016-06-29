@@ -23,6 +23,6 @@ public class Jira3012_CreateSupplier extends BrowserSettings {
 
         AddSupplierPage addSupplierPage = new AddSupplierPage(driver);
         addSupplierPage.addSupplierContactInfo(supplierAccountNumber, supplierName, supplierURL, supplierAddress, addressZip, supplierEmail, firstName, lastName);
-
+        addSupplierPage.saveSupplier();
     }
 }
