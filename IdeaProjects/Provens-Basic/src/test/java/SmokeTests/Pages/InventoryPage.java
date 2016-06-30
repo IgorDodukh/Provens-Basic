@@ -9,8 +9,6 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.util.Objects;
-
 /**
  * Created by Ihor on 6/29/2016.
  */
@@ -22,20 +20,22 @@ public class InventoryPage extends BrowserSettings {
     }
 
     private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
-    private By firstProductLocator = By.xpath("//tr[1]");
+    private By firstProductLocator = By.xpath("//tr[1]/td[3]");
     private By firstProductSKULocator = By.xpath("//tr[1]/td[2]");
     private By firstProductAddButtonLocator = By.xpath("//tr[1]//button[@id='create_Inventory']");
 
     private By lotNumberFieldLocator = By.xpath("//input[@id='txtLotNum']");
     private By unitCostFieldLocator = By.xpath("//input[@id='txtUnitCost']");
     private By binDropdownLocator = By.xpath("//select[@id='bin_1']");
-    private By binDropdownFirstExistingLocator = By.xpath("//select[@id='bin_1']//option[1]");
+    private By binDropdownAddNewBinButtonLocator = By.xpath("//select[@id='bin_1']//option[2]");
+//    private By binDropdownFirstExistingLocator = By.xpath("//select[@id='bin_1']//option[1]");
 
     private By addBinNameFieldLocator = By.xpath("//input[@id='txtBinName']");
     private By addBinPickBinDropdownLocator = By.xpath("//select[@id='selectBinType']/option[2]");
     private By addBinPriorityFieldLocator = By.xpath("//input[@id='binPriority']");
     private By addBinLowLevelFieldLocator = By.xpath("//input[@id='productInfo_LowLevel']");
     private By addBinQuantityFieldLocator = By.xpath("//input[@id='quantity_1']");
+    private By addBinQuantityValueLocator = By.xpath("//form/div[6]/*");
     private By addBinNotesFieldLocator = By.xpath("//textarea[@id='txtComment']");
 
     private By saveBinButtonLocator = By.xpath("//input[@id='save_BinAddClone']");
@@ -49,11 +49,14 @@ public class InventoryPage extends BrowserSettings {
 
     public void openAddInventoryForm() {
         totalResultMessage += "Search created Product\n";
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
+
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(productSku);
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(Keys.ENTER);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Product search didn't finished");
-        wait.until(ExpectedConditions.elementToBeClickable(firstProductSKULocator));
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Product search didn't finished");
+        wait2.until(ExpectedConditions.elementToBeClickable(firstProductSKULocator));
 
         Assert.assertEquals(driver.findElement(firstProductSKULocator).getText(), productSku, "Found Product has not expected SKU");
 
@@ -62,23 +65,20 @@ public class InventoryPage extends BrowserSettings {
 
         totalResultMessage += "Click 'Add' button\n";
         driver.findElement(firstProductAddButtonLocator).click();
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Inventory adding form was not loaded");
-        wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
+        final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("Inventory adding form was not loaded");
+        wait3.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
     }
 
-    public void addInventoryInfo() {
+    public void addInventoryInfo() throws InterruptedException {
         totalResultMessage += "Adding Inventory info:\n";
         totalResultMessage += " - Add Lot number\n";
-        driver.findElement(productInventoryFilterByFieldLocator).sendKeys(inventoryLotNumber);
+        driver.findElement(lotNumberFieldLocator).sendKeys(inventoryLotNumber);
 
         totalResultMessage += " - Add unit cost\n";
         driver.findElement(unitCostFieldLocator).sendKeys(inventoryUnitCost);
 
-        totalResultMessage += " - Is Bin exist\n";
-        if(Objects.equals(driver.findElement(binDropdownFirstExistingLocator).getText(), "+ Add New Bin")){
-            totalResultMessage += " - Bin doesn't exist\n";
-            driver.findElement(binDropdownLocator).click();
-            driver.findElement(binDropdownFirstExistingLocator).click();
+            totalResultMessage += " - Open 'Add Bin' form\n";
+            driver.findElement(binDropdownAddNewBinButtonLocator).click();
             final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
             wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
 
@@ -92,21 +92,24 @@ public class InventoryPage extends BrowserSettings {
             totalResultMessage += " - Add Bin priority\n";
             driver.findElement(addBinPriorityFieldLocator).sendKeys(binPriority);
 
-            totalResultMessage += " - Add Bin low level\n";
-            driver.findElement(addBinLowLevelFieldLocator).sendKeys("0");
+//            totalResultMessage += " - Add Bin low level\n";
+//            driver.findElement(addBinLowLevelFieldLocator).sendKeys("0");
 
             totalResultMessage += " - Save Bin\n";
             driver.findElement(saveBinButtonLocator).click();
             final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
             wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
 
-        } else {
-            totalResultMessage += " - Bin does exist\n";
-            driver.findElement(binDropdownFirstExistingLocator).click();
-        }
-
         totalResultMessage += " - Add qty value\n";
+        driver.findElement(addBinQuantityFieldLocator).click();
+        driver.findElement(addBinQuantityFieldLocator).clear();
         driver.findElement(addBinQuantityFieldLocator).sendKeys(inventoryQty);
+        Thread.sleep(2000);
+        driver.findElement(addBinNotesFieldLocator).click();
+
+        Thread.sleep(2000);
+        String qtyValue = driver.findElement(addBinQuantityValueLocator).getText();
+        Assert.assertEquals(qtyValue + ".00", inventoryQty, "Incorrect qty value is displayed");
 
         totalResultMessage += " - Add Notes\n";
         driver.findElement(addBinNotesFieldLocator).sendKeys(inventoryNotes);

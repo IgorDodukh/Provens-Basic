@@ -52,6 +52,15 @@ public class AddProductPage extends BrowserSettings{
 
     private By productMessageBoxLocator = By.xpath("//*[@id='productMessageBox']");
     private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
+
+    private By inventoryMenuItemLocator = By.xpath("//nav/ul/li[4]");
+    private By productInventoryMenuItemLocator = By.xpath("//nav/ul/li[4]/ul/li[4]");
+    private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
+    private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
+
+
+
+
     private By saveProductPopupMessage = By.xpath("(//div[@id='productMessageBox']//*)[1]");
     private By filterProductsFieldLocator = By.xpath("//*[@id='searchProductResult_filter']/label/input");
     private By productSkuInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[2]");
@@ -136,10 +145,11 @@ public class AddProductPage extends BrowserSettings{
 
         driver.findElement(unitCostAddButtonLocator).click();
         totalResultMessage += " - Save Supplier changes\n";
+        Thread.sleep(500);
         driver.findElement(supplierSaveOkButton).click();
     }
 
-    public void saveProduct() {
+    public void saveProduct() throws InterruptedException {
         totalResultMessage += "Saving Product:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseProductButtonLocator).click();
@@ -149,5 +159,14 @@ public class AddProductPage extends BrowserSettings{
 
         totalResultMessage += " - Confirm success popup\n";
         driver.findElement(popupOkBtnLocator).click();
+    }
+
+    public void openInventoryPage() throws InterruptedException {
+        totalResultMessage += "Open 'Product Inventory' page\n";
+        Thread.sleep(2000);
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Product grid was not opened");
+        wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
+        driver.findElement(inventoryMenuItemLocator).click();
+
     }
 }

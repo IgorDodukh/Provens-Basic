@@ -25,6 +25,7 @@ public class Jira3015_AddProductAndBin extends BrowserSettings{
         addProductPage.addProductSalesChannel(productSalesChannel);
         addProductPage.addProductSupplier(productRetailPrice);
         addProductPage.saveProduct();
+        addProductPage.openInventoryPage();
 
 //        mainPage.openMainPage();
 //        mainPage.openBinsPage();
@@ -34,8 +35,8 @@ public class Jira3015_AddProductAndBin extends BrowserSettings{
 //        binsPage.addBinInfo();
 //        binsPage.saveBin();
 
-        mainPage.openMainPage();
-        mainPage.openInventoryPage();
+        //mainPage.openMainPage();
+
 
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.openAddInventoryForm();

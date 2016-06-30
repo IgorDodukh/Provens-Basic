@@ -321,8 +321,8 @@ public class SimpleGUI extends JFrame {
 //  Show "Authorize Credentials" popup
                 boolean transactionFailed = false;
                 if (entityTypeComboBoxIndex == 0) {
-                    field1.setText(browserSettings.authApiLoginId);
-                    field2.setText(browserSettings.authTransactionKey);
+                    field1.setText(BrowserSettings.authApiLoginId);
+                    field2.setText(BrowserSettings.authTransactionKey);
                     Object[] message = {
                             "API Login ID:", field1,
                             "Transaction Key:                    ", field2,
@@ -332,13 +332,13 @@ public class SimpleGUI extends JFrame {
 //  Authorize credentials fields validation
                     String transactionWarning = "It seems you forgot to fill ";
                     if (field1.getText().length() > 0){
-                        browserSettings.authApiLoginId = field1.getText();
+                        BrowserSettings.authApiLoginId = field1.getText();
                     } else {
                         transactionFailed = true;
                         transactionWarning += "'API Login ID'";
                     }
                     if (field2.getText().length() > 0){
-                        browserSettings.authTransactionKey = field2.getText();
+                        BrowserSettings.authTransactionKey = field2.getText();
                         transactionWarning += " field.";
                     } else {
                         if(transactionFailed){
@@ -356,7 +356,6 @@ public class SimpleGUI extends JFrame {
                                     JOptionPane.PLAIN_MESSAGE, hmm);
                         }
                     }
-//                    System.out.println(browserSettings.authApiLoginId + " " + browserSettings.authTransactionKey);
                 }
 
 //  Show "Lucky Confirmation" popup
@@ -409,7 +408,7 @@ public class SimpleGUI extends JFrame {
 //  Call "Browser Settings" class
                             browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
-//  Generate Result message
+//  Select test + Generate Result message
                             String exceptionMessage = "";
                             String resultMessage = "";
                             resultMessage += "Oh boy, you are lucky.\n" + "Test has been finished.\nNew ";
@@ -464,7 +463,7 @@ public class SimpleGUI extends JFrame {
                                     exceptionMessage += "Reason:\n";
                                     exceptionMessage += e1.getClass().getSimpleName();
 //  Exception detailed message
-//                                    exceptionMessage += "\n" + "\n";
+//                                    exceptionMessage += "\n";
 //                                    exceptionMessage += "\nGetCause: ";
 //                                    exceptionMessage += e1.getCause();
 //                                    if (Objects.equals(e1.getClass().getSimpleName(), "WebDriverException")) {

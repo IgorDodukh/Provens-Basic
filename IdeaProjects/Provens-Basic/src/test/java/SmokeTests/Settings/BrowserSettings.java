@@ -85,7 +85,7 @@ public class BrowserSettings {
     public static String inventoryLotNumber = generateRandomData.generateRandomNumber(5);
     public static String inventoryUnitCost = generateRandomData.generateRandomNumber(2);
     public static String inventoryQty = generateRandomData.generateRandomNumber(6);
-    public static String inventoryNotes = "My Notes" + generateRandomData.generateRandomString(10);
+    public static String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
 
     //    Authorize credentials
     public static String authApiLoginId = "3y8Z2fk5Z3n";
