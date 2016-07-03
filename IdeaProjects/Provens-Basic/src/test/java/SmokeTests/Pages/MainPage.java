@@ -46,7 +46,7 @@ public class MainPage extends BrowserSettings {
     private By shippingMethodsButtonLocator = By.xpath("//a[@href='/web/Configuration/ShippingMethods']");
     private By basicSettingTitleLocator = By.xpath("//section[@id='basicSettingTabpage']/div[1]");
     private By authorizeNetTitleLocator = By.xpath("//section[@id='paymentGateTabpage']/div[1]");
-    private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
+    private By siteLogoIconLocator = By.xpath("//img[@src='/web/Content/Images/nextgen_logo-white.png']");
 
     private By shippingMethodsPageTitleLocator = By.xpath("//button[@id='btnShippingMethods']");
     private By addShippingMethodButtonLocator = By.xpath("//button[@id='add_shippingMethod']");
@@ -113,7 +113,7 @@ public class MainPage extends BrowserSettings {
         Assert.assertEquals(element.isDisplayed(), true, "'Third Party Connections' page title was not found");
     }
 
-    public void openMainPage() {
+    public void openMainPage() throws InterruptedException {
         totalResultMessage += "Navigate to Main Page\n";
         driver.findElement(siteLogoIconLocator).click();
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");

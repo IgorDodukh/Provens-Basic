@@ -13,7 +13,7 @@ import org.testng.Assert;
  * Created by Ihor on 6/29/2016.
  */
 public class InventoryPage extends BrowserSettings {
-    private WebDriver driver;
+    public WebDriver driver;
 
     public InventoryPage(WebDriver driver) {
         this.driver = driver;
@@ -97,19 +97,21 @@ public class InventoryPage extends BrowserSettings {
 
             totalResultMessage += " - Save Bin\n";
             driver.findElement(saveBinButtonLocator).click();
+        Thread.sleep(2000);
             final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
             wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
 
         totalResultMessage += " - Add qty value\n";
         driver.findElement(addBinQuantityFieldLocator).click();
-        driver.findElement(addBinQuantityFieldLocator).clear();
+        Thread.sleep(5000);
+//        driver.findElement(addBinQuantityFieldLocator).clear();
         driver.findElement(addBinQuantityFieldLocator).sendKeys(inventoryQty);
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         driver.findElement(addBinNotesFieldLocator).click();
 
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         String qtyValue = driver.findElement(addBinQuantityValueLocator).getText();
-        Assert.assertEquals(qtyValue + ".00", inventoryQty, "Incorrect qty value is displayed");
+        Assert.assertEquals(qtyValue, inventoryQty + ".00", "Incorrect qty value is displayed");
 
         totalResultMessage += " - Add Notes\n";
         driver.findElement(addBinNotesFieldLocator).sendKeys(inventoryNotes);

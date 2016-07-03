@@ -72,7 +72,7 @@ public class BrowserSettings {
 
 //    Supplier data
     public static String supplierAccountNumber = generateRandomData.generateRandomNumber(5);
-    public static String supplierName = "MySupplier " + supplierAccountNumber;
+    public static String supplierName = "MySupplier_" + supplierAccountNumber;
     public static String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.blabla";
     public static String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
     public static String supplierEmail = supplierName + "@dydacomp.biz";
@@ -102,7 +102,7 @@ public class BrowserSettings {
     public static String uspsPassPhrase = "EliManningHOF!1?";
 
 //    create UPS Ground shipping method
-    public static String upsGroundMethodName = "UPS Ground_" + generateRandomData.generateRandomNumber(2);
+    public static String upsGroundMethodName = "UPS Ground-" + generateRandomData.generateRandomNumber(2);
     public static String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
     public static int timeoutVariable = 10;

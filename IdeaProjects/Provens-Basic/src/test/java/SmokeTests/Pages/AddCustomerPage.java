@@ -69,56 +69,38 @@ public class AddCustomerPage extends BrowserSettings {
     public void addCustomerInfo(String customerFirstName, String customerLastName, String customerEmail, String customerPhone) {
         totalResultMessage += "Adding customer info:\n";
         totalResultMessage += " - Add First Name\n";
-        WebElement firstNameField = driver.findElement(firstNameFieldLocator);
-        firstNameField.clear();
-        firstNameField.sendKeys(customerFirstName);
+        driver.findElement(firstNameFieldLocator).sendKeys(customerFirstName);
 
         totalResultMessage += " - Add Last Name\n";
-        WebElement lastNameField = driver.findElement(lastNameFieldLocator);
-        lastNameField.clear();
-        lastNameField.sendKeys(customerLastName);
+        driver.findElement(lastNameFieldLocator).sendKeys(customerLastName);
 
         totalResultMessage += " - Add email\n";
-        WebElement emailField = driver.findElement(emailFieldLocator);
-        emailField.clear();
-        emailField.sendKeys(customerEmail);
+        driver.findElement(emailFieldLocator).sendKeys(customerEmail);
 
         totalResultMessage += " - Add phone\n";
-        WebElement phoneField = driver.findElement(phoneFieldLocator);
-        phoneField.clear();
-        phoneField.sendKeys(customerPhone);
+        driver.findElement(phoneFieldLocator).sendKeys(customerPhone);
     }
 
     public void addBillingAddress(String billingFirstName, String billingLastName, String billingAddressLine1, String billingZip) {
         totalResultMessage += "Adding Billing Address:\n";
         totalResultMessage += " - Select Billing Address tab\n";
         driver.findElement(billingAddressTabLocator).click();
-        String currentBillingAddressTitle = driver.findElement(billingAddressTitleLocator).getText();
-        Assert.assertEquals(currentBillingAddressTitle, billingAddressTitle, "Unexpected Billing Address tab title");
 
         totalResultMessage += " - Click 'Add Billing Address' button\n";
         driver.findElement(getBillingAddressBtnLocator).click();
         Assert.assertEquals(driver.findElement(newBillingAddressSectionLocator).isDisplayed(), true, "Add new billing address form does not appear");
 
         totalResultMessage += " - Add Billing Address First Name\n";
-        WebElement billingFirstNameField = driver.findElement(billingAddressFirstNameLocator);
-        billingFirstNameField.clear();
-        billingFirstNameField.sendKeys(billingFirstName);
+        driver.findElement(billingAddressFirstNameLocator).sendKeys(billingFirstName);
 
         totalResultMessage += " - Add Billing Address Last Name\n";
-        WebElement billingLastNameField = driver.findElement(billingAddressLastNameLocator);
-        billingLastNameField.clear();
-        billingLastNameField.sendKeys(billingLastName);
+        driver.findElement(billingAddressLastNameLocator).sendKeys(billingLastName);
 
         totalResultMessage += " - Add Billing Address Address line 1\n";
-        WebElement billingAddressLine1Field = driver.findElement(billingAddressAddr1Locator);
-        billingAddressLine1Field.clear();
-        billingAddressLine1Field.sendKeys(billingAddressLine1);
+        driver.findElement(billingAddressAddr1Locator).sendKeys(billingAddressLine1);
 
         totalResultMessage += " - Add Billing Address Zip\n";
-        WebElement billingZipField = driver.findElement(billingAddressZipLocator);
-        billingZipField.clear();
-        billingZipField.sendKeys(billingZip);
+        driver.findElement(billingAddressZipLocator).sendKeys(billingZip);
         driver.findElement(billingAddressAddr1Locator).click();
     }
 

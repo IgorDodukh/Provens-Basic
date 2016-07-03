@@ -33,8 +33,7 @@ public class ShippingMethodsPage extends BrowserSettings {
 
 
     public void openShippingMethodCreatingForm() {
-        log("Open 'Add Shipping Method' form");
-        System.out.println("Open 'Add Shipping Method' form");
+        totalResultMessage += "Open 'Add Shipping Method' form\n";
         driver.findElement(addShippingMethodButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Shipping Method Creating Form was not opened");
         wait.until(ExpectedConditions.visibilityOfElementLocated(addShippingMethodTitleLocator));
@@ -42,16 +41,14 @@ public class ShippingMethodsPage extends BrowserSettings {
         Assert.assertEquals(currentTitle, "Shipping Method Information", "Unexpected page title for Shipping Method Creating Form");
     }
 
-    public void createUPSGroundShippingMethod(String methodName, String shippingCharge) {
-        log("Add 'UPS Ground' method");
-        System.out.println("Add 'UPS Ground' method");
-        log("Set 'UPS Ground' method name");
-        System.out.println("Set 'UPS Ground' method name");
+    public void createUPSGroundShippingMethod(String methodName, String shippingCharge) throws InterruptedException {
+        totalResultMessage += "Adding 'UPS Ground' method:\n";
+        totalResultMessage += " - Set 'UPS Ground' method name\n";
         WebElement shippingMethodNameField = driver.findElement(shippingMethodNameFieldLocator);
         shippingMethodNameField.clear();
         shippingMethodNameField.sendKeys(methodName);
 
-        System.out.println("Set Shipping Method parameters");
+        totalResultMessage += "Set Shipping Method parameters\n";
         driver.findElement(upsMethodDropdownLocator).click();
         driver.findElement(upsTypeGroundDropdownLocator).click();
         driver.findElement(favoriteShippingMethodSetYesLocator).click();
@@ -60,17 +57,16 @@ public class ShippingMethodsPage extends BrowserSettings {
         shippingChargeField.clear();
         shippingChargeField.sendKeys(shippingCharge);
 
-        log("Save 'UPS' method");
-        System.out.println("Save 'UPS' method");
+        totalResultMessage += "Save 'UPS' method\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.elementToBeClickable(confirmPopupButtonLocator));
 
-        log("Confirm success popup");
-        System.out.println("Confirm success popup");
+        totalResultMessage += "Confirm success popup\n";
+        Thread.sleep(1000);
 //        String currentPopupMessage = driver.findElement(saveSettingsSuccessPopupLocator).getText();
 //        Assert.assertEquals(currentPopupMessage, "Create ShippingMethod successfully!", "Unexpected popup message");
-//        driver.findElement(confirmPopupButtonLocator).click();
+        driver.findElement(confirmPopupButtonLocator).click();
 //
 //        log("Check displaying Shipping Methods grid after saving changes");
 //        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");

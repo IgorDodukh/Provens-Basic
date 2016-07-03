@@ -46,48 +46,35 @@ public class AddWarehousePage extends BrowserSettings {
 
 
     public void addWarehouseInfo(String warehouseName, String contactName, String phone, String startTime, String endTime, String addressLine1, String zip) {
-        log("Add Warehouse info");
-        log("Add Warehouse Name");
-        WebElement warehouseNameField = driver.findElement(warehouseNameFieldLocator);
-        warehouseNameField.clear();
-        warehouseNameField.sendKeys(warehouseName);
+        totalResultMessage += "Adding Warehouse info:\n";
+        totalResultMessage +=" - Add Warehouse Name\n";
+        driver.findElement(warehouseNameFieldLocator).sendKeys(warehouseName);
 
-        log("Add contact name");
-        WebElement contactNameField = driver.findElement(warehouseContactNameFieldLocator);
-        contactNameField.clear();
-        contactNameField.sendKeys(contactName);
+        totalResultMessage += " - Add contact name\n";
+        driver.findElement(warehouseContactNameFieldLocator).sendKeys(contactName);
 
-        log("Add phone number");
-        WebElement phoneField = driver.findElement(warehousePhoneFieldLocator);
-        phoneField.clear();
-        phoneField.sendKeys(phone);
+        totalResultMessage += " - Add phone number\n";
+        driver.findElement(warehousePhoneFieldLocator).sendKeys(phone);
 
-        log("Add Earliest Pickup Time");
-        WebElement startTimeField = driver.findElement(pickingReadyTimeFieldLocator);
-        startTimeField.clear();
-        startTimeField.sendKeys(startTime);
+        totalResultMessage += " - Add Earliest Pickup Time\n";
+        driver.findElement(pickingReadyTimeFieldLocator).sendKeys(startTime);
 
-        log("Add Latest Pickup Time");
-        WebElement endTimeField = driver.findElement(pickingCutoffTimeFieldLocator);
-        endTimeField.clear();
-        endTimeField.sendKeys(endTime);
+        totalResultMessage += " - Add Latest Pickup Time\n";
+        driver.findElement(pickingCutoffTimeFieldLocator).sendKeys(endTime);
 
-        log("Add address line");
-        WebElement addressLineField = driver.findElement(addressFieldLocator);
-        addressLineField.clear();
-        addressLineField.sendKeys(addressLine1);
+        totalResultMessage += " - Add address line\n";
+        driver.findElement(addressFieldLocator).sendKeys(addressLine1);
 
-        log("Add zip code");
-        WebElement zipField = driver.findElement(zipFieldLocator);
-        zipField.clear();
-        zipField.sendKeys(zip);
+        totalResultMessage += " - Add zip code\n";
+        driver.findElement(zipFieldLocator).sendKeys(zip);
         driver.findElement(warehouseInfoTitleLocator).click();
     }
 
     public void addWarehouseBin (String name) throws InterruptedException {
-        log("Select Bins tab");
+        totalResultMessage += "Select Bins tab\n";
+        totalResultMessage += "Adding Bin:\n";
         driver.findElement(binsTabLocator).click();
-        log("Open 'Add Bin' popup");
+        totalResultMessage += " - Open 'Add Bin' popup\n";
         driver.findElement(addWarehouseBinButtonLocator).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Bin' popup was not found");
@@ -95,33 +82,31 @@ public class AddWarehousePage extends BrowserSettings {
 
         Assert.assertEquals(element.isDisplayed(), true, "Popup for the 'Add Bin' form is not displayed");
 
-        log("Put Bin name");
-        WebElement binName = driver.findElement(newBinNameLocator);
-        binName.clear();
-        binName.sendKeys(name);
+        totalResultMessage += " - Enter Bin name\n";
+        driver.findElement(newBinNameLocator).sendKeys(name);
 
-        log("Select Bin type");
+        totalResultMessage += " - Select Bin type\n";
         driver.findElement(pickBinTypeLocator).click();
 
-        log("Save new Bin");
+        totalResultMessage += "Save new Bin\n";
         driver.findElement(saveNewBinBtnLocator).click();
         Assert.assertEquals(driver.findElement(newBinNameInBinsGridLocator).getText(), newBinName, "Unexpected new created bin's name");
     }
 
     public void saveWarehouse() throws InterruptedException {
-        log("Save Warehouse");
+        totalResultMessage += "Save Warehouse\n";
         driver.findElement(saveContextualButton).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-        log("Confirm popup message");
+        totalResultMessage += "Confirm popup message\n";
         String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
         Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
         driver.findElement(popupOkBtnLocator).click();
 
-        log("Check displayed page with the created WH name");
-        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
-        wait1.until(ExpectedConditions.elementToBeClickable(binsTabLocator));
+//        log("Check displayed page with the created WH name");
+//        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
+//        wait1.until(ExpectedConditions.elementToBeClickable(binsTabLocator));
     }
 }

@@ -13,7 +13,7 @@ import org.testng.Assert;
  * Created by igor on 21.04.16.
  */
 public class AddProductPage extends BrowserSettings{
-    private WebDriver driver;
+    public WebDriver driver;
 
     public AddProductPage(WebDriver driver) {
         this.driver = driver;

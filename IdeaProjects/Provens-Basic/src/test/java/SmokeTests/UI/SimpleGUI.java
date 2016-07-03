@@ -52,14 +52,14 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.10");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.10 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
 
 //  Graphical resources
     final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
-    final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\8-512.png"));
+    final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\high-performance-200x160.png"));
     final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
     final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
     final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
@@ -78,7 +78,7 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
     private String[] browsers = {" Google Chrome", " Mozilla Firefox"};
-    private String[] entityTypes = {" Configure Merchant", " Add Customer", " Add Product", " Add Supplier", " Add Warehouse & Bin"};
+    private String[] entityTypes = {" Configure Merchant", " Create Customer", " Create Product", " Create Supplier", " Create Warehouse & Bin"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
     boolean exceptionStatus = false;
@@ -327,7 +327,13 @@ public class SimpleGUI extends JFrame {
                             "API Login ID:", field1,
                             "Transaction Key:                    ", field2,
                     };
-                    authorizePopupOption = JOptionPane.showConfirmDialog(null, message, "Authorize.Net credentials", JOptionPane.OK_CANCEL_OPTION, 0, authorize);
+                    authorizePopupOption = JOptionPane.showConfirmDialog(
+                            null,
+                            message,
+                            "Authorize.Net credentials",
+                            JOptionPane.OK_CANCEL_OPTION,
+                            0,
+                            authorize);
 
 //  Authorize credentials fields validation
                     String transactionWarning = "It seems you forgot to fill ";
@@ -444,7 +450,7 @@ public class SimpleGUI extends JFrame {
                                 startButton.setEnabled(true);
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
-                                if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException")){
+                                if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException")) {
                                     browserSettings.tearDown(driver);
                                 }
 
@@ -456,6 +462,15 @@ public class SimpleGUI extends JFrame {
 //                                            "Failed",
 //                                            JOptionPane.PLAIN_MESSAGE, sad);
 //                                } else {
+                                    JTextArea ta = new JTextArea();
+                                    JScrollPane scrolltxt = new JScrollPane(ta,
+                                            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                                    ta.setBounds(5, 5, 100, 200);
+                                    scrolltxt = new JScrollPane(ta);
+                                    scrolltxt.setBounds(1, 1, 200, 200);
+                                    scrolltxt.createVerticalScrollBar();
+
                                     exceptionMessage += "You are not lucky enough today.\n";
                                     exceptionMessage += "\n";
                                     exceptionMessage += "Test has been stopped unexpectedly.\n";
@@ -473,13 +488,30 @@ public class SimpleGUI extends JFrame {
 //                                    }
 
                                     exceptionMessage += "\n";
-                                    exceptionMessage += "\nExecution log:\n";
-                                    exceptionMessage += BrowserSettings.totalResultMessage;
+                                    exceptionMessage += "\n";
+//                                    exceptionMessage += "\nExecution log:\n";
+//                                    exceptionMessage += BrowserSettings.totalResultMessage;
 
-                                    JOptionPane.showMessageDialog(null,
+                                    ta.setText(BrowserSettings.totalResultMessage);
+                                    Object[] exceptionLog = {
                                             exceptionMessage,
+                                            "Execution log:\n", scrolltxt,
+                                    };
+
+                                    JOptionPane.showConfirmDialog(
+                                            null,
+                                            exceptionLog,
                                             "Failed",
-                                            JOptionPane.PLAIN_MESSAGE, sad);
+                                            JOptionPane.DEFAULT_OPTION,
+                                            0,
+                                            sad);
+                                    BrowserSettings.totalResultMessage = "";
+
+
+//                                    JOptionPane.showMessageDialog(null,
+//                                            exceptionMessage + exceptionLog,
+//                                            "Failed",
+//                                            JOptionPane.PLAIN_MESSAGE, sad);
 //                                }
                                 }
                             }
