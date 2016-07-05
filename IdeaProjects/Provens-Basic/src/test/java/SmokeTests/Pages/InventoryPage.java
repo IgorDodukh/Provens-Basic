@@ -98,18 +98,16 @@ public class InventoryPage extends BrowserSettings {
             totalResultMessage += " - Save Bin\n";
             driver.findElement(saveBinButtonLocator).click();
         Thread.sleep(2000);
-            final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
-            wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
+        wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
 
         totalResultMessage += " - Add qty value\n";
         driver.findElement(addBinQuantityFieldLocator).click();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 //        driver.findElement(addBinQuantityFieldLocator).clear();
         driver.findElement(addBinQuantityFieldLocator).sendKeys(inventoryQty);
-        Thread.sleep(5000);
         driver.findElement(addBinNotesFieldLocator).click();
 
-        Thread.sleep(5000);
         String qtyValue = driver.findElement(addBinQuantityValueLocator).getText();
         Assert.assertEquals(qtyValue, inventoryQty + ".00", "Incorrect qty value is displayed");
 

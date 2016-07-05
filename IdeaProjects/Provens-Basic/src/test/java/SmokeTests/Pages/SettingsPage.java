@@ -33,8 +33,8 @@ public class SettingsPage extends BrowserSettings {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page was not loaded");
 
-        totalResultMessage += "Open 'Order Processing' tab locator\n";
-        Thread.sleep(2000);
+        totalResultMessage += "Open 'Order Processing' tab\n";
+        Thread.sleep(1000);
         driver.findElement(orderProcessingTabLocator).click();
 
         totalResultMessage += "Set 'Always Ship Ahead, no setting changes allowed' setting\n";
@@ -47,13 +47,12 @@ public class SettingsPage extends BrowserSettings {
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
-        wait2.until(ExpectedConditions.visibilityOfElementLocated(saveSettingsSuccessPopupLocator));
+        wait2.until(ExpectedConditions.elementToBeClickable(confirmPopupButtonLocator));
 
         totalResultMessage += "Confirm success popup\n";
         String currentPopupMessage = driver.findElement(saveSettingsSuccessPopupLocator).getText();
         Assert.assertEquals(currentPopupMessage, saveSettingsPopupMessage, "Unexpected popup message");
         driver.findElement(confirmPopupButtonLocator).click();
-
-        Thread.sleep(2000);
+        Thread.sleep(1000);
     }
 }

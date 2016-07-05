@@ -13,6 +13,11 @@ public class GenerateRandomData {
     public String generateRandomNumber(int length){
         return RandomStringUtils.randomNumeric(length);
     }
+    public String generateRandomNumberAllovedDigits(int length, String allowdSplChrs){
+        String allowedChars= "123456789" +   //numbers
+                allowdSplChrs;
+        return RandomStringUtils.random(length, allowedChars);
+    }
 
     public String generateRandomAlphaNumeric(int length){
         return RandomStringUtils.randomAlphanumeric(length);

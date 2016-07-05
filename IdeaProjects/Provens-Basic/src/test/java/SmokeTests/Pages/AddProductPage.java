@@ -141,6 +141,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(warehouseTabLocator).click();
 
         totalResultMessage += " - Add Supplier Unit Cost\n";
+        Thread.sleep(500);
         driver.findElement(unitCostFieldLocator).sendKeys(unitCost);
 
         driver.findElement(unitCostAddButtonLocator).click();

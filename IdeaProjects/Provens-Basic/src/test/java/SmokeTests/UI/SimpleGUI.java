@@ -52,7 +52,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.10 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.12 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -463,13 +463,8 @@ public class SimpleGUI extends JFrame {
 //                                            JOptionPane.PLAIN_MESSAGE, sad);
 //                                } else {
                                     JTextArea ta = new JTextArea();
-                                    JScrollPane scrolltxt = new JScrollPane(ta,
-                                            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                                    ta.setBounds(5, 5, 100, 200);
+                                    JScrollPane scrolltxt = new JScrollPane(ta);
                                     scrolltxt = new JScrollPane(ta);
-                                    scrolltxt.setBounds(1, 1, 200, 200);
-                                    scrolltxt.createVerticalScrollBar();
 
                                     exceptionMessage += "You are not lucky enough today.\n";
                                     exceptionMessage += "\n";
@@ -480,12 +475,13 @@ public class SimpleGUI extends JFrame {
 //  Exception detailed message
 //                                    exceptionMessage += "\n";
 //                                    exceptionMessage += "\nGetCause: ";
-//                                    exceptionMessage += e1.getCause();
-//                                    if (Objects.equals(e1.getClass().getSimpleName(), "WebDriverException")) {
-//                                        exceptionMessage += "\nInitCause: ";
-//                                        exceptionMessage += e1.initCause(new WebDriverException("web driver exception"));
-//
-//                                    }
+//                                    exceptionMessage += e1.getMessage();
+//                                    exceptionMessage += "\n";
+////                                    if (Objects.equals(e1.getClass().getSimpleName(), "WebDriverException")) {
+////                                        exceptionMessage += "\nInitCause: ";
+////                                        exceptionMessage += e1.initCause(new WebDriverException("web driver exception"));
+////
+////                                    }
 
                                     exceptionMessage += "\n";
                                     exceptionMessage += "\n";

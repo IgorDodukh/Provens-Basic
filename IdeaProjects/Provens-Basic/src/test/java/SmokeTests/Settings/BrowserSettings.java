@@ -1,5 +1,6 @@
 package SmokeTests.Settings;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 import org.testng.annotations.AfterTest;
@@ -52,7 +53,7 @@ public class BrowserSettings {
     public static String saveSettingsPopupMessage = "Configuration has been saved successfully.";
 
 //    Warehouse data
-    public static String warehouseName = "Test Warehouse_" + generateRandomData.generateRandomNumber(3);
+    public static String warehouseName = "Test Warehouse_" + generateRandomData.generateRandomNumber(5);
     public static String warehouseContactName = "Test Warehouse Contact Name";
     public static String startPickupTime = "08:00";
     public static String endPickupTime = "21:00";
@@ -84,7 +85,7 @@ public class BrowserSettings {
     //    Inventory Data
     public static String inventoryLotNumber = generateRandomData.generateRandomNumber(5);
     public static String inventoryUnitCost = generateRandomData.generateRandomNumber(2);
-    public static String inventoryQty = generateRandomData.generateRandomNumber(6);
+    public static String inventoryQty = generateRandomData.generateRandomNumberAllovedDigits(6, "");
     public static String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
 
     //    Authorize credentials
@@ -114,6 +115,7 @@ public class BrowserSettings {
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         System.out.println("Run WebDriver");
         totalResultMessage += "Run WebDriver\n";
+        driver.manage().window().setSize(new Dimension(1366, 900));
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
     }
