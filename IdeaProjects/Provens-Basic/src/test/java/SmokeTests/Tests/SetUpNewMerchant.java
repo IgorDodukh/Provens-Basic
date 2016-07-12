@@ -21,9 +21,6 @@ public class SetUpNewMerchant extends BrowserSettings {
         SettingsPage settingsPage = new SettingsPage(driver);
         settingsPage.setShipaheadSetting();
 
-//        mainPage.openMainPage();
-//        mainPage.openThirdPartyConnectionsPage();
-
         ThirdPartyConnectionsPage thirdPartyConnectionsPage = new ThirdPartyConnectionsPage(driver);
         thirdPartyConnectionsPage.openThirdPartyPage();
         thirdPartyConnectionsPage.configureAuthorizeAccount(authApiLoginId, authTransactionKey);

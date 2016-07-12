@@ -52,6 +52,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
 
     public void openThirdPartyPage() throws InterruptedException {
+        totalResultMessage += "Open Third Party Connections page\n";
         driver.findElement(setUpButtonLocator).click();
         driver.findElement(thirdPartyButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party' page was not loaded");

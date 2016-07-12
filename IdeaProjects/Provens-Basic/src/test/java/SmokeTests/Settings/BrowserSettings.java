@@ -48,6 +48,9 @@ public class BrowserSettings {
 
 //    CreditCard info
     public static String visaTestCardNumber = "4005550000000019";
+    public static String masterCardTestCardNumber = "5424180279791765";
+    public static String discoverTestCardNumber = "6011000993010978";
+    public static String americanExpressTestCardNumber = "372700997251009";
     public static String addCustomerPopupMessage = "The customer has been successfully created.";
     public static String saveSupplierPopupMessage = "Supplier was created successfully.\n";
     public static String saveSettingsPopupMessage = "Configuration has been saved successfully.";
@@ -105,6 +108,8 @@ public class BrowserSettings {
 //    create UPS Ground shipping method
     public static String upsGroundMethodName = "UPS Ground-" + generateRandomData.generateRandomNumber(2);
     public static String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
+
+    public static String orderedCustomerNumber = "";
 
     public static int timeoutVariable = 10;
 

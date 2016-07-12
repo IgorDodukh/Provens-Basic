@@ -59,6 +59,9 @@ public class MainPage extends BrowserSettings {
     private By addBinButtonLocator = By.xpath("//button[@id='add_bin']");
     private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
 
+    private By ordersMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[3]");
+    private By viewAllOrdersMenuButtonLocator = By.xpath("//li/a[@href='/web/Order/SearchOrderAdvance']");
+    private By allOrdersTabButtonLocator = By.xpath("//section[@id='tabsSection']/button[6]");
 
 
     public void openAddCustomerPage() {
@@ -144,7 +147,8 @@ public class MainPage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' page popup was not loaded");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
 
-        Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");    }
+        Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
+    }
 
     public void openBinsPage() {
         totalResultMessage += "Open 'Bins' page\n";
@@ -160,5 +164,19 @@ public class MainPage extends BrowserSettings {
         driver.findElement(productInventoryButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
+    }
+
+    public void openOrdersGrid() throws InterruptedException {
+        totalResultMessage += "Open 'Orders' grid\n";
+        driver.findElement(ordersMenuButtonLocator).click();
+        driver.findElement(viewAllOrdersMenuButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Orders' grid was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
+
+        totalResultMessage += "Select 'All' tab\n";
+        Thread.sleep(2000);
+        driver.findElement(allOrdersTabButtonLocator).click();
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'All Orders' grid was not loaded");
+        wait2.until(ExpectedConditions.elementToBeClickable(allOrdersTabButtonLocator));
     }
 }

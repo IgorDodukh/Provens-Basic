@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 /**
  * Created by igor on 21.04.16.
  */
-public class Jira3015_AddProductAndBin extends BrowserSettings{
+public class AddProductAndBin extends BrowserSettings{
 
     @Test
     public void jira3015(String email, String merchantPassword, WebDriver driver) throws InterruptedException{
@@ -26,17 +26,6 @@ public class Jira3015_AddProductAndBin extends BrowserSettings{
         addProductPage.addProductSupplier(productRetailPrice);
         addProductPage.saveProduct();
         addProductPage.openInventoryPage();
-
-//        mainPage.openMainPage();
-//        mainPage.openBinsPage();
-//
-//        BinsPage binsPage = new BinsPage(driver);
-//        binsPage.clickAddBinButton();
-//        binsPage.addBinInfo();
-//        binsPage.saveBin();
-
-        //mainPage.openMainPage();
-
 
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.openAddInventoryForm();

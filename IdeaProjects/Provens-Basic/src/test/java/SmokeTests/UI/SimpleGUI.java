@@ -4,7 +4,6 @@ package SmokeTests.UI;
  * Created by igor on 05.06.16.
  */
 
-import SmokeTests.Pages.*;
 import SmokeTests.Settings.BrowserSettings;
 import SmokeTests.Tests.*;
 import org.openqa.selenium.WebDriver;
@@ -31,19 +30,11 @@ public class SimpleGUI extends JFrame {
 
 //  Define objects of all classes
     SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
-    Jira3675_AddNewCustomer addNewCustomer = new Jira3675_AddNewCustomer();
-    Jira3015_AddProductAndBin addProductAndBin = new Jira3015_AddProductAndBin();
-    Jira3006_AddWarehouseAndBin addWarehouseAndBin = new Jira3006_AddWarehouseAndBin();
-    Jira3012_CreateSupplier createSupplier = new Jira3012_CreateSupplier();
-    LoginPage loginPage = new LoginPage(driver);
-    MainPage mainPage = new MainPage(driver);
-    SettingsPage settingsPage = new SettingsPage(driver);
-    AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
-    AddProductPage addProductPage = new AddProductPage(driver);
-    AddWarehousePage addWarehousePage = new AddWarehousePage(driver);
-    ShippingMethodsPage shippingMethodsPage = new ShippingMethodsPage(driver);
-    ThirdPartyConnectionsPage thirdPartyConnectionsPage = new ThirdPartyConnectionsPage(driver);
-
+    AddNewCustomer addNewCustomer = new AddNewCustomer();
+    AddProductAndBin addProductAndBin = new AddProductAndBin();
+    AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
+    CreateSupplier createSupplier = new CreateSupplier();
+    MakeReorder makeReorder = new MakeReorder();
 
 //  Main window elements
     private JButton startButton = new JButton("Start Test");
@@ -52,7 +43,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.12 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.15 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -67,9 +58,18 @@ public class SimpleGUI extends JFrame {
     final ImageIcon hmm = new ImageIcon("C:\\appFiles\\pic\\hmm.png");
     final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
 
+    final ImageIcon visaLogo = new ImageIcon("C:\\appFiles\\pic\\visa.png");
+    final ImageIcon masterCardLogo = new ImageIcon("C:\\appFiles\\pic\\mastercard.png");
+    final ImageIcon discoverLogo = new ImageIcon("C:\\appFiles\\pic\\discover.png");
+    final ImageIcon americanExpressLogo = new ImageIcon("C:\\appFiles\\pic\\American-Express.png");
+    final ImageIcon jcbLogo = new ImageIcon("C:\\appFiles\\pic\\JCB.png");
+    final ImageIcon ccLogo = new ImageIcon("C:\\appFiles\\pic\\credit-card-logo.png");
+
     private JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
     private JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
     private JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
+
+    private String testCardNumber = "";
 
     Dimension d = new Dimension(200,30);
 
@@ -78,7 +78,7 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
     private String[] browsers = {" Google Chrome", " Mozilla Firefox"};
-    private String[] entityTypes = {" Configure Merchant", " Create Customer", " Create Product", " Create Supplier", " Create Warehouse & Bin"};
+    private String[] entityTypes = {" Configure Merchant", " Create Customer", " Create Product", " Create Supplier", " Create Warehouse & Bin", " Reorder the last Order"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
     boolean exceptionStatus = false;
@@ -317,6 +317,11 @@ public class SimpleGUI extends JFrame {
                 int mainConfirmationPopupOption = 0;
                 JTextField field1 = new JTextField();
                 JTextField field2 = new JTextField();
+//                JRadioButtonMenuItem visaButton = new JRadioButtonMenuItem();
+//                JRadioButtonMenuItem masterCardButton = new JRadioButtonMenuItem();
+//                JRadioButtonMenuItem discoverButton = new JRadioButtonMenuItem();
+//                JRadioButtonMenuItem americanExpressButton = new JRadioButtonMenuItem();
+//                JRadioButtonMenuItem jcbButton = new JRadioButtonMenuItem();
 
 //  Show "Authorize Credentials" popup
                 boolean transactionFailed = false;
@@ -360,6 +365,44 @@ public class SimpleGUI extends JFrame {
                                     transactionWarning + "\nOk, I'll give you another try.",
                                     "Warning",
                                     JOptionPane.PLAIN_MESSAGE, hmm);
+                        }
+                    }
+                } else if (entityTypeComboBoxIndex == 1) {
+
+                    final ButtonGroup buttonGroup = new ButtonGroup();
+                    final JRadioButtonMenuItem visaButton = new JRadioButtonMenuItem(visaLogo);
+                    final JRadioButtonMenuItem masterCardButton = new JRadioButtonMenuItem(masterCardLogo);
+                    final JRadioButtonMenuItem americanExpressButton = new JRadioButtonMenuItem(americanExpressLogo);
+                    final JRadioButtonMenuItem discoverButton = new JRadioButtonMenuItem(discoverLogo);
+
+                    buttonGroup.add(visaButton);
+                    buttonGroup.add(masterCardButton);
+                    buttonGroup.add(americanExpressButton);
+                    buttonGroup.add(discoverButton);
+
+                    visaButton.setSelected(true);
+
+
+                    Object[] message = {
+                            "Choose type for the new Customer: \n\n",
+                            visaButton, masterCardButton, americanExpressButton, discoverButton
+                    };
+
+                    authorizePopupOption = JOptionPane.showConfirmDialog(
+                            null,
+                            message,
+                            "Select Credit Card type",
+                            JOptionPane.DEFAULT_OPTION, 0, ccLogo);
+
+                    if (authorizePopupOption == JOptionPane.YES_OPTION){
+                        if (visaButton.isSelected()) {
+                            testCardNumber = BrowserSettings.visaTestCardNumber;
+                        } else if (masterCardButton.isSelected()) {
+                            testCardNumber = BrowserSettings.masterCardTestCardNumber;
+                        } else if (americanExpressButton.isSelected()) {
+                            testCardNumber = BrowserSettings.americanExpressTestCardNumber;
+                        } else if (discoverButton.isSelected()) {
+                            testCardNumber = BrowserSettings.discoverTestCardNumber;
                         }
                     }
                 }
@@ -423,7 +466,7 @@ public class SimpleGUI extends JFrame {
                                     setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
                                     resultMessage += "Merchant '" + loginValue + "' has been configured";
                                 } else if (entityTypeComboBoxIndex == 1) {
-                                    addNewCustomer.jira3675(loginValue, password, driver);
+                                    addNewCustomer.jira3675(loginValue, password, testCardNumber ,driver);
                                     resultMessage += "Customer has been created\n" + "\n";
                                     resultMessage += "Customer name is:\n" + BrowserSettings.firstName + " " + BrowserSettings.lastName;
                                 } else if (entityTypeComboBoxIndex == 2) {
@@ -441,6 +484,10 @@ public class SimpleGUI extends JFrame {
                                     createSupplier.jira3012(loginValue, password, driver);
                                     resultMessage += "Supplier has been created\n" + "\n";
                                     resultMessage += "Supplier name is: " + BrowserSettings.supplierName;
+                                } else if (entityTypeComboBoxIndex == 5) {
+                                    makeReorder.makeReorder(loginValue, password, driver);
+                                    resultMessage += "Order has been created\n" + "\n";
+                                    resultMessage += "Order Number is: XXXX" ;
                                 }
                             } catch (Exception e1) {
 //                            credentialsValid = Boolean.getBoolean(loginPage.credentialsStatus);
@@ -477,12 +524,6 @@ public class SimpleGUI extends JFrame {
 //                                    exceptionMessage += "\nGetCause: ";
 //                                    exceptionMessage += e1.getMessage();
 //                                    exceptionMessage += "\n";
-////                                    if (Objects.equals(e1.getClass().getSimpleName(), "WebDriverException")) {
-////                                        exceptionMessage += "\nInitCause: ";
-////                                        exceptionMessage += e1.initCause(new WebDriverException("web driver exception"));
-////
-////                                    }
-
                                     exceptionMessage += "\n";
                                     exceptionMessage += "\n";
 //                                    exceptionMessage += "\nExecution log:\n";

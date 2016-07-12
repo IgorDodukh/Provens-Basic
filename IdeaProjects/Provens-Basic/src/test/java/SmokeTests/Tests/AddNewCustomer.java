@@ -10,25 +10,21 @@ import org.testng.annotations.Test;
 /**
  * Created by igor on 17.04.16.
  */
-public class Jira3675_AddNewCustomer extends BrowserSettings{
+public class AddNewCustomer extends BrowserSettings{
 
     @Test
-    public void jira3675(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
+    public void jira3675(String email, String merchantPassword, String testCardNumber, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 
         MainPage mainPage = new MainPage(driver);
         mainPage.openAddCustomerPage();
-//        mainPage.openCustomersGrid();
 
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
-
-//        addCustomerPage.openAddCustomerPage();
-
         addCustomerPage.addCustomerInfo(firstName, lastName, customerEmail, phone);
         addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();
-        addCustomerPage.addCreditCard(visaTestCardNumber);
+        addCustomerPage.addCreditCard(testCardNumber);
         addCustomerPage.saveNewCustomer();
         addCustomerPage.searchNewCustomerInTheGrid(firstName);
     }
