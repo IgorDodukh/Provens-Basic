@@ -384,7 +384,7 @@ public class SimpleGUI extends JFrame {
 
 
                     Object[] message = {
-                            "Choose type for the new Customer: \n\n",
+                            "Choose preferred Card type: \n\n",
                             visaButton, masterCardButton, americanExpressButton, discoverButton
                     };
 
