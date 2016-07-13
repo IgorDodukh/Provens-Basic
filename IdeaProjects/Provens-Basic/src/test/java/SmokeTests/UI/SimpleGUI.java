@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static javax.swing.BorderFactory.createLineBorder;
-
 public class SimpleGUI extends JFrame {
     public WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
@@ -41,9 +39,9 @@ public class SimpleGUI extends JFrame {
     private JLabel browserLabel = new JLabel("Select Browser");
     private JLabel entityTypeLabel = new JLabel("Select Test Type");
     private JLabel environmentLabel = new JLabel("Select Environment");
-    private JLabel loginLabel = new JLabel("Login:");
-    private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.15 beta");
+    protected JLabel loginLabel = new JLabel("Login:");
+    protected JLabel passwordLabel = new JLabel("Password:");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.16 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -62,12 +60,11 @@ public class SimpleGUI extends JFrame {
     final ImageIcon masterCardLogo = new ImageIcon("C:\\appFiles\\pic\\mastercard.png");
     final ImageIcon discoverLogo = new ImageIcon("C:\\appFiles\\pic\\discover.png");
     final ImageIcon americanExpressLogo = new ImageIcon("C:\\appFiles\\pic\\American-Express.png");
-    final ImageIcon jcbLogo = new ImageIcon("C:\\appFiles\\pic\\JCB.png");
     final ImageIcon ccLogo = new ImageIcon("C:\\appFiles\\pic\\credit-card-logo.png");
 
     private JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
-    private JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
-    private JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
+    protected JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
+    protected JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
 
     private String testCardNumber = "";
 
@@ -86,6 +83,9 @@ public class SimpleGUI extends JFrame {
     public int environmentComboBoxIndex;
     public int entityTypeComboBoxIndex;
 //    boolean credentialsValid = false;
+
+    static boolean loginFilled = false;
+    static boolean passFilled = false;
 
 
     public SimpleGUI() throws IOException {
@@ -290,38 +290,17 @@ public class SimpleGUI extends JFrame {
             String password = String.valueOf(passwordField.getPassword());
 
 //  Login/Password fields validation
-            boolean loginFilled = false;
-            boolean passFilled = false;
-            if (Objects.equals(loginValue, "")){
-                loginField.setBorder(createLineBorder(Color.RED));
-                loginLabel.setForeground(Color.RED);
-                loginFilled = false;
-            } else if (!Objects.equals(loginValue, "")) {
-                loginField.setBorder(createLineBorder(Color.decode("#5f839c")));
-                loginLabel.setForeground(Color.decode("#5f839c"));
-                loginFilled = true;
-            }
-            if (Objects.equals(password, "")) {
-                passwordField.setBorder(createLineBorder(Color.RED));
-                passwordLabel.setForeground(Color.RED);
-                passFilled = false;
-            } else if (!Objects.equals(password, "")) {
-                passwordField.setBorder(createLineBorder(Color.decode("#5f839c")));
-                passwordLabel.setForeground(Color.decode("#5f839c"));
-                passFilled = true;
-            }
+
+            new LoginPasswordValidation(
+                    loginValue, password, loginField, passwordField, loginLabel, passwordLabel);
 
 //  Accept login/password
+
             if (loginFilled && passFilled) {
                 int authorizePopupOption = 0;
                 int mainConfirmationPopupOption = 0;
                 JTextField field1 = new JTextField();
                 JTextField field2 = new JTextField();
-//                JRadioButtonMenuItem visaButton = new JRadioButtonMenuItem();
-//                JRadioButtonMenuItem masterCardButton = new JRadioButtonMenuItem();
-//                JRadioButtonMenuItem discoverButton = new JRadioButtonMenuItem();
-//                JRadioButtonMenuItem americanExpressButton = new JRadioButtonMenuItem();
-//                JRadioButtonMenuItem jcbButton = new JRadioButtonMenuItem();
 
 //  Show "Authorize Credentials" popup
                 boolean transactionFailed = false;
@@ -367,6 +346,8 @@ public class SimpleGUI extends JFrame {
                                     JOptionPane.PLAIN_MESSAGE, hmm);
                         }
                     }
+
+//  Show "Credit Card types" popup
                 } else if (entityTypeComboBoxIndex == 1) {
 
                     final ButtonGroup buttonGroup = new ButtonGroup();
