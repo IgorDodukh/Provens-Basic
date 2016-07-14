@@ -115,7 +115,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(getShippingAddressBtnLocator).click();
         Assert.assertEquals(driver.findElement(newShippingAddressSectionLocator).isDisplayed(), true, "Add new Shipping address form does not appear");
 
-        totalResultMessage += " - Add Shipping Address info. Same as Billing Address\n";
+        totalResultMessage += " - Add Shipping info. Same as Billing\n";
         driver.findElement(sameAsBillingButtonLocator).click();
     }
 

@@ -63,9 +63,9 @@ public class LoginPage extends BrowserSettings{
             Thread.sleep(1000);
             try {
                 driver.findElement(msgBox);
-                totalResultMessage += "'This user is already logged in' popup appears\n";
+                totalResultMessage += "'User is already logged' popup appears\n";
                 driver.findElement(msgBoxOkButton).click();
-                totalResultMessage += "'This user is already logged in' popup is confirmed\n";
+                totalResultMessage += "'User is already logged' popup confirmed\n";
             } catch (NoSuchElementException e) {
                 totalResultMessage += "User is logging now\n";
             }

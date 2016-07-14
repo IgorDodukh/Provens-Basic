@@ -290,12 +290,10 @@ public class SimpleGUI extends JFrame {
             String password = String.valueOf(passwordField.getPassword());
 
 //  Login/Password fields validation
-
             new LoginPasswordValidation(
                     loginValue, password, loginField, passwordField, loginLabel, passwordLabel);
 
 //  Accept login/password
-
             if (loginFilled && passFilled) {
                 int authorizePopupOption = 0;
                 int mainConfirmationPopupOption = 0;
@@ -492,7 +490,9 @@ public class SimpleGUI extends JFrame {
 //                                } else {
                                     JTextArea ta = new JTextArea();
                                     JScrollPane scrolltxt = new JScrollPane(ta);
-                                    scrolltxt = new JScrollPane(ta);
+//                                    scrolltxt = new JScrollPane(ta);
+
+                                    scrolltxt.setPreferredSize(new Dimension(270, 200));
 
                                     exceptionMessage += "You are not lucky enough today.\n";
                                     exceptionMessage += "\n";
@@ -524,13 +524,6 @@ public class SimpleGUI extends JFrame {
                                             0,
                                             sad);
                                     BrowserSettings.totalResultMessage = "";
-
-
-//                                    JOptionPane.showMessageDialog(null,
-//                                            exceptionMessage + exceptionLog,
-//                                            "Failed",
-//                                            JOptionPane.PLAIN_MESSAGE, sad);
-//                                }
                                 }
                             }
 
