@@ -41,7 +41,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     protected JLabel loginLabel = new JLabel("Login:");
     protected JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.16 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.17 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
