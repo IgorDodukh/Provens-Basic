@@ -19,11 +19,9 @@ public class ExecutionTimeCounter {
 
            if(diffSec<60){
                executionTime = String.valueOf(diffSec)  + " sec.";
-//               System.out.println(diffSec + " seconds");
            } else {
                long diffMins = diffSec / 60;
                executionTime = String.valueOf(diffMins) + " min. " + (diffSec - ((diffMins - 1)*60) - 60) + " sec.";
-//               System.out.println(diffMins + " minutes" + (diffSec - 60) + " seconds");
            }
         }
 }

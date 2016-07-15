@@ -41,7 +41,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.17 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.18 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -436,7 +436,7 @@ public class SimpleGUI extends JFrame {
                                 }
                                 JOptionPane.showMessageDialog(null,
                                         driverWarning[0] + driverExceptionMessage[0],
-                                        "Failed. Execution time: " + ExecutionTimeCounter.executionTime,
+                                        "Failed. Running time: " + ExecutionTimeCounter.executionTime,
                                         JOptionPane.PLAIN_MESSAGE, sad);
                             }
 //  Call "Browser Settings" class
@@ -529,7 +529,7 @@ public class SimpleGUI extends JFrame {
                                     JOptionPane.showConfirmDialog(
                                             null,
                                             exceptionLog,
-                                            "Failed. Execution time: " + ExecutionTimeCounter.executionTime,
+                                            "Failed. Running time: " + ExecutionTimeCounter.executionTime,
                                             JOptionPane.DEFAULT_OPTION,
                                             0,
                                             sad);
@@ -548,7 +548,7 @@ public class SimpleGUI extends JFrame {
                                 waitingAnimation.setVisible(false);
                                 JOptionPane.showMessageDialog(null,
                                         resultMessage,
-                                        "Complete. Execution time: " + ExecutionTimeCounter.executionTime,
+                                        "Complete. Running time: " + ExecutionTimeCounter.executionTime,
                                         JOptionPane.PLAIN_MESSAGE, success);
                             }
 //  Behavior on Close/Cancel confirmation popup
