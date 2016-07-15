@@ -26,6 +26,5 @@ public class AddNewCustomer extends BrowserSettings{
         addCustomerPage.addShippingAddress();
         addCustomerPage.addCreditCard(testCardNumber);
         addCustomerPage.saveNewCustomer();
-        addCustomerPage.searchNewCustomerInTheGrid(firstName);
     }
 }

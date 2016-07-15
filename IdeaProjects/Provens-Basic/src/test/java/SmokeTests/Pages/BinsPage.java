@@ -3,9 +3,6 @@ package SmokeTests.Pages;
 import SmokeTests.Settings.BrowserSettings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Ihor on 6/29/2016.
@@ -31,47 +28,53 @@ public class BinsPage extends BrowserSettings {
     private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
 
-    public void clickAddBinButton() {
-        totalResultMessage += "Click 'Add Bin' button\n";
-        driver.findElement(addBinButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
-        wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
-    }
+// --Commented out by Inspection START (7/14/2016 10:08 PM):
+//    public void clickAddBinButton() {
+//        totalResultMessage += "Click 'Add Bin' button\n";
+//        driver.findElement(addBinButtonLocator).click();
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
+//        wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:08 PM)
 
-    public void addBinInfo() {
-        totalResultMessage += "Adding Bin info:\n";
-        totalResultMessage += " - Add Bin name\n";
-        driver.findElement(addBinNameFieldLocator).sendKeys(binName);
+// --Commented out by Inspection START (7/14/2016 10:08 PM):
+//    public void addBinInfo() {
+//        totalResultMessage += "Adding Bin info:\n";
+//        totalResultMessage += " - Add Bin name\n";
+//        driver.findElement(addBinNameFieldLocator).sendKeys(binName);
+//
+//        totalResultMessage += " - Select Bin type\n";
+//        driver.findElement(addBinPickBinDropdownLocator).click();
+//
+//        totalResultMessage += " - Add Bin priority\n";
+//        driver.findElement(addBinPriorityFieldLocator).sendKeys(binPriority);
+//
+//        totalResultMessage += " - Select first Warehouse\n";
+//        driver.findElement(addBinWarehouseDropdownLocator).click();
+//        final String productWHName = driver.findElement(addBinWarehouseDropdownLocator).getText();
+//
+//        totalResultMessage += " - Add Product SKU\n";
+//        driver.findElement(addBinProductSKUFieldLocator).sendKeys(productSku);
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Product was not found");
+//        wait.until(ExpectedConditions.elementToBeClickable(addBinProductSKUTooltipLocator));
+//        driver.findElement(addBinProductSKUTooltipLocator).click();
+//
+//        totalResultMessage += " - Add Bin low level\n";
+//        driver.findElement(addBinLowLevelFieldLocator).sendKeys("0");
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:08 PM)
 
-        totalResultMessage += " - Select Bin type\n";
-        driver.findElement(addBinPickBinDropdownLocator).click();
-
-        totalResultMessage += " - Add Bin priority\n";
-        driver.findElement(addBinPriorityFieldLocator).sendKeys(binPriority);
-
-        totalResultMessage += " - Select first Warehouse\n";
-        driver.findElement(addBinWarehouseDropdownLocator).click();
-        final String productWHName = driver.findElement(addBinWarehouseDropdownLocator).getText();
-
-        totalResultMessage += " - Add Product SKU\n";
-        driver.findElement(addBinProductSKUFieldLocator).sendKeys(productSku);
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Product was not found");
-        wait.until(ExpectedConditions.elementToBeClickable(addBinProductSKUTooltipLocator));
-        driver.findElement(addBinProductSKUTooltipLocator).click();
-
-        totalResultMessage += " - Add Bin low level\n";
-        driver.findElement(addBinLowLevelFieldLocator).sendKeys("0");
-    }
-
-    public void saveBin() throws InterruptedException {
-        totalResultMessage += "Saving new Bin:\n";
-        totalResultMessage += " - Click 'Save and Close' button\n";
-        driver.findElement(saveAndCloseProductButtonLocator).click();
-
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
-
-        totalResultMessage += " - Confirm success popup\n";
-        driver.findElement(popupOkBtnLocator).click();
-    }
+// --Commented out by Inspection START (7/14/2016 10:08 PM):
+//    public void saveBin() {
+//        totalResultMessage += "Saving new Bin:\n";
+//        totalResultMessage += " - Click 'Save and Close' button\n";
+//        driver.findElement(saveAndCloseProductButtonLocator).click();
+//
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
+//
+//        totalResultMessage += " - Confirm success popup\n";
+//        driver.findElement(popupOkBtnLocator).click();
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:08 PM)
 }

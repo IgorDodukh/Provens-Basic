@@ -90,7 +90,7 @@ public class AddSupplierPage extends BrowserSettings {
         driver.findElement(contactFaxFieldLocator).sendKeys("4444444444");
     }
 
-    public void saveSupplier() throws InterruptedException {
+    public void saveSupplier() {
         totalResultMessage += "Saving new Supplier:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
@@ -98,9 +98,9 @@ public class AddSupplierPage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-        totalResultMessage += " - Confirm success popup\n";
-//        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
-//        Assert.assertEquals(currentPopupMessage, saveSupplierPopupMessage, "Unexpected popup message");
-        driver.findElement(popupOkBtnLocator).click();
+//        totalResultMessage += " - Confirm success popup\n";
+////        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
+////        Assert.assertEquals(currentPopupMessage, saveSupplierPopupMessage, "Unexpected popup message");
+//        driver.findElement(popupOkBtnLocator).click();
     }
 }

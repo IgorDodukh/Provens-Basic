@@ -13,7 +13,7 @@ import java.util.Objects;
  * Created by igor on 27.05.16.
  */
 public class ThirdPartyConnectionsPage extends BrowserSettings {
-    public WebDriver driver;
+    private WebDriver driver;
 
     public ThirdPartyConnectionsPage(WebDriver driver) {
         this.driver = driver;
@@ -51,7 +51,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
 
 
-    public void openThirdPartyPage() throws InterruptedException {
+    public void openThirdPartyPage() {
         totalResultMessage += "Open Third Party Connections page\n";
         driver.findElement(setUpButtonLocator).click();
         driver.findElement(thirdPartyButtonLocator).click();
@@ -135,7 +135,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 //        driver.findElement(confirmPopupButtonLocator).click();
     }
 
-    public void configureUSPSAccount(String accountId, String passPhrase) throws InterruptedException {
+    public void configureUSPSAccount(String accountId, String passPhrase) {
         totalResultMessage += "Click USPS checkbox\n";
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("USPS checkbox is not clickable");

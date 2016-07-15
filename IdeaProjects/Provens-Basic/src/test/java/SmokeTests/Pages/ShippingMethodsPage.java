@@ -13,7 +13,7 @@ import org.testng.Assert;
  * Created by igor on 28.05.16.
  */
 public class ShippingMethodsPage extends BrowserSettings {
-    public WebDriver driver;
+    private WebDriver driver;
 
     public ShippingMethodsPage(WebDriver driver) {
         this.driver = driver;

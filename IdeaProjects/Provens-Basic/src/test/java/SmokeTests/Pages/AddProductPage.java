@@ -13,7 +13,7 @@ import org.testng.Assert;
  * Created by igor on 21.04.16.
  */
 public class AddProductPage extends BrowserSettings{
-    public WebDriver driver;
+    private WebDriver driver;
 
     public AddProductPage(WebDriver driver) {
         this.driver = driver;
@@ -150,7 +150,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(supplierSaveOkButton).click();
     }
 
-    public void saveProduct() throws InterruptedException {
+    public void saveProduct() {
         totalResultMessage += "Saving Product:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseProductButtonLocator).click();

@@ -119,7 +119,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(sameAsBillingButtonLocator).click();
     }
 
-    public void addCreditCard(String testCardNumber) throws InterruptedException {
+    public void addCreditCard(String testCardNumber) {
         totalResultMessage += "Adding Credit Card:\n";
         totalResultMessage += " - Select Payment Methods tab\n";
         driver.findElement(paymentDetailsTabLocator).click();
@@ -145,7 +145,7 @@ public class AddCustomerPage extends BrowserSettings {
         Assert.assertEquals(driver.findElement(editCardLinkLocator).isDisplayed(), true, "Credit card is not saved");
     }
 
-    public void saveNewCustomer() throws InterruptedException {
+    public void saveNewCustomer() {
         totalResultMessage += "Saving new Customer:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
@@ -153,34 +153,34 @@ public class AddCustomerPage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-        totalResultMessage += " - Confirm success popup\n";
-        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
-        Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
-        driver.findElement(popupOkBtnLocator).click();
+//        totalResultMessage += " - Confirm success popup\n";
+//        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
+//        Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
+//        driver.findElement(popupOkBtnLocator).click();
+//
+//        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Progress bar was not hidden");
+//        wait2.until(ExpectedConditions.elementToBeClickable(filterCustomersFieldLocator));
     }
 
-    public void searchNewCustomerInTheGrid (String customerFirstName) throws InterruptedException {
+//    public void searchNewCustomerInTheGrid (String customerFirstName) {
 //        log("Search new Customer in the grid");
-/*        WebElement searchField = driver.findElement(filterCustomersFieldLocator);
-        searchField.clear();
-        searchField.click();
-        searchField.sendKeys(customerFirstName);
-        searchField.sendKeys(Keys.ENTER);
-
-        int numberOfElements = driver.findElements(numberOfCustomersLocator).size();
-
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup was not found");
-        wait.until(ExpectedConditions.numberOfElementsToBeLessThan(numberOfCustomersLocator, numberOfElements));*/
-
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Progress bar was not hidden");
-        wait.until(ExpectedConditions.elementToBeClickable(filterCustomersFieldLocator));
-
-/*
-        log("Compare Customer's data from the grid");
-        Assert.assertEquals(driver.findElement(customerNameInTheGridLocator).getText(), firstName + " " + lastName, "Unexpected Customer name");
-        Assert.assertEquals(driver.findElement(customerEmailInTheGridLocator).getText(), email, "Unexpected Customer Email");
-        Assert.assertEquals(driver.findElement(customerAddressInTheGridLocator).getText(), addressLine1, "Unexpected Customer address");
-        Assert.assertEquals(driver.findElement(customerZipInTheGridLocator).getText(), addressZip, "Unexpected Customer Zip");
-*/
-    }
+//        WebElement searchField = driver.findElement(filterCustomersFieldLocator);
+//        searchField.clear();
+//        searchField.click();
+//        searchField.sendKeys(customerFirstName);
+//        searchField.sendKeys(Keys.ENTER);
+//
+//        int numberOfElements = driver.findElements(numberOfCustomersLocator).size();
+//
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup was not found");
+//        wait.until(ExpectedConditions.numberOfElementsToBeLessThan(numberOfCustomersLocator, numberOfElements));
+//
+//
+//
+//        log("Compare Customer's data from the grid");
+//        Assert.assertEquals(driver.findElement(customerNameInTheGridLocator).getText(), firstName + " " + lastName, "Unexpected Customer name");
+//        Assert.assertEquals(driver.findElement(customerEmailInTheGridLocator).getText(), email, "Unexpected Customer Email");
+//        Assert.assertEquals(driver.findElement(customerAddressInTheGridLocator).getText(), addressLine1, "Unexpected Customer address");
+//        Assert.assertEquals(driver.findElement(customerZipInTheGridLocator).getText(), addressZip, "Unexpected Customer Zip");
+//    }
 }

@@ -115,7 +115,7 @@ public class InventoryPage extends BrowserSettings {
         driver.findElement(addBinNotesFieldLocator).sendKeys(inventoryNotes);
     }
 
-    public void saveInventory() throws InterruptedException {
+    public void saveInventory() {
         totalResultMessage += "Saving inventory:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseProductButtonLocator).click();
@@ -123,8 +123,8 @@ public class InventoryPage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-        totalResultMessage += " - Confirm success popup\n";
-        driver.findElement(popupOkBtnLocator).click();
+//        totalResultMessage += " - Confirm success popup\n";
+//        driver.findElement(popupOkBtnLocator).click();
     }
 
 }

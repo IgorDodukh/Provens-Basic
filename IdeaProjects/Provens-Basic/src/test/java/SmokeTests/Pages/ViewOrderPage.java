@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Created by Ihor on 7/11/2016.
  */
 public class ViewOrderPage extends BrowserSettings {
-    public WebDriver driver;
+    private WebDriver driver;
 
     public ViewOrderPage(WebDriver driver) {
         this.driver = driver;

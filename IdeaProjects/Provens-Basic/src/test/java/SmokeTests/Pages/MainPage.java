@@ -13,7 +13,7 @@ import org.testng.Assert;
  * Created by igor on 17.04.16.
  */
 public class MainPage extends BrowserSettings {
-    public WebDriver driver;
+    private WebDriver driver;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -71,11 +71,13 @@ public class MainPage extends BrowserSettings {
         Assert.assertEquals(driver.findElement(customerInfoTabLocator).isDisplayed(), true, "Customer creating page is not loaded");
     }
 
-    public void openCustomersGrid () {
-        totalResultMessage += "Open Customers grid\n";
-        driver.findElement(customersMenuButtonLocator).click();
-        driver.findElement(customersGridButtonLocator).click();
-    }
+// --Commented out by Inspection START (7/14/2016 10:10 PM):
+//    public void openCustomersGrid () {
+//        totalResultMessage += "Open Customers grid\n";
+//        driver.findElement(customersMenuButtonLocator).click();
+//        driver.findElement(customersGridButtonLocator).click();
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:10 PM)
 
     public void openAddWarehousePage () {
         totalResultMessage += "Open 'Add Warehouse' page\n";
@@ -106,17 +108,19 @@ public class MainPage extends BrowserSettings {
 
     }
 
-    public void openThirdPartyConnectionsPage() {
-        totalResultMessage += "Open 'Third Party Connections' page\n";
-        driver.findElement(setupButtonLocator).click();
-        driver.findElement(thirdPartyConnectionsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party Connections' page popup was not found");
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeNetTitleLocator));
+// --Commented out by Inspection START (7/14/2016 10:10 PM):
+//    public void openThirdPartyConnectionsPage() {
+//        totalResultMessage += "Open 'Third Party Connections' page\n";
+//        driver.findElement(setupButtonLocator).click();
+//        driver.findElement(thirdPartyConnectionsButtonLocator).click();
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party Connections' page popup was not found");
+//        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeNetTitleLocator));
+//
+//        Assert.assertEquals(element.isDisplayed(), true, "'Third Party Connections' page title was not found");
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:10 PM)
 
-        Assert.assertEquals(element.isDisplayed(), true, "'Third Party Connections' page title was not found");
-    }
-
-    public void openMainPage() throws InterruptedException {
+    public void openMainPage() {
         totalResultMessage += "Navigate to Main Page\n";
         driver.findElement(siteLogoIconLocator).click();
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");
@@ -150,21 +154,25 @@ public class MainPage extends BrowserSettings {
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
     }
 
-    public void openBinsPage() {
-        totalResultMessage += "Open 'Bins' page\n";
-        driver.findElement(inventoryMenuButtonLocator).click();
-        driver.findElement(binsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Bins' page popup was not loaded");
-        wait.until(ExpectedConditions.elementToBeClickable(addBinButtonLocator));
-    }
+// --Commented out by Inspection START (7/14/2016 10:10 PM):
+//    public void openBinsPage() {
+//        totalResultMessage += "Open 'Bins' page\n";
+//        driver.findElement(inventoryMenuButtonLocator).click();
+//        driver.findElement(binsButtonLocator).click();
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Bins' page popup was not loaded");
+//        wait.until(ExpectedConditions.elementToBeClickable(addBinButtonLocator));
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:10 PM)
 
-    public void openInventoryPage() {
-        totalResultMessage += "Open 'Product Inventory' page\n";
-        driver.findElement(inventoryMenuButtonLocator).click();
-        driver.findElement(productInventoryButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
-        wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
-    }
+// --Commented out by Inspection START (7/14/2016 10:10 PM):
+//    public void openInventoryPage() {
+//        totalResultMessage += "Open 'Product Inventory' page\n";
+//        driver.findElement(inventoryMenuButtonLocator).click();
+//        driver.findElement(productInventoryButtonLocator).click();
+//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
+//        wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
+//    }
+// --Commented out by Inspection STOP (7/14/2016 10:10 PM)
 
     public void openOrdersGrid() throws InterruptedException {
         totalResultMessage += "Open 'Orders' grid\n";

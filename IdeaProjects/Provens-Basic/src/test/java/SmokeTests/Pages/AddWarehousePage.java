@@ -14,7 +14,7 @@ import org.testng.Assert;
  */
 public class AddWarehousePage extends BrowserSettings {
 
-    public WebDriver driver;
+    private WebDriver driver;
 
     public AddWarehousePage(WebDriver driver) {
         this.driver = driver;
@@ -42,7 +42,6 @@ public class AddWarehousePage extends BrowserSettings {
 
     private By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
     private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-    private By currentPageModePopup = By.xpath(".//*[@id='breadCrumb']/ul/li[2]/h1");
 
 
     public void addWarehouseInfo(String warehouseName, String contactName, String phone, String startTime, String endTime, String addressLine1, String zip) {
@@ -70,7 +69,7 @@ public class AddWarehousePage extends BrowserSettings {
         driver.findElement(warehouseInfoTitleLocator).click();
     }
 
-    public void addWarehouseBin (String name) throws InterruptedException {
+    public void addWarehouseBin (String name) {
         totalResultMessage += "Select Bins tab\n";
         totalResultMessage += "Adding Bin:\n";
         driver.findElement(binsTabLocator).click();
@@ -93,17 +92,17 @@ public class AddWarehousePage extends BrowserSettings {
         Assert.assertEquals(driver.findElement(newBinNameInBinsGridLocator).getText(), newBinName, "Unexpected new created bin's name");
     }
 
-    public void saveWarehouse() throws InterruptedException {
+    public void saveWarehouse() {
         totalResultMessage += "Save Warehouse\n";
         driver.findElement(saveContextualButton).click();
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-        totalResultMessage += "Confirm popup message\n";
-        String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
-        Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
-        driver.findElement(popupOkBtnLocator).click();
+//        totalResultMessage += "Confirm popup message\n";
+//        String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
+//        Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
+//        driver.findElement(popupOkBtnLocator).click();
 
 //        log("Check displayed page with the created WH name");
 //        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");

@@ -15,7 +15,7 @@ import org.testng.Assert;
  */
 public class SettingsPage extends BrowserSettings {
 
-    public WebDriver driver;
+    private WebDriver driver;
     public SettingsPage(WebDriver driver) {
         this.driver = driver;
     }

@@ -23,52 +23,52 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SimpleGUI extends JFrame {
-    public WebDriver driver;
+    private WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
 
 //  Define objects of all classes
-    SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
-    AddNewCustomer addNewCustomer = new AddNewCustomer();
-    AddProductAndBin addProductAndBin = new AddProductAndBin();
-    AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
-    CreateSupplier createSupplier = new CreateSupplier();
-    MakeReorder makeReorder = new MakeReorder();
+    private SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
+    private AddNewCustomer addNewCustomer = new AddNewCustomer();
+    private AddProductAndBin addProductAndBin = new AddProductAndBin();
+    private AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
+    private CreateSupplier createSupplier = new CreateSupplier();
+    private MakeReorder makeReorder = new MakeReorder();
 
 //  Main window elements
     private JButton startButton = new JButton("Start Test");
     private JLabel browserLabel = new JLabel("Select Browser");
     private JLabel entityTypeLabel = new JLabel("Select Test Type");
     private JLabel environmentLabel = new JLabel("Select Environment");
-    protected JLabel loginLabel = new JLabel("Login:");
-    protected JLabel passwordLabel = new JLabel("Password:");
+    private JLabel loginLabel = new JLabel("Login:");
+    private JLabel passwordLabel = new JLabel("Password:");
     private JLabel buildVersionLabel = new JLabel("Build Version: 1.17 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
 
 //  Graphical resources
-    final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
-    final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\high-performance-200x160.png"));
-    final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
-    final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
-    final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
-    final ImageIcon sad = new ImageIcon("C:\\appFiles\\pic\\sad.png");
-    final ImageIcon hmm = new ImageIcon("C:\\appFiles\\pic\\hmm.png");
-    final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
+    private final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
+    private final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\high-performance-200x160.png"));
+    private final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
+    private final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
+    private final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
+    private final ImageIcon sad = new ImageIcon("C:\\appFiles\\pic\\sad.png");
+    private final ImageIcon hmm = new ImageIcon("C:\\appFiles\\pic\\hmm.png");
+    private final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
 
-    final ImageIcon visaLogo = new ImageIcon("C:\\appFiles\\pic\\visa.png");
-    final ImageIcon masterCardLogo = new ImageIcon("C:\\appFiles\\pic\\mastercard.png");
-    final ImageIcon discoverLogo = new ImageIcon("C:\\appFiles\\pic\\discover.png");
-    final ImageIcon americanExpressLogo = new ImageIcon("C:\\appFiles\\pic\\American-Express.png");
-    final ImageIcon ccLogo = new ImageIcon("C:\\appFiles\\pic\\credit-card-logo.png");
+    private final ImageIcon visaLogo = new ImageIcon("C:\\appFiles\\pic\\visa.png");
+    private final ImageIcon masterCardLogo = new ImageIcon("C:\\appFiles\\pic\\mastercard.png");
+    private final ImageIcon discoverLogo = new ImageIcon("C:\\appFiles\\pic\\discover.png");
+    private final ImageIcon americanExpressLogo = new ImageIcon("C:\\appFiles\\pic\\American-Express.png");
+    private final ImageIcon ccLogo = new ImageIcon("C:\\appFiles\\pic\\credit-card-logo.png");
 
     private JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
-    protected JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
-    protected JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
+    private JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
+    private JPasswordField passwordField = new JPasswordField("78qa22!#", 15);
 
     private String testCardNumber = "";
 
-    Dimension d = new Dimension(200,30);
+    private Dimension d = new Dimension(200,30);
 
     private JComboBox<String> browsersComboBox = new JComboBox<>();
     private JComboBox<String> entityTypeComboBox = new JComboBox<>();
@@ -78,17 +78,17 @@ public class SimpleGUI extends JFrame {
     private String[] entityTypes = {" Configure Merchant", " Create Customer", " Create Product", " Create Supplier", " Create Warehouse & Bin", " Reorder the last Order"};
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
-    boolean exceptionStatus = false;
-    public int browserComboBoxIndex;
-    public int environmentComboBoxIndex;
-    public int entityTypeComboBoxIndex;
+    private boolean exceptionStatus = false;
+    private int browserComboBoxIndex;
+    private int environmentComboBoxIndex;
+    private int entityTypeComboBoxIndex;
 //    boolean credentialsValid = false;
 
     static boolean loginFilled = false;
     static boolean passFilled = false;
 
 
-    public SimpleGUI() throws IOException {
+    private SimpleGUI() throws IOException {
         super("Secret app for our team :)");
 
 //  Main app configs
@@ -406,6 +406,10 @@ public class SimpleGUI extends JFrame {
                     final String[] driverExceptionMessage = {""};
                     Runnable runnable = () -> {
                         if (finalMainConfirmationPopupOption == JOptionPane.OK_OPTION) {
+
+//  Start execution time counter
+                            ExecutionTimeCounter.startCounter();
+
                             try {
                                 if (browserComboBoxIndex == 0) {
                                     driverWarning[0] += "Chrome";
@@ -418,9 +422,11 @@ public class SimpleGUI extends JFrame {
                                 }
                             } catch (Exception e1) {
                                 exceptionStatus = true;
+
                                 startButton.setEnabled(true);
                                 waitingLabel.setVisible(false);
                                 waitingAnimation.setVisible(false);
+
                                 if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
                                     driverExceptionMessage[0] += " session has been stopped unexpectedly.";
                                 } else if (!Objects.equals(e1.getClass().getSimpleName(), "IllegalStateException")){
@@ -430,7 +436,7 @@ public class SimpleGUI extends JFrame {
                                 }
                                 JOptionPane.showMessageDialog(null,
                                         driverWarning[0] + driverExceptionMessage[0],
-                                        "Failed",
+                                        "Failed. Execution time: " + ExecutionTimeCounter.executionTime,
                                         JOptionPane.PLAIN_MESSAGE, sad);
                             }
 //  Call "Browser Settings" class
@@ -480,6 +486,10 @@ public class SimpleGUI extends JFrame {
                                     browserSettings.tearDown(driver);
                                 }
 
+//  Stop execution time counter
+                                ExecutionTimeCounter.stopCounter();
+                                System.out.println(ExecutionTimeCounter.executionTime);
+
 //  Exceptions handler
                                 if (exceptionStatus) {
 //                                if (credentialsValid) {
@@ -519,13 +529,16 @@ public class SimpleGUI extends JFrame {
                                     JOptionPane.showConfirmDialog(
                                             null,
                                             exceptionLog,
-                                            "Failed",
+                                            "Failed. Execution time: " + ExecutionTimeCounter.executionTime,
                                             JOptionPane.DEFAULT_OPTION,
                                             0,
                                             sad);
                                     BrowserSettings.totalResultMessage = "";
                                 }
                             }
+//  Stop execution time counter
+                            ExecutionTimeCounter.stopCounter();
+                            System.out.println(ExecutionTimeCounter.executionTime);
 
 //  Run Complete message
                             if (!exceptionStatus) {
@@ -535,7 +548,7 @@ public class SimpleGUI extends JFrame {
                                 waitingAnimation.setVisible(false);
                                 JOptionPane.showMessageDialog(null,
                                         resultMessage,
-                                        "Complete",
+                                        "Complete. Execution time: " + ExecutionTimeCounter.executionTime,
                                         JOptionPane.PLAIN_MESSAGE, success);
                             }
 //  Behavior on Close/Cancel confirmation popup
