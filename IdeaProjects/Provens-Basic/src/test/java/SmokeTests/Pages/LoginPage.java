@@ -49,18 +49,7 @@ public class LoginPage extends BrowserSettings{
         totalResultMessage += " - Click 'Login' button\n";
         driver.findElement(loginButtonLocator).click();
 
-//        String title = driver.findElement(wrongCredentialsLocator).getText();
-//        if (Objects.equals(title, "Incorrect Userame or Password.")){
-//            System.out.println("Your credentials are not valid");
-//            validCredentials = false;
-////            tearDown(driver);
-//        } else {
-//            validCredentials = true;
-//            System.out.println("Your credentials are valid");
-//        }
-//
-//        if(validCredentials){
-            Thread.sleep(1000);
+        Thread.sleep(1000);
             try {
                 driver.findElement(msgBox);
                 totalResultMessage += "'User is already logged' popup appears\n";
@@ -69,19 +58,8 @@ public class LoginPage extends BrowserSettings{
             } catch (NoSuchElementException e) {
                 totalResultMessage += "User is logging now\n";
             }
-//        }
-//        credentialsStatus = String.valueOf(validCredentials);
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("User was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
 
     }
-
-// --Commented out by Inspection START (7/14/2016 10:09 PM):
-//    public void logOutUser() {
-//        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("'Sign In' dropdown is not clickable for a long time");
-//        wait1.until(ExpectedConditions.elementToBeClickable(signInDropdown));
-//        driver.findElement(signInDropdown).click();
-//        driver.findElement(logOutButton).click();
-//    }
-// --Commented out by Inspection STOP (7/14/2016 10:09 PM)
 }

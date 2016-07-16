@@ -5,7 +5,6 @@ package SmokeTests.UI;
  */
 
 import SmokeTests.Settings.BrowserSettings;
-import SmokeTests.Tests.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -27,12 +26,6 @@ public class SimpleGUI extends JFrame {
     private BrowserSettings browserSettings = new BrowserSettings();
 
 //  Define objects of all classes
-    private SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
-    private AddNewCustomer addNewCustomer = new AddNewCustomer();
-    private AddProductAndBin addProductAndBin = new AddProductAndBin();
-    private AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
-    private CreateSupplier createSupplier = new CreateSupplier();
-    private MakeReorder makeReorder = new MakeReorder();
 
 //  Main window elements
     private JButton startButton = new JButton("Start Test");
@@ -41,7 +34,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.18 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.20 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     private JLabel waitingLabel = new JLabel("Test is running...");
@@ -50,11 +43,10 @@ public class SimpleGUI extends JFrame {
     private final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
     private final BufferedImage appIcon = ImageIO.read(new File("C:\\appFiles\\pic\\high-performance-200x160.png"));
     private final BufferedImage background = ImageIO.read(new File("C:\\appFiles\\pic\\background.png"));
-    private final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
-    private final ImageIcon success = new ImageIcon("C:\\appFiles\\pic\\success.png");
     private final ImageIcon sad = new ImageIcon("C:\\appFiles\\pic\\sad.png");
-    private final ImageIcon hmm = new ImageIcon("C:\\appFiles\\pic\\hmm.png");
     private final ImageIcon authorize = new ImageIcon("C:\\appFiles\\pic\\authorize-net.png");
+    private final ImageIcon icon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
+
 
     private final ImageIcon visaLogo = new ImageIcon("C:\\appFiles\\pic\\visa.png");
     private final ImageIcon masterCardLogo = new ImageIcon("C:\\appFiles\\pic\\mastercard.png");
@@ -82,11 +74,17 @@ public class SimpleGUI extends JFrame {
     private int browserComboBoxIndex;
     private int environmentComboBoxIndex;
     private int entityTypeComboBoxIndex;
-//    boolean credentialsValid = false;
 
     static boolean loginFilled = false;
     static boolean passFilled = false;
 
+    private Exception exceptionValue;
+
+    private TestStatus testStatus = new TestStatus();
+    private FieldsValidation fieldsValidation = new FieldsValidation();
+    private DropdownValueDeterminator dropdownValueDeterminator = new DropdownValueDeterminator();
+
+    static String resultMessage = "";
 
     private SimpleGUI() throws IOException {
         super("Secret app for our team :)");
@@ -252,8 +250,6 @@ public class SimpleGUI extends JFrame {
         startButton.addActionListener(new ButtonEventListener());
         container.add(startButton, gbc);
 
-
-
 //  Waiting animation position
         gbc.gridx = 0;
         gbc.gridy = 11;
@@ -286,30 +282,31 @@ public class SimpleGUI extends JFrame {
             environmentComboBoxIndex = environmentsComboBox.getSelectedIndex();
             entityTypeComboBoxIndex = entityTypeComboBox.getSelectedIndex();
 
-            String loginValue = loginField.getText();
+            String login = loginField.getText();
             String password = String.valueOf(passwordField.getPassword());
 
 //  Login/Password fields validation
-            new LoginPasswordValidation(
-                    loginValue, password, loginField, passwordField, loginLabel, passwordLabel);
+            fieldsValidation.loginPassValidation(login, password, loginField, passwordField, loginLabel, passwordLabel);
 
 //  Accept login/password
             if (loginFilled && passFilled) {
-                int authorizePopupOption = 0;
+                int popupOption = 0;
                 int mainConfirmationPopupOption = 0;
-                JTextField field1 = new JTextField();
-                JTextField field2 = new JTextField();
 
 //  Show "Authorize Credentials" popup
+
                 boolean transactionFailed = false;
                 if (entityTypeComboBoxIndex == 0) {
+
+                    JTextField field1 = new JTextField();
+                    JTextField field2 = new JTextField();
                     field1.setText(BrowserSettings.authApiLoginId);
                     field2.setText(BrowserSettings.authTransactionKey);
                     Object[] message = {
                             "API Login ID:", field1,
                             "Transaction Key:                    ", field2,
                     };
-                    authorizePopupOption = JOptionPane.showConfirmDialog(
+                    popupOption = JOptionPane.showConfirmDialog(
                             null,
                             message,
                             "Authorize.Net credentials",
@@ -336,12 +333,10 @@ public class SimpleGUI extends JFrame {
                             transactionFailed = true;
                         }
                     }
-                    if (authorizePopupOption == JOptionPane.YES_OPTION){
+
+                    if (popupOption == JOptionPane.YES_OPTION){
                         if (transactionFailed){
-                            JOptionPane.showMessageDialog(null,
-                                    transactionWarning + "\nOk, I'll give you another try.",
-                                    "Warning",
-                                    JOptionPane.PLAIN_MESSAGE, hmm);
+                            GeneratePopupBox.hmmPopupBox(transactionWarning);
                         }
                     }
 
@@ -361,19 +356,18 @@ public class SimpleGUI extends JFrame {
 
                     visaButton.setSelected(true);
 
-
                     Object[] message = {
                             "Choose preferred Card type: \n\n",
                             visaButton, masterCardButton, americanExpressButton, discoverButton
                     };
 
-                    authorizePopupOption = JOptionPane.showConfirmDialog(
+                    popupOption = JOptionPane.showConfirmDialog(
                             null,
                             message,
                             "Select Credit Card type",
                             JOptionPane.DEFAULT_OPTION, 0, ccLogo);
 
-                    if (authorizePopupOption == JOptionPane.YES_OPTION){
+                    if (popupOption == JOptionPane.YES_OPTION){
                         if (visaButton.isSelected()) {
                             testCardNumber = BrowserSettings.visaTestCardNumber;
                         } else if (masterCardButton.isSelected()) {
@@ -387,7 +381,7 @@ public class SimpleGUI extends JFrame {
                 }
 
 //  Show "Lucky Confirmation" popup
-                if (authorizePopupOption == JOptionPane.OK_OPTION && !transactionFailed) {
+                if (popupOption == JOptionPane.OK_OPTION && !transactionFailed) {
                     final String[] driverWarning = {""};
                     String infoMessage = "";
                     infoMessage += "Test is starting now\n\n";
@@ -396,20 +390,22 @@ public class SimpleGUI extends JFrame {
                     infoMessage += "Selected Environment: " + environmentsComboBox.getSelectedItem() + "\n\n";
                     infoMessage += "Performing the test will take some time. Please wait!\nMake a cup of tea or hug your cat :)\n\n";
 
-                    startButton.setEnabled(false);
-                    waitingLabel.setVisible(true);
-                    waitingAnimation.setVisible(true);
+                    mainConfirmationPopupOption =  JOptionPane.showConfirmDialog(
+                            null,
+                            infoMessage,
+                            "Lucky Confirmation",
+                            JOptionPane.OK_CANCEL_OPTION,
+                            0,
+                            icon);
 
-                    mainConfirmationPopupOption = JOptionPane.showConfirmDialog(null, infoMessage, "Lucky Confirmation", JOptionPane.OK_CANCEL_OPTION, 0, icon);
+                    testStatus.startTest(startButton, waitingLabel, waitingAnimation);
+//  Start execution time counter
+                    ExecutionTimeCounter.startCounter();
 
                     final int finalMainConfirmationPopupOption = mainConfirmationPopupOption;
                     final String[] driverExceptionMessage = {""};
                     Runnable runnable = () -> {
                         if (finalMainConfirmationPopupOption == JOptionPane.OK_OPTION) {
-
-//  Start execution time counter
-                            ExecutionTimeCounter.startCounter();
-
                             try {
                                 if (browserComboBoxIndex == 0) {
                                     driverWarning[0] += "Chrome";
@@ -423,9 +419,7 @@ public class SimpleGUI extends JFrame {
                             } catch (Exception e1) {
                                 exceptionStatus = true;
 
-                                startButton.setEnabled(true);
-                                waitingLabel.setVisible(false);
-                                waitingAnimation.setVisible(false);
+                                testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
 
                                 if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
                                     driverExceptionMessage[0] += " session has been stopped unexpectedly.";
@@ -443,125 +437,38 @@ public class SimpleGUI extends JFrame {
                             browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
 
 //  Select test + Generate Result message
-                            String exceptionMessage = "";
-                            String resultMessage = "";
-                            resultMessage += "Oh boy, you are lucky.\n" + "Test has been finished.\nNew ";
                             try {
-                                if (entityTypeComboBoxIndex == 0) {
-                                    setUpNewMerchant.setupNewMerchant(loginValue, password, driver);
-                                    resultMessage += "Merchant '" + loginValue + "' has been configured";
-                                } else if (entityTypeComboBoxIndex == 1) {
-                                    addNewCustomer.jira3675(loginValue, password, testCardNumber ,driver);
-                                    resultMessage += "Customer has been created\n" + "\n";
-                                    resultMessage += "Customer name is:\n" + BrowserSettings.firstName + " " + BrowserSettings.lastName;
-                                } else if (entityTypeComboBoxIndex == 2) {
-                                    addProductAndBin.jira3015(loginValue, password, driver);
-                                    resultMessage += "Product has been created\n" + "\n";
-                                    resultMessage += "Product SKU is: " + BrowserSettings.productSku;
-                                    resultMessage += "\nProduct Bin name is: " + BrowserSettings.binName;
-                                    resultMessage += "\nProduct qty is: " + BrowserSettings.inventoryQty;
-                                } else if (entityTypeComboBoxIndex == 4) {
-                                    addWarehouseAndBin.jira3006(loginValue, password, driver);
-                                    resultMessage += "Warehouse and Bin have been created\n" + "\n";
-                                    resultMessage += "Warehouse name is: " + BrowserSettings.warehouseName;
-                                    resultMessage += "\nBin name is: " + BrowserSettings.newBinName;
-                                } else if (entityTypeComboBoxIndex == 3) {
-                                    createSupplier.jira3012(loginValue, password, driver);
-                                    resultMessage += "Supplier has been created\n" + "\n";
-                                    resultMessage += "Supplier name is: " + BrowserSettings.supplierName;
-                                } else if (entityTypeComboBoxIndex == 5) {
-                                    makeReorder.makeReorder(loginValue, password, driver);
-                                    resultMessage += "Order has been created\n" + "\n";
-                                    resultMessage += "Order Number is: XXXX" ;
-                                }
+                                dropdownValueDeterminator.entityTypeDropdown(entityTypeComboBoxIndex, login, password, testCardNumber, driver);
                             } catch (Exception e1) {
-//                            credentialsValid = Boolean.getBoolean(loginPage.credentialsStatus);
-
-//  Generate Failed message
+                                exceptionValue = e1;
                                 exceptionStatus = true;
-                                startButton.setEnabled(true);
-                                waitingLabel.setVisible(false);
-                                waitingAnimation.setVisible(false);
+
                                 if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException")) {
                                     browserSettings.tearDown(driver);
                                 }
-
-//  Stop execution time counter
+// Show exception popup box
+                            } finally {
                                 ExecutionTimeCounter.stopCounter();
-                                System.out.println(ExecutionTimeCounter.executionTime);
-
-//  Exceptions handler
                                 if (exceptionStatus) {
-//                                if (credentialsValid) {
-//                                    JOptionPane.showMessageDialog(null,
-//                                            "Your credentials are not valid",
-//                                            "Failed",
-//                                            JOptionPane.PLAIN_MESSAGE, sad);
-//                                } else {
-                                    JTextArea ta = new JTextArea();
-                                    JScrollPane scrolltxt = new JScrollPane(ta);
-//                                    scrolltxt = new JScrollPane(ta);
-
-                                    scrolltxt.setPreferredSize(new Dimension(270, 200));
-
-                                    exceptionMessage += "You are not lucky enough today.\n";
-                                    exceptionMessage += "\n";
-                                    exceptionMessage += "Test has been stopped unexpectedly.\n";
-                                    exceptionMessage += "\n";
-                                    exceptionMessage += "Reason:\n";
-                                    exceptionMessage += e1.getClass().getSimpleName();
-//  Exception detailed message
-//                                    exceptionMessage += "\n";
-//                                    exceptionMessage += "\nGetCause: ";
-//                                    exceptionMessage += e1.getMessage();
-//                                    exceptionMessage += "\n";
-                                    exceptionMessage += "\n";
-                                    exceptionMessage += "\n";
-//                                    exceptionMessage += "\nExecution log:\n";
-//                                    exceptionMessage += BrowserSettings.totalResultMessage;
-
-                                    ta.setText(BrowserSettings.totalResultMessage);
-                                    Object[] exceptionLog = {
-                                            exceptionMessage,
-                                            "Execution log:\n", scrolltxt,
-                                    };
-
-                                    JOptionPane.showConfirmDialog(
-                                            null,
-                                            exceptionLog,
-                                            "Failed. Running time: " + ExecutionTimeCounter.executionTime,
-                                            JOptionPane.DEFAULT_OPTION,
-                                            0,
-                                            sad);
-                                    BrowserSettings.totalResultMessage = "";
+                                    testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
+                                    GeneratePopupBox.exceptionPopupBox(exceptionValue);
                                 }
                             }
-//  Stop execution time counter
-                            ExecutionTimeCounter.stopCounter();
-                            System.out.println(ExecutionTimeCounter.executionTime);
-
 //  Run Complete message
                             if (!exceptionStatus) {
                                 browserSettings.tearDown(driver);
-                                startButton.setEnabled(true);
-                                waitingLabel.setVisible(false);
-                                waitingAnimation.setVisible(false);
-                                JOptionPane.showMessageDialog(null,
-                                        resultMessage,
-                                        "Complete. Running time: " + ExecutionTimeCounter.executionTime,
-                                        JOptionPane.PLAIN_MESSAGE, success);
+                                testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
+                                GeneratePopupBox.successPopupBox(resultMessage);
                             }
 //  Behavior on Close/Cancel confirmation popup
                         }else if (finalMainConfirmationPopupOption == JOptionPane.CANCEL_OPTION || finalMainConfirmationPopupOption == JOptionPane.CLOSED_OPTION) {
-                            startButton.setEnabled(true);
-                            waitingLabel.setVisible(false);
-                            waitingAnimation.setVisible(false);
+                            testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
                         }
                     };
 
                     Thread thread1 = new Thread(runnable);
                     thread1.start();
-                } else if (authorizePopupOption == JOptionPane.CANCEL_OPTION) {
+                } else if (popupOption == JOptionPane.CANCEL_OPTION) {
                 }
             }
         }

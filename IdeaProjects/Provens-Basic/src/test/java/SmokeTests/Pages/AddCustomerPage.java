@@ -153,13 +153,13 @@ public class AddCustomerPage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-//        totalResultMessage += " - Confirm success popup\n";
-//        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
-//        Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
-//        driver.findElement(popupOkBtnLocator).click();
-//
-//        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Progress bar was not hidden");
-//        wait2.until(ExpectedConditions.elementToBeClickable(filterCustomersFieldLocator));
+        totalResultMessage += " - Confirm success popup\n";
+        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();
+        Assert.assertEquals(currentPopupMessage, addCustomerPopupMessage, "Unexpected popup message");
+        driver.findElement(popupOkBtnLocator).click();
+
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Progress bar was not hidden");
+        wait2.until(ExpectedConditions.elementToBeClickable(filterCustomersFieldLocator));
     }
 
 //    public void searchNewCustomerInTheGrid (String customerFirstName) {

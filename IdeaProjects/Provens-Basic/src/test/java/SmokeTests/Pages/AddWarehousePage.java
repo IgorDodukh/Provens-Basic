@@ -99,10 +99,10 @@ public class AddWarehousePage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-//        totalResultMessage += "Confirm popup message\n";
-//        String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
-//        Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
-//        driver.findElement(popupOkBtnLocator).click();
+        totalResultMessage += "Confirm popup message\n";
+        String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
+        Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
+        driver.findElement(popupOkBtnLocator).click();
 
 //        log("Check displayed page with the created WH name");
 //        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
