@@ -33,26 +33,4 @@ public class FieldsValidation {
         }
     }
 
-//    public void authorizeValidation(String transactionWarning, JTextField field1, JTextField field2, boolean transactionFailed) {
-//
-//        transactionWarning = "It seems you forgot to fill ";
-//
-//        if (field1.getText().length() > 0){
-//            BrowserSettings.authApiLoginId = field1.getText();
-//        } else {
-//            transactionFailed = true;
-//            transactionWarning += "'API Login ID'";
-//        }
-//        if (field2.getText().length() > 0){
-//            BrowserSettings.authTransactionKey = field2.getText();
-//            transactionWarning += " field.";
-//        } else {
-//            if(transactionFailed){
-//                transactionWarning += " and 'Transaction Key' fields.";
-//            } else {
-//                transactionWarning += "'Transaction Key' field.";
-//                transactionFailed = true;
-//            }
-//        }
-//    }
 }

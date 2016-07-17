@@ -25,7 +25,7 @@ public class SimpleGUI extends JFrame {
     private WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
 
-//  Define objects of all classes
+    public static int addProgressValue = 0;
 
 //  Main window elements
     private JButton startButton = new JButton("Start Test");
@@ -37,7 +37,8 @@ public class SimpleGUI extends JFrame {
     private JLabel buildVersionLabel = new JLabel("Build Version: 1.20 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
-    private JLabel waitingLabel = new JLabel("Test is running...");
+    public static JLabel waitingLabel = new JLabel("Test is running... " + addProgressValue + "%");
+    public static JProgressBar progressBar = new JProgressBar(0, 100);
 
 //  Graphical resources
     private final ImageIcon animatedIcon = new ImageIcon("C:\\appFiles\\pic\\spinner.gif");
@@ -82,7 +83,7 @@ public class SimpleGUI extends JFrame {
 
     private TestStatus testStatus = new TestStatus();
     private FieldsValidation fieldsValidation = new FieldsValidation();
-    private DropdownValueDeterminator dropdownValueDeterminator = new DropdownValueDeterminator();
+    private DropdownValueDeterminer dropdownValueDeterminer = new DropdownValueDeterminer();
 
     static String resultMessage = "";
 
@@ -96,6 +97,8 @@ public class SimpleGUI extends JFrame {
         this.setIconImage(appIcon);
         waitingAnimation.setVisible(false);
         waitingLabel.setVisible(false);
+        progressBar.setVisible(false);
+
 
 //  Add items to dropdown-lists
         for (String browser : browsers) {
@@ -190,13 +193,24 @@ public class SimpleGUI extends JFrame {
         container.add(environmentsComboBox, gbc);
 
 //  Size parameters for the middle section
-        gbc.insets = new Insets(14, 20, 2, 20);
+        gbc.insets = new Insets(13, 20, 2, 20);
 
-//  Middle space position
+//  Progress bar position
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
+        progressBar.setBackground(new Color(255, 255, 255));
+        progressBar.setForeground(new Color(42, 67, 77));
+        progressBar.setBorderPainted(false);
+//        SimpleGUI.progressBar.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
+//        SimpleGUI.progressBar.setStringPainted(true);
+//        SimpleGUI.progressBar.setString(String.valueOf(addProgressValue) + "%");
+        container.add(progressBar, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
         container.add(middleSpaceLabel, gbc);
+
 
 //  Size parameters for the bottom section
         gbc.insets = new Insets(4, 20, 4, 20);
@@ -383,6 +397,8 @@ public class SimpleGUI extends JFrame {
 //  Show "Lucky Confirmation" popup
                 if (popupOption == JOptionPane.OK_OPTION && !transactionFailed) {
                     final String[] driverWarning = {""};
+//                    progressBar.setString(String.valueOf(addProgressValue) + "%");
+                    waitingLabel.setText("Test is running... 0%");
                     String infoMessage = "";
                     infoMessage += "Test is starting now\n\n";
                     infoMessage += "Selected Browser: " + browsersComboBox.getSelectedItem() + "\n";
@@ -398,12 +414,13 @@ public class SimpleGUI extends JFrame {
                             0,
                             icon);
 
-                    testStatus.startTest(startButton, waitingLabel, waitingAnimation);
+                    testStatus.startTest(startButton, waitingLabel, waitingAnimation, progressBar);
 //  Start execution time counter
                     ExecutionTimeCounter.startCounter();
 
                     final int finalMainConfirmationPopupOption = mainConfirmationPopupOption;
                     final String[] driverExceptionMessage = {""};
+// Start Thread
                     Runnable runnable = () -> {
                         if (finalMainConfirmationPopupOption == JOptionPane.OK_OPTION) {
                             try {
@@ -418,8 +435,7 @@ public class SimpleGUI extends JFrame {
                                 }
                             } catch (Exception e1) {
                                 exceptionStatus = true;
-
-                                testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
+                                testStatus.stopTest(startButton, waitingLabel, waitingAnimation, progressBar);
 
                                 if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
                                     driverExceptionMessage[0] += " session has been stopped unexpectedly.";
@@ -438,11 +454,10 @@ public class SimpleGUI extends JFrame {
 
 //  Select test + Generate Result message
                             try {
-                                dropdownValueDeterminator.entityTypeDropdown(entityTypeComboBoxIndex, login, password, testCardNumber, driver);
+                                dropdownValueDeterminer.entityTypeDropdown(entityTypeComboBoxIndex, login, password, testCardNumber, driver);
                             } catch (Exception e1) {
                                 exceptionValue = e1;
                                 exceptionStatus = true;
-
                                 if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException")) {
                                     browserSettings.tearDown(driver);
                                 }
@@ -450,19 +465,19 @@ public class SimpleGUI extends JFrame {
                             } finally {
                                 ExecutionTimeCounter.stopCounter();
                                 if (exceptionStatus) {
-                                    testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
+                                    testStatus.stopTest(startButton, waitingLabel, waitingAnimation, progressBar);
                                     GeneratePopupBox.exceptionPopupBox(exceptionValue);
                                 }
                             }
 //  Run Complete message
                             if (!exceptionStatus) {
                                 browserSettings.tearDown(driver);
-                                testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
+                                testStatus.stopTest(startButton, waitingLabel, waitingAnimation, progressBar);
                                 GeneratePopupBox.successPopupBox(resultMessage);
                             }
 //  Behavior on Close/Cancel confirmation popup
                         }else if (finalMainConfirmationPopupOption == JOptionPane.CANCEL_OPTION || finalMainConfirmationPopupOption == JOptionPane.CLOSED_OPTION) {
-                            testStatus.stopTest(startButton, waitingLabel, waitingAnimation);
+                            testStatus.stopTest(startButton, waitingLabel, waitingAnimation, progressBar);
                         }
                     };
 

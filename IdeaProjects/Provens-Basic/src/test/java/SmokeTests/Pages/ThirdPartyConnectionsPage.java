@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -57,6 +58,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         driver.findElement(thirdPartyButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(authorizeLoginFieldLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void configureAuthorizeAccount(String apiLoginId, String transactionKey) {
@@ -65,11 +67,13 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         WebElement loginField = driver.findElement(authorizeLoginFieldLocator);
         loginField.clear();
         loginField.sendKeys(apiLoginId);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Transaction Key\n";
         WebElement keyField = driver.findElement(authorizeKeyFieldLocator);
         keyField.clear();
         keyField.sendKeys(transactionKey);
+        ProgressBar.addProgressValue(progressVariable);
 
 //        log("Make Test for Authorize");
 //        driver.findElement(authorizeTestButtonLocator).click();
@@ -88,6 +92,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
         totalResultMessage += "Set UPS credentials:\n";
         totalResultMessage += " - Click UPS checkbox\n";
+        ProgressBar.addProgressValue(progressVariable);
 
         String upsIsChecked = driver.findElement(upsConfigurationCheckboxLocator).getAttribute("checked");
 
@@ -97,6 +102,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         } else {
             totalResultMessage += "UPS checkbox was selected\n";
         }
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("'UPS User Name' field was not found");
         WebElement element2 = wait3.until(ExpectedConditions.elementToBeClickable(upsUserNameFieldLocator));
@@ -106,21 +112,25 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         WebElement userNameField = driver.findElement(upsUserNameFieldLocator);
         userNameField.clear();
         userNameField.sendKeys(userName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Enter UPS password\n";
         WebElement passwordField = driver.findElement(upsPasswordFieldLocator);
         passwordField.clear();
         passwordField.sendKeys(password);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Enter UPS License Number\n";
         WebElement licenseNumberField = driver.findElement(upsLicenseNumberFieldLocator);
         licenseNumberField.clear();
         licenseNumberField.sendKeys(licenseNumber);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Enter UPS Shipper Number\n";
         WebElement shipperNumberField = driver.findElement(upsShipperNumberFieldLocator);
         shipperNumberField.clear();
         shipperNumberField.sendKeys(shipperNumber);
+        ProgressBar.addProgressValue(progressVariable);
 
 //          Test for UPS connection
 
@@ -144,6 +154,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         totalResultMessage += "Click USPS checkbox\n";
         String uspsIsChecked;
         uspsIsChecked = driver.findElement(uspsConfigurationCheckboxLocator).getAttribute("checked");
+        ProgressBar.addProgressValue(progressVariable);
 
         if(!Objects.equals(uspsIsChecked, "true")){
             driver.findElement(uspsConfigurationCheckboxLocator).click();
@@ -151,20 +162,23 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         } else {
             totalResultMessage += "USPS checkbox was selected\n";
         }
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'USPS Account ID' field was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(uspsAccountIdFieldLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'USPS Account ID' field was not loaded");
 
-        totalResultMessage += " - Enter USPS Account ID";
+        totalResultMessage += " - Enter USPS Account ID\n";
         WebElement accountIdField = driver.findElement(uspsAccountIdFieldLocator);
         accountIdField.clear();
         accountIdField.sendKeys(accountId);
+        ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Enter USPS Pass Phrase";
+        totalResultMessage += " - Enter USPS Pass Phrase\n";
         WebElement passPhraseField = driver.findElement(uspsPasswordFieldLocator);
         passPhraseField.clear();
         passPhraseField.sendKeys(passPhrase);
+        ProgressBar.addProgressValue(progressVariable);
 
 //        log("Make Test for USPS");
 //        driver.findElement(uspsTestButtonLocator).click();
@@ -185,8 +199,10 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
+        ProgressBar.addProgressValue(3);
 
         totalResultMessage += "Confirm popup message\n";
         driver.findElement(popupOkBtnLocator).click();
+        ProgressBar.addProgressValue(3);
     }
 }

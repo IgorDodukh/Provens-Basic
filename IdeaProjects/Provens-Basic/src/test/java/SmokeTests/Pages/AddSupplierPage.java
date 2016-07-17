@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,59 +45,75 @@ public class AddSupplierPage extends BrowserSettings {
         totalResultMessage += "Adding Supplier info:\n";
         totalResultMessage += " - Add Supplier Account Number\n";
         driver.findElement(supplierAccountNumberFieldLocator).sendKeys(accountNumber);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier Name\n";
         driver.findElement(supplierNameFieldLocator).sendKeys(name);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier URL\n";
         WebElement urlField = driver.findElement(supplierURLFieldLocator);
         urlField.click();
         Thread.sleep(500);
         urlField.sendKeys(url);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier Address\n";
         driver.findElement(supplierAddressFieldLocator).sendKeys(address1);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier Zip code\n";
         driver.findElement(supplierZipFieldLocator).sendKeys(zip);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier Email To\n";
         WebElement emailToField = driver.findElement(supplierEmailToFieldLocator);
         emailToField.click();
         emailToField.sendKeys(email);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier Email BCC\n";
         driver.findElement(supplierEmailBCCFieldLocator).sendKeys(email);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Supplier Email CC\n";
         driver.findElement(supplierEmailCCFieldLocator).sendKeys(email);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Contact First Name\n";
         driver.findElement(contactFirstNameFieldLocator).sendKeys(first);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Contact Last Name\n";
         driver.findElement(contactLastNameFieldLocator).sendKeys(last);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Contact Job Title\n";
         driver.findElement(contactJobTitleFieldLocator).sendKeys("QA");
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Contact Phone\n";
         driver.findElement(contactPhoneFieldLocator).sendKeys("8888888888");
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Contact Email\n";
         driver.findElement(contactEmailFieldLocator).sendKeys(email);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Contact Fax\n";
         driver.findElement(contactFaxFieldLocator).sendKeys("4444444444");
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void saveSupplier() {
         totalResultMessage += "Saving new Supplier:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
+        ProgressBar.addProgressValue(2);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
+        ProgressBar.addProgressValue(progressVariable);
 
 //        totalResultMessage += " - Confirm success popup\n";
 ////        String currentPopupMessage = driver.findElement(popupBoxMessageLocator).getText();

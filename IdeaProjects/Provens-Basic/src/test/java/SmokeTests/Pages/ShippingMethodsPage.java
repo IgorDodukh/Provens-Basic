@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,6 +40,7 @@ public class ShippingMethodsPage extends BrowserSettings {
         wait.until(ExpectedConditions.visibilityOfElementLocated(addShippingMethodTitleLocator));
         String currentTitle = driver.findElement(addShippingMethodTitleLocator).getText();
         Assert.assertEquals(currentTitle, "Shipping Method Information", "Unexpected page title for Shipping Method Creating Form");
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void createUPSGroundShippingMethod(String methodName, String shippingCharge) throws InterruptedException {
@@ -47,26 +49,31 @@ public class ShippingMethodsPage extends BrowserSettings {
         WebElement shippingMethodNameField = driver.findElement(shippingMethodNameFieldLocator);
         shippingMethodNameField.clear();
         shippingMethodNameField.sendKeys(methodName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Set Shipping Method parameters\n";
         driver.findElement(upsMethodDropdownLocator).click();
         driver.findElement(upsTypeGroundDropdownLocator).click();
         driver.findElement(favoriteShippingMethodSetYesLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         WebElement shippingChargeField = driver.findElement(shippingChargeFieldLocator);
         shippingChargeField.clear();
         shippingChargeField.sendKeys(shippingCharge);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Save 'UPS' method\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.elementToBeClickable(confirmPopupButtonLocator));
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Confirm success popup\n";
         Thread.sleep(1000);
 //        String currentPopupMessage = driver.findElement(saveSettingsSuccessPopupLocator).getText();
 //        Assert.assertEquals(currentPopupMessage, "Create ShippingMethod successfully!", "Unexpected popup message");
         driver.findElement(confirmPopupButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 //
 //        log("Check displaying Shipping Methods grid after saving changes");
 //        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Success popup is not hidden for a long time");

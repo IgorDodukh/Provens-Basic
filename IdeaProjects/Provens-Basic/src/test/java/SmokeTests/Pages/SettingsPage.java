@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -36,23 +37,28 @@ public class SettingsPage extends BrowserSettings {
         totalResultMessage += "Open 'Order Processing' tab\n";
         Thread.sleep(1000);
         driver.findElement(orderProcessingTabLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Set 'Always Ship Ahead, no setting changes allowed' setting\n";
+        totalResultMessage += "Set 'Always Ship Ahead' setting\n";
 
         WebElement element2=driver.findElement(alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element2);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait2.until(ExpectedConditions.elementToBeClickable(confirmPopupButtonLocator));
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Confirm success popup\n";
         String currentPopupMessage = driver.findElement(saveSettingsSuccessPopupLocator).getText();
+        ProgressBar.addProgressValue(1);
         Assert.assertEquals(currentPopupMessage, saveSettingsPopupMessage, "Unexpected popup message");
         driver.findElement(confirmPopupButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(1000);
     }
 }

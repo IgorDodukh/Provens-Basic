@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -70,38 +71,48 @@ public class AddCustomerPage extends BrowserSettings {
         totalResultMessage += "Adding customer info:\n";
         totalResultMessage += " - Add First Name\n";
         driver.findElement(firstNameFieldLocator).sendKeys(customerFirstName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Last Name\n";
         driver.findElement(lastNameFieldLocator).sendKeys(customerLastName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add email\n";
         driver.findElement(emailFieldLocator).sendKeys(customerEmail);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add phone\n";
         driver.findElement(phoneFieldLocator).sendKeys(customerPhone);
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addBillingAddress(String billingFirstName, String billingLastName, String billingAddressLine1, String billingZip) {
         totalResultMessage += "Adding Billing Address:\n";
         totalResultMessage += " - Select Billing Address tab\n";
         driver.findElement(billingAddressTabLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Click 'Add Billing Address' button\n";
         driver.findElement(getBillingAddressBtnLocator).click();
         Assert.assertEquals(driver.findElement(newBillingAddressSectionLocator).isDisplayed(), true, "Add new billing address form does not appear");
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Billing Address First Name\n";
         driver.findElement(billingAddressFirstNameLocator).sendKeys(billingFirstName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Billing Address Last Name\n";
         driver.findElement(billingAddressLastNameLocator).sendKeys(billingLastName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Billing Address Address line 1\n";
         driver.findElement(billingAddressAddr1Locator).sendKeys(billingAddressLine1);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Billing Address Zip\n";
         driver.findElement(billingAddressZipLocator).sendKeys(billingZip);
         driver.findElement(billingAddressAddr1Locator).click();
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addShippingAddress() {
@@ -110,13 +121,16 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(shippingAddressTabLocator).click();
         String currentShippingAddressTitle = driver.findElement(shippingAddressTitleLocator).getText();
         Assert.assertEquals(currentShippingAddressTitle, shippingAddressTitle, "Unexpected Shipping Address tab title");
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Click 'Add Shipping Address' button\n";
         driver.findElement(getShippingAddressBtnLocator).click();
         Assert.assertEquals(driver.findElement(newShippingAddressSectionLocator).isDisplayed(), true, "Add new Shipping address form does not appear");
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Shipping info. Same as Billing\n";
         driver.findElement(sameAsBillingButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addCreditCard(String testCardNumber) {
@@ -125,6 +139,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(paymentDetailsTabLocator).click();
         String currentPaymentMethodsTitle = driver.findElement(paymentDetailsTabTitleLocator).getText();
         Assert.assertEquals(currentPaymentMethodsTitle, paymentMethodsTitle, "Unexpected Payment Methods tab title");
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Click 'Add New Card' button\n";
         driver.findElement(addNewCardBtnLocator).click();
@@ -134,14 +149,16 @@ public class AddCustomerPage extends BrowserSettings {
         WebElement cardNumberField = driver.findElement(cardNumberFieldLocator);
         cardNumberField.clear();
         cardNumberField.sendKeys(testCardNumber);
+        ProgressBar.addProgressValue(progressVariable);
 
         driver.findElement(cardExpiredYearLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Click 'Save Card' button\n";
         driver.findElement(saveCardLinkLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
         wait.until(ExpectedConditions.elementToBeClickable(editCardLinkLocator));
-
+        ProgressBar.addProgressValue(progressVariable);
         Assert.assertEquals(driver.findElement(editCardLinkLocator).isDisplayed(), true, "Credit card is not saved");
     }
 
@@ -149,6 +166,7 @@ public class AddCustomerPage extends BrowserSettings {
         totalResultMessage += "Saving new Customer:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
@@ -160,6 +178,7 @@ public class AddCustomerPage extends BrowserSettings {
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Progress bar was not hidden");
         wait2.until(ExpectedConditions.elementToBeClickable(filterCustomersFieldLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 
 //    public void searchNewCustomerInTheGrid (String customerFirstName) {

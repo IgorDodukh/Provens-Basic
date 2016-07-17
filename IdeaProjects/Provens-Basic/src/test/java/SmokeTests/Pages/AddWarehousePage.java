@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,25 +49,32 @@ public class AddWarehousePage extends BrowserSettings {
         totalResultMessage += "Adding Warehouse info:\n";
         totalResultMessage +=" - Add Warehouse Name\n";
         driver.findElement(warehouseNameFieldLocator).sendKeys(warehouseName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add contact name\n";
         driver.findElement(warehouseContactNameFieldLocator).sendKeys(contactName);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add phone number\n";
         driver.findElement(warehousePhoneFieldLocator).sendKeys(phone);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Earliest Pickup Time\n";
         driver.findElement(pickingReadyTimeFieldLocator).sendKeys(startTime);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add Latest Pickup Time\n";
         driver.findElement(pickingCutoffTimeFieldLocator).sendKeys(endTime);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add address line\n";
         driver.findElement(addressFieldLocator).sendKeys(addressLine1);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add zip code\n";
         driver.findElement(zipFieldLocator).sendKeys(zip);
         driver.findElement(warehouseInfoTitleLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addWarehouseBin (String name) {
@@ -75,6 +83,7 @@ public class AddWarehousePage extends BrowserSettings {
         driver.findElement(binsTabLocator).click();
         totalResultMessage += " - Open 'Add Bin' popup\n";
         driver.findElement(addWarehouseBinButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Bin' popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(addBinPopupTitleLocator));
@@ -83,29 +92,31 @@ public class AddWarehousePage extends BrowserSettings {
 
         totalResultMessage += " - Enter Bin name\n";
         driver.findElement(newBinNameLocator).sendKeys(name);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Select Bin type\n";
         driver.findElement(pickBinTypeLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Save new Bin\n";
         driver.findElement(saveNewBinBtnLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
         Assert.assertEquals(driver.findElement(newBinNameInBinsGridLocator).getText(), newBinName, "Unexpected new created bin's name");
     }
 
     public void saveWarehouse() {
         totalResultMessage += "Save Warehouse\n";
         driver.findElement(saveContextualButton).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
         totalResultMessage += "Confirm popup message\n";
         String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
+        ProgressBar.addProgressValue(progressVariable);
         Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");
         driver.findElement(popupOkBtnLocator).click();
-
-//        log("Check displayed page with the created WH name");
-//        final Wait<WebDriver> wait1 = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
-//        wait1.until(ExpectedConditions.elementToBeClickable(binsTabLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 }

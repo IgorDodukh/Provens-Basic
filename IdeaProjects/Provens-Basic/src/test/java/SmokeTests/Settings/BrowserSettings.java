@@ -1,5 +1,6 @@
 package SmokeTests.Settings;
 
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
@@ -107,20 +108,21 @@ public class BrowserSettings {
     protected static String upsGroundMethodName = "UPS Ground-" + generateRandomData.generateRandomNumber(2);
     protected static String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
+// For reorder
+    protected static String orderedItems = "";
+    protected String shippingMethod = "";
     protected static String orderedCustomerNumber = "";
 
     protected static int timeoutVariable = 10;
+    public static int progressVariable;
 
-//    public boolean validCredentials = true;
     public static String totalResultMessage = "";
 
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         System.out.println("Run WebDriver");
         totalResultMessage += "Run WebDriver\n";
-
-
-
+        ProgressBar.addProgressValue(progressVariable);
         driver.manage().window().setSize(new Dimension(1366, 900));
         driver.get(enviroment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
@@ -130,9 +132,6 @@ public class BrowserSettings {
     public void tearDown(WebDriver driver) {
         System.out.println("Close WebDriver");
         totalResultMessage += "Close WebDriver";
-
-
-
         driver.close();
     }
 

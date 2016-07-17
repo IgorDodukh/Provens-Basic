@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -40,14 +41,17 @@ public class LoginPage extends BrowserSettings{
         WebElement login = driver.findElement(emailInputLocator);
         login.clear();
         login.sendKeys(email);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Enter Password\n";
         WebElement password = driver.findElement(passwordInputLocator);
         password.clear();
         password.sendKeys(pass);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Click 'Login' button\n";
         driver.findElement(loginButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         Thread.sleep(1000);
             try {
@@ -58,8 +62,10 @@ public class LoginPage extends BrowserSettings{
             } catch (NoSuchElementException e) {
                 totalResultMessage += "User is logging now\n";
             }
+        ProgressBar.addProgressValue(progressVariable);
+
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("User was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
-
+        ProgressBar.addProgressValue(progressVariable);
     }
 }

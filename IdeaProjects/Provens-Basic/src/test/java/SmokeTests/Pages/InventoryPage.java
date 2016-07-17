@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -51,9 +52,10 @@ public class InventoryPage extends BrowserSettings {
         totalResultMessage += "Search created Product\n";
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
-
+        ProgressBar.addProgressValue(10);
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(productSku);
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(Keys.ENTER);
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Product search didn't finished");
         wait2.until(ExpectedConditions.elementToBeClickable(firstProductSKULocator));
@@ -62,66 +64,77 @@ public class InventoryPage extends BrowserSettings {
 
         totalResultMessage += "Select first found Product\n";
         driver.findElement(firstProductLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Click 'Add' button\n";
         driver.findElement(firstProductAddButtonLocator).click();
         final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("Inventory adding form was not loaded");
         wait3.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addInventoryInfo() throws InterruptedException {
         totalResultMessage += "Adding Inventory info:\n";
         totalResultMessage += " - Add Lot number\n";
         driver.findElement(lotNumberFieldLocator).sendKeys(inventoryLotNumber);
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Add unit cost\n";
         driver.findElement(unitCostFieldLocator).sendKeys(inventoryUnitCost);
+        ProgressBar.addProgressValue(progressVariable);
 
-            totalResultMessage += " - Open 'Add Bin' form\n";
-            driver.findElement(binDropdownAddNewBinButtonLocator).click();
-            final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
-            wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
+        totalResultMessage += " - Open 'Add Bin' form\n";
+        driver.findElement(binDropdownAddNewBinButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
+        ProgressBar.addProgressValue(progressVariable);
 
-            totalResultMessage += "Adding Bin info:\n";
-            totalResultMessage += " - Add Bin name\n";
-            driver.findElement(addBinNameFieldLocator).sendKeys(binName);
+        totalResultMessage += "Adding Bin info:\n";
+        totalResultMessage += " - Add Bin name\n";
+        driver.findElement(addBinNameFieldLocator).sendKeys(binName);
+        ProgressBar.addProgressValue(progressVariable);
 
-            totalResultMessage += " - Select Bin type\n";
-            driver.findElement(addBinPickBinDropdownLocator).click();
+        totalResultMessage += " - Select Bin type\n";
+        driver.findElement(addBinPickBinDropdownLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
-            totalResultMessage += " - Add Bin priority\n";
-            driver.findElement(addBinPriorityFieldLocator).sendKeys(binPriority);
+        totalResultMessage += " - Add Bin priority\n";
+        driver.findElement(addBinPriorityFieldLocator).sendKeys(binPriority);
+        ProgressBar.addProgressValue(progressVariable);
 
-//            totalResultMessage += " - Add Bin low level\n";
-//            driver.findElement(addBinLowLevelFieldLocator).sendKeys("0");
-
-            totalResultMessage += " - Save Bin\n";
-            driver.findElement(saveBinButtonLocator).click();
+        totalResultMessage += " - Save Bin\n";
+        driver.findElement(saveBinButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
         wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
 
         totalResultMessage += " - Add qty value\n";
         driver.findElement(addBinQuantityFieldLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
-//        driver.findElement(addBinQuantityFieldLocator).clear();
         driver.findElement(addBinQuantityFieldLocator).sendKeys(inventoryQty);
         driver.findElement(addBinNotesFieldLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         String qtyValue = driver.findElement(addBinQuantityValueLocator).getText();
         Assert.assertEquals(qtyValue, inventoryQty + ".00", "Incorrect qty value is displayed");
 
         totalResultMessage += " - Add Notes\n";
         driver.findElement(addBinNotesFieldLocator).sendKeys(inventoryNotes);
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void saveInventory() {
         totalResultMessage += "Saving inventory:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseProductButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
+
+        ProgressBar.addProgressValue(10);
 
 //        totalResultMessage += " - Confirm success popup\n";
 //        driver.findElement(popupOkBtnLocator).click();

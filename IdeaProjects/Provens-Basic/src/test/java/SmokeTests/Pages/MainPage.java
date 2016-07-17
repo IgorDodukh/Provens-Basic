@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -69,6 +70,7 @@ public class MainPage extends BrowserSettings {
         driver.findElement(customersMenuButtonLocator).click();
         driver.findElement(addCustomerMenuButtonLocator).click();
         Assert.assertEquals(driver.findElement(customerInfoTabLocator).isDisplayed(), true, "Customer creating page is not loaded");
+        ProgressBar.addProgressValue(progressVariable);
     }
 
 // --Commented out by Inspection START (7/14/2016 10:10 PM):
@@ -85,7 +87,8 @@ public class MainPage extends BrowserSettings {
         driver.findElement(searchWarehouseButtonLocator).click();
         driver.findElement(addWarehouseButtonLocator).click();
         Assert.assertEquals(driver.findElement(addPageBreadcrumpLocator).getText(), "Add", "Warehouse creating page is not loaded");
-        }
+        ProgressBar.addProgressValue(progressVariable);
+    }
 
     public void openAddProductPage() throws InterruptedException {
         totalResultMessage += "Open 'Add Product' page\n";
@@ -93,6 +96,7 @@ public class MainPage extends BrowserSettings {
         driver.findElement(addProductMenuButtonLocator).click();
         Assert.assertEquals(driver.findElement(addPageBreadcrumpLocator).getText(), "Add", "Customer creating page is not loaded");
         Assert.assertEquals(driver.findElement(addCustomerPageTitleLocator).getText(), "Product Details", "Unexpected page title");
+        ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(5000);
     }
 
@@ -105,53 +109,45 @@ public class MainPage extends BrowserSettings {
         WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page title was not found");
         Assert.assertEquals(element2.isDisplayed(), true, "'Basic Settings' page was not loaded");
-
+        ProgressBar.addProgressValue(progressVariable);
     }
-
-// --Commented out by Inspection START (7/14/2016 10:10 PM):
-//    public void openThirdPartyConnectionsPage() {
-//        totalResultMessage += "Open 'Third Party Connections' page\n";
-//        driver.findElement(setupButtonLocator).click();
-//        driver.findElement(thirdPartyConnectionsButtonLocator).click();
-//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party Connections' page popup was not found");
-//        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(authorizeNetTitleLocator));
-//
-//        Assert.assertEquals(element.isDisplayed(), true, "'Third Party Connections' page title was not found");
-//    }
-// --Commented out by Inspection STOP (7/14/2016 10:10 PM)
 
     public void openMainPage() {
         totalResultMessage += "Navigate to Main Page\n";
         driver.findElement(siteLogoIconLocator).click();
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");
         wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void openShippingMethodsPage() throws InterruptedException {
         totalResultMessage += "Open 'Shipping Methods' page\n";
         driver.findElement(setupButtonLocator).click();
         driver.findElement(shippingMethodsButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         Thread.sleep(2000);
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not loaded");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(addShippingMethodButtonLocator));
-
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
     }
 
     public void openSuppliersPage() {
         totalResultMessage += "Open 'Suppliers' page\n";
+        ProgressBar.addProgressValue(5);
         driver.findElement(productsMenuButtonLocator).click();
         driver.findElement(suppliersMenuButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void openAddSupplierPage() {
         totalResultMessage += "Open 'Add Supplier' page\n";
+        ProgressBar.addProgressValue(5);
         driver.findElement(addSupplierButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' page popup was not loaded");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
-
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
+        ProgressBar.addProgressValue(progressVariable);
     }
 
 // --Commented out by Inspection START (7/14/2016 10:10 PM):
@@ -180,11 +176,13 @@ public class MainPage extends BrowserSettings {
         driver.findElement(viewAllOrdersMenuButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Orders' grid was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
+        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Select 'All' tab\n";
         Thread.sleep(2000);
         driver.findElement(allOrdersTabButtonLocator).click();
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'All Orders' grid was not loaded");
         wait2.until(ExpectedConditions.elementToBeClickable(allOrdersTabButtonLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 }
