@@ -35,7 +35,7 @@ public class GeneratePopupBox {
                 exceptionLog,
                 "Failed. " + SimpleGUI.waitingLabel.getText().replaceAll("Test is running... ","") + ". Running time: " + ExecutionTimeCounter.executionTime,
                 JOptionPane.DEFAULT_OPTION,
-                0,
+                JOptionPane.ERROR_MESSAGE,
                 sad);
         BrowserSettings.totalResultMessage = "";
     }
@@ -44,7 +44,7 @@ public class GeneratePopupBox {
         JOptionPane.showMessageDialog(
                 null,
                 resultMessage,
-                "Complete." + SimpleGUI.waitingLabel.getText().replaceAll("Test is running... ","") + " Running time: " + ExecutionTimeCounter.executionTime,
+                "Complete."/* + SimpleGUI.waitingLabel.getText().replaceAll("Test is running... ","")*/ + " Running time: " + ExecutionTimeCounter.executionTime,
                 JOptionPane.PLAIN_MESSAGE,
                 success);
         BrowserSettings.totalResultMessage = "";

@@ -16,12 +16,14 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SimpleGUI extends JFrame {
+public class SimpleGUI extends JFrame implements KeyListener {
     private WebDriver driver;
     private BrowserSettings browserSettings = new BrowserSettings();
 
@@ -34,7 +36,7 @@ public class SimpleGUI extends JFrame {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.20 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.26 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     public static JLabel waitingLabel = new JLabel("Test is running... " + addProgressValue + "%");
@@ -68,7 +70,14 @@ public class SimpleGUI extends JFrame {
     private JComboBox<String> environmentsComboBox = new JComboBox<>();
 
     private String[] browsers = {" Google Chrome", " Mozilla Firefox"};
-    private String[] entityTypes = {" Configure Merchant", " Create Customer", " Create Product", " Create Supplier", " Create Warehouse & Bin", " Reorder the last Order"};
+    private String[] entityTypes = {
+            " Configure Merchant",
+            " Create Customer",
+            " Create Product",
+            " Create Supplier",
+            " Create Warehouse & Bin",
+            " Reorder the last Order"
+    };
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
     private boolean exceptionStatus = false;
@@ -92,8 +101,14 @@ public class SimpleGUI extends JFrame {
 
 //  Main app configs
         this.setBounds(800,400,500,448);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
+        browsersComboBox.addKeyListener(this);
+        entityTypeComboBox.addKeyListener(this);
+        environmentsComboBox.addKeyListener(this);
+        loginField.addKeyListener(this);
+        passwordField.addKeyListener(this);
+        this.setBackground(new Color(42, 67, 77));
         this.setIconImage(appIcon);
         waitingAnimation.setVisible(false);
         waitingLabel.setVisible(false);
@@ -193,7 +208,7 @@ public class SimpleGUI extends JFrame {
         container.add(environmentsComboBox, gbc);
 
 //  Size parameters for the middle section
-        gbc.insets = new Insets(13, 20, 2, 20);
+        gbc.insets = new Insets(14, 0, 0, 0);
 
 //  Progress bar position
         gbc.gridx = 0;
@@ -287,6 +302,26 @@ public class SimpleGUI extends JFrame {
         picLabel.setBounds(0,0,0,0);
         picLabel.setVisible(true);
         container.add(picLabel, gbc);
+    }
+
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        if (keyCode == KeyEvent.VK_ENTER)
+            startButton.doClick();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 
     private class ButtonEventListener implements ActionListener {

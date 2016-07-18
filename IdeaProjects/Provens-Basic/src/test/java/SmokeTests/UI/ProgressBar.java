@@ -9,8 +9,6 @@ public class ProgressBar {
         SimpleGUI.progressBar.paintImmediately(0, 0, 200, 25);
         SimpleGUI.addProgressValue = SimpleGUI.addProgressValue + i;
         SimpleGUI.progressBar.setValue(SimpleGUI.addProgressValue);
-//        SimpleGUI.progressBar.setString(SimpleGUI.addProgressValue + "%");
         SimpleGUI.waitingLabel.setText("Test is running... " + SimpleGUI.addProgressValue + "%");
-
     }
 }
