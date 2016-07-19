@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Ihor on 7/11/2016.
@@ -22,7 +23,7 @@ public class ViewOrderPage extends BrowserSettings {
 
     private By firstOrderFromTheListLocator = By.xpath("//tbody//tr[2]/td/a");
     private By orderSummaryTabLocator = By.xpath("//aside[@id='leftNav']//li[1]/a");
-    private By customerInfoTabLocator = By.xpath("//aside[@id='leftNav']//li[2]/a");
+    private By customerNameLocator = By.xpath("//tbody//tr[2]/td[4]");
     private By shippingDetailsTabLocator = By.xpath("//aside[@id='leftNav']//li[4]/a");
     private By paymentDetailsTabLocator = By.xpath("//aside[@id='leftNav']//li[6]/a");
     private By customerNumberFieldLocator = By.xpath("//input[@id='customerNumber']");
@@ -38,6 +39,15 @@ public class ViewOrderPage extends BrowserSettings {
     public void openViewOrderPage() throws InterruptedException {
         totalResultMessage += "Open 'View Order' page\n";
         Thread.sleep(2000);
+        orderedCustomerName = driver.findElement(customerNameLocator).getText();
+
+        int nameLength = orderedCustomerName.length();
+        int nameSpace = orderedCustomerName.indexOf(" ");
+        StringBuffer buffer = new StringBuffer(orderedCustomerName);
+        buffer.replace(nameSpace, nameLength, "");
+        orderedCustomerName = Objects.toString(buffer);
+        System.out.println(orderedCustomerName);
+
         driver.findElement(firstOrderFromTheListLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'View Order' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
@@ -47,14 +57,6 @@ public class ViewOrderPage extends BrowserSettings {
         System.out.println("Shipping Method " + shippingMethod);
     }
 
-    public void getCustomerInfo() throws InterruptedException {
-        totalResultMessage += "Get Customer Info\n";
-        Thread.sleep(3000);
-        driver.findElement(customerInfoTabLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Customer Info' tab is not loaded");
-        wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
-        orderedCustomerNumber = driver.findElement(customerNumberFieldLocator).getText();
-    }
     public void getOrderItemsInfo() {
         totalResultMessage += "Get Ordered Items Info\n";
         driver.findElement(shippingDetailsTabLocator).click();

@@ -24,7 +24,7 @@ public class MakeReorder extends BrowserSettings {
 
         ViewOrderPage viewOrderPage = new ViewOrderPage(driver);
         viewOrderPage.openViewOrderPage();
-        viewOrderPage.getCustomerInfo();
+//        viewOrderPage.getCustomerInfo();
         viewOrderPage.getOrderItemsInfo();
         viewOrderPage.backToOrdersGrid();
         viewOrderPage.openOrderCreatingForm();

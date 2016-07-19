@@ -110,8 +110,9 @@ public class BrowserSettings {
 
 // For reorder
     protected static String orderedItems = "";
-    protected String shippingMethod = "";
-    protected static String orderedCustomerNumber = "";
+    protected static String shippingMethod = "";
+    protected static String orderedCustomerName = "";
+    public static String orderNumber = "";
 
     protected static int timeoutVariable = 10;
     public static int progressVariable;

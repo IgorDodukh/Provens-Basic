@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 /**
  * Created by igor on 27.05.16.
  */
-public class SetUpNewMerchant extends BrowserSettings {
+public class ConfigureMerchant extends BrowserSettings {
     @Test
     public void setupNewMerchant(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
 

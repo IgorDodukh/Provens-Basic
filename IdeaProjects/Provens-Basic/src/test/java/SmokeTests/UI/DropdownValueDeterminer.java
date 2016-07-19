@@ -8,19 +8,20 @@ import org.openqa.selenium.WebDriver;
  * Created by Ihor on 7/16/2016.
  */
 public class DropdownValueDeterminer {
-    private SetUpNewMerchant setUpNewMerchant = new SetUpNewMerchant();
+    private ConfigureMerchant configureMerchant = new ConfigureMerchant();
     private AddNewCustomer addNewCustomer = new AddNewCustomer();
     private AddProductWithInventory addProductWithInventory = new AddProductWithInventory();
     private AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
     private CreateSupplier createSupplier = new CreateSupplier();
     private MakeReorder makeReorder = new MakeReorder();
+    private ConfigureChannel configureChannel = new ConfigureChannel();
 
 
     public void entityTypeDropdown(int entityTypeComboBoxIndex, String login, String password, String testCardNumber, WebDriver driver) throws InterruptedException {
         SimpleGUI.resultMessage += "Oh boy, you are lucky.\n" + "Test has been finished.\nNew ";
         if (entityTypeComboBoxIndex == 0) {
             BrowserSettings.progressVariable = 3;
-            setUpNewMerchant.setupNewMerchant(login, password, driver);
+            configureMerchant.setupNewMerchant(login, password, driver);
             SimpleGUI.resultMessage += "Merchant '" + login + "' has been configured";
         } else if (entityTypeComboBoxIndex == 1) {
             BrowserSettings.progressVariable = 4;
@@ -49,9 +50,9 @@ public class DropdownValueDeterminer {
         } else if (entityTypeComboBoxIndex == 6) {
             makeReorder.makeReorder(login, password, driver);
             SimpleGUI.resultMessage += "Order has been created\n";
-            SimpleGUI.resultMessage += "\nOrder Number is: XXXX";
+            SimpleGUI.resultMessage += "\nOrder Number is: " + BrowserSettings.orderNumber;
         } else if (entityTypeComboBoxIndex == 5) {
-
+            configureChannel.configureMagentoChannel(login, password, driver);
             SimpleGUI.resultMessage += "Magento Channel has been configured\n";
             SimpleGUI.resultMessage += "\nMagento is: qatestlab05";
             SimpleGUI.resultMessage += "\nNew FS environment is: qa05";
