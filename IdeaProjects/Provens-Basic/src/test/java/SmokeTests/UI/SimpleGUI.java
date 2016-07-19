@@ -14,10 +14,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboPopup;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +33,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.26 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.28 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     public static JLabel waitingLabel = new JLabel("Test is running... " + addProgressValue + "%");
@@ -76,7 +73,8 @@ public class SimpleGUI extends JFrame implements KeyListener {
             " Create Product",
             " Create Supplier",
             " Create Warehouse & Bin",
-            " Reorder the last Order"
+            " Configure Magento Channel",
+            " Reorder the last Order(in dev)"
     };
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
 
@@ -103,16 +101,71 @@ public class SimpleGUI extends JFrame implements KeyListener {
         this.setBounds(800,400,500,448);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
-        browsersComboBox.addKeyListener(this);
-        entityTypeComboBox.addKeyListener(this);
-        environmentsComboBox.addKeyListener(this);
-        loginField.addKeyListener(this);
-        passwordField.addKeyListener(this);
         this.setBackground(new Color(42, 67, 77));
         this.setIconImage(appIcon);
         waitingAnimation.setVisible(false);
         waitingLabel.setVisible(false);
         progressBar.setVisible(false);
+
+        browsersComboBox.addKeyListener(this);
+        entityTypeComboBox.addKeyListener(this);
+        environmentsComboBox.addKeyListener(this);
+        loginField.addKeyListener(this);
+        passwordField.addKeyListener(this);
+        startButton.addKeyListener(this);
+
+        browsersComboBox.addMouseWheelListener(new MouseWheelListener()
+        {
+            public void mouseWheelMoved(MouseWheelEvent e)
+            {
+                int index = browsersComboBox.getSelectedIndex();
+                if(Objects.equals(String.valueOf(e.getWheelRotation()), "-1")){
+                    if (index != 0){
+                        browsersComboBox.setSelectedIndex(index - 1);
+                    }
+                }else if(Objects.equals(String.valueOf(e.getWheelRotation()), "1")){
+                    if (index == 0) {
+                        browsersComboBox.setSelectedIndex(index + 1);
+                    }
+                }
+            }
+        });
+
+        entityTypeComboBox.addMouseWheelListener(new MouseWheelListener()
+        {
+            public void mouseWheelMoved(MouseWheelEvent e)
+            {
+                int index = entityTypeComboBox.getSelectedIndex();
+                int entityCount = entityTypeComboBox.getMaximumRowCount();
+                if(Objects.equals(String.valueOf(e.getWheelRotation()), "-1")){
+                    if (index != 0){
+                        entityTypeComboBox.setSelectedIndex(index - 1);
+                    }
+                }else if(Objects.equals(String.valueOf(e.getWheelRotation()), "1")){
+                    if (entityCount - 2 > index) {
+                        entityTypeComboBox.setSelectedIndex(index + 1);
+                    }
+                }
+            }
+        });
+
+        environmentsComboBox.addMouseWheelListener(new MouseWheelListener()
+        {
+            public void mouseWheelMoved(MouseWheelEvent e)
+            {
+                int index = environmentsComboBox.getSelectedIndex();
+                int envCount = environmentsComboBox.getMaximumRowCount();
+                if(Objects.equals(String.valueOf(e.getWheelRotation()), "-1")){
+                    if (index != 0){
+                        environmentsComboBox.setSelectedIndex(index - 1);
+                    }
+                }else if(Objects.equals(String.valueOf(e.getWheelRotation()), "1")){
+                    if (envCount - 5 > index) {
+                        environmentsComboBox.setSelectedIndex(index + 1);
+                    }
+                }
+            }
+        });
 
 
 //  Add items to dropdown-lists
@@ -217,9 +270,6 @@ public class SimpleGUI extends JFrame implements KeyListener {
         progressBar.setBackground(new Color(255, 255, 255));
         progressBar.setForeground(new Color(42, 67, 77));
         progressBar.setBorderPainted(false);
-//        SimpleGUI.progressBar.setFont(new java.awt.Font("Arial", Font.PLAIN, 10));
-//        SimpleGUI.progressBar.setStringPainted(true);
-//        SimpleGUI.progressBar.setString(String.valueOf(addProgressValue) + "%");
         container.add(progressBar, gbc);
 
         gbc.gridx = 1;

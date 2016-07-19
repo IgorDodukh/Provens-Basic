@@ -46,10 +46,15 @@ public class DropdownValueDeterminer {
             createSupplier.jira3012(login, password, driver);
             SimpleGUI.resultMessage += "Supplier has been created\n";
             SimpleGUI.resultMessage += "\nSupplier name is: " + BrowserSettings.supplierName;
-        } else if (entityTypeComboBoxIndex == 5) {
+        } else if (entityTypeComboBoxIndex == 6) {
             makeReorder.makeReorder(login, password, driver);
             SimpleGUI.resultMessage += "Order has been created\n";
             SimpleGUI.resultMessage += "\nOrder Number is: XXXX";
+        } else if (entityTypeComboBoxIndex == 5) {
+
+            SimpleGUI.resultMessage += "Magento Channel has been configured\n";
+            SimpleGUI.resultMessage += "\nMagento is: qatestlab05";
+            SimpleGUI.resultMessage += "\nNew FS environment is: qa05";
         }
     }
 }
