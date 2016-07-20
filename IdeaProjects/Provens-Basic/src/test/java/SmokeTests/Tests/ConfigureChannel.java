@@ -10,12 +10,15 @@ import org.testng.annotations.Test;
  */
 public class ConfigureChannel extends BrowserSettings {
     @Test
-    public void configureMagentoChannel(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
+    public void configureMagentoChannel(/*String email, String merchantPassword,*/ WebDriver driver) throws InterruptedException {
 
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginMerchant(email, merchantPassword);
+        MagentoAdminPanel magentoAdminPanel = new MagentoAdminPanel(driver);
+        magentoAdminPanel.adminPanelLogin();
 
-        MainPage mainPage = new MainPage(driver);
+//        LoginPage loginPage = new LoginPage(driver);
+//        loginPage.loginMerchant(email, merchantPassword);
+//
+//        MainPage mainPage = new MainPage(driver);
 
     }
 

@@ -20,11 +20,24 @@ public class BrowserSettings {
     private static GenerateRandomData generateRandomData = new GenerateRandomData();
 
     //    List of Environments
-    private static ArrayList<String> enviroment = new ArrayList<String>(
+    private static ArrayList<String> fsEnvironment = new ArrayList<String>(
             Arrays.asList("https://qa01.freestylecommerce.info/web/",
                     "https://qa03.freestylecommerce.info/web/",
                     "https://qa05.freestylecommerce.info/web/",
                     "https://my.freestylecommerce.com/web/"));
+
+    public static ArrayList<String> magentoEnvironment = new ArrayList<String>(
+            Arrays.asList("https://linux.mailordercentral.com/qatestlab01/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab02/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab03/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab04/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab05/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab06/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab07/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab08/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab09/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/qatestlab10/index.php/admin/dashboard/",
+                    "https://linux.mailordercentral.com/hercules/index.php/admin/dashboard/"));
 
 //    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
 
@@ -114,6 +127,10 @@ public class BrowserSettings {
     protected static String orderedCustomerName = "";
     public static String orderNumber = "";
 
+// Magento config
+    public String magentoLogin = "FSAWS_Admin";
+    public String magentoPassword = "#Dydacomp1";
+
     protected static int timeoutVariable = 10;
     public static int progressVariable;
 
@@ -125,7 +142,7 @@ public class BrowserSettings {
         totalResultMessage += "Run WebDriver\n";
         ProgressBar.addProgressValue(progressVariable);
         driver.manage().window().setSize(new Dimension(1366, 900));
-        driver.get(enviroment.get(envIndex));
+        driver.get(fsEnvironment.get(envIndex));
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
     }
 

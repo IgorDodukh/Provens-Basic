@@ -14,6 +14,7 @@ public class TestStatus {
         progressBar.setVisible(true);
         SimpleGUI.progressBar.setValue(0);
         SimpleGUI.addProgressValue = 0;
+        SimpleGUI.resultMessage = "";
     }
 
     public void stopTest(JButton startButton, JLabel waitingLabel, JLabel waitingAnimation, JProgressBar progressBar) {
@@ -23,5 +24,6 @@ public class TestStatus {
         progressBar.setVisible(false);
         SimpleGUI.progressBar.setValue(0);
         SimpleGUI.addProgressValue = 0;
+
     }
 }

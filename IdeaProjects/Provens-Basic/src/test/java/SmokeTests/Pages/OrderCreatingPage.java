@@ -70,7 +70,10 @@ public class OrderCreatingPage extends BrowserSettings {
             By shippingMethodMoreButtonLocator = By.xpath(
                     "//div[@id='Shipping Address']//ul[@class='uib-dropdown-menu dropdown-menu']/li[" + i + "]/a");
             dropdownValue = driver.findElement(shippingMethodMoreButtonLocator).getText();
-            if (Objects.equals(dropdownValue, shippingMethod)) {
+            if(Objects.equals("", shippingMethod)){
+                driver.findElement(shippingMethodMoreButtonLocator).click();
+                break;
+            }else if (Objects.equals(dropdownValue, shippingMethod)) {
                 driver.findElement(shippingMethodMoreButtonLocator).click();
                 break;
             }

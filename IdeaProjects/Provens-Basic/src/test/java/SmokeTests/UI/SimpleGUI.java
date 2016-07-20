@@ -33,7 +33,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.30 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.31 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     public static JLabel waitingLabel = new JLabel("Test is running... " + addProgressValue + "%");
@@ -53,6 +53,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
     private final ImageIcon discoverLogo = new ImageIcon("C:\\appFiles\\pic\\discover.png");
     private final ImageIcon americanExpressLogo = new ImageIcon("C:\\appFiles\\pic\\American-Express.png");
     private final ImageIcon ccLogo = new ImageIcon("C:\\appFiles\\pic\\credit-card-logo.png");
+    private final ImageIcon magentoLogo = new ImageIcon("C:\\appFiles\\pic\\magento-logo.png");
 
     private JLabel waitingAnimation = new JLabel(new ImageIcon(String.valueOf(animatedIcon)));
     private JTextField loginField = new JTextField("newadmin@dydacomp.biz", 15);
@@ -64,7 +65,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
 
     private JComboBox<String> browsersComboBox = new JComboBox<>();
     private JComboBox<String> entityTypeComboBox = new JComboBox<>();
-    private JComboBox<String> environmentsComboBox = new JComboBox<>();
+    protected static JComboBox<String> environmentsComboBox = new JComboBox<>();
 
     private String[] browsers = {" Google Chrome", " Mozilla Firefox"};
     private String[] entityTypes = {
@@ -73,10 +74,25 @@ public class SimpleGUI extends JFrame implements KeyListener {
             " Create Product",
             " Create Supplier",
             " Create Warehouse & Bin",
-            " Configure Magento Channel",
-            " Reorder the last Order(in dev)"
+            " Configure Magento (in dev)",
+            " Reorder the last Order"
     };
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
+    private String[] magentos = {
+            " qatestlab01",
+            " qatestlab02",
+            " qatestlab03",
+            " qatestlab04",
+            " qatestlab05",
+            " qatestlab06",
+            " qatestlab07",
+            " qatestlab08",
+            " qatestlab09",
+            " qatestlab10",
+            " hercules",};
+
+    public static int magentoIndex;
+    public static String magentoIndexName = "";
 
     private boolean exceptionStatus = false;
     private int browserComboBoxIndex;
@@ -476,6 +492,28 @@ public class SimpleGUI extends JFrame implements KeyListener {
                         } else if (discoverButton.isSelected()) {
                             testCardNumber = BrowserSettings.discoverTestCardNumber;
                         }
+                    }
+                } else if (entityTypeComboBoxIndex == 5){
+                    JComboBox<String> magentoComboBox = new JComboBox<>();
+                    for (String magento : magentos) {
+                        magentoComboBox.addItem(magento);
+                    }
+
+                    Object[] popupMessage = {
+                            "Select Magento which you would like\n",
+                            "to sync with " + environmentsComboBox.getSelectedItem() + "\n",
+                            magentoComboBox
+                    };
+
+                    popupOption = JOptionPane.showConfirmDialog(
+                            null,
+                            popupMessage,
+                            "Select Magento Environment",
+                            JOptionPane.DEFAULT_OPTION, 0, magentoLogo);
+
+                    if(popupOption == JOptionPane.OK_OPTION){
+                        magentoIndex = magentoComboBox.getSelectedIndex();
+                        magentoIndexName = magentoComboBox.getSelectedItem().toString();
                     }
                 }
 

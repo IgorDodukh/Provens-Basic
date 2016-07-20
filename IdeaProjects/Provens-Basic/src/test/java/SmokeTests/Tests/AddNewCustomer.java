@@ -13,9 +13,9 @@ import org.testng.annotations.Test;
 public class AddNewCustomer extends BrowserSettings{
 
     @Test
-    public void jira3675(String email, String merchantPassword, String testCardNumber, WebDriver driver) throws InterruptedException {
+    public void jira3675(String email, String password, String cardNumber, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginMerchant(email, merchantPassword);
+        loginPage.loginMerchant(email, password);
 
         MainPage mainPage = new MainPage(driver);
         mainPage.openAddCustomerPage();
@@ -24,7 +24,7 @@ public class AddNewCustomer extends BrowserSettings{
         addCustomerPage.addCustomerInfo(firstName, lastName, customerEmail, phone);
         addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();
-        addCustomerPage.addCreditCard(testCardNumber);
+        addCustomerPage.addCreditCard(cardNumber);
         addCustomerPage.saveNewCustomer();
     }
 }
