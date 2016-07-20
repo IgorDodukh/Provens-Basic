@@ -64,6 +64,7 @@ public class MainPage extends BrowserSettings {
     private By viewAllOrdersMenuButtonLocator = By.xpath("//li/a[@href='/web/Order/SearchOrderAdvance']");
     private By allOrdersTabButtonLocator = By.xpath("//section[@id='tabsSection']/button[6]");
 
+    private By syncButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[7]");
 
     public void openAddCustomerPage() {
         totalResultMessage += "Open 'Add Customer' page\n";
@@ -184,5 +185,13 @@ public class MainPage extends BrowserSettings {
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'All Orders' grid was not loaded");
         wait2.until(ExpectedConditions.elementToBeClickable(allOrdersTabButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
+    }
+
+    public void openSyncPage() {
+        totalResultMessage += "Open 'Sync' page\n";
+        driver.findElement(syncButtonLocator).click();
+
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Sync' page was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
     }
 }

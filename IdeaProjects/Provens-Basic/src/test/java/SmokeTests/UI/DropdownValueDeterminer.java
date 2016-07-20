@@ -52,7 +52,7 @@ public class DropdownValueDeterminer {
             SimpleGUI.resultMessage += "New Order has been created\n";
             SimpleGUI.resultMessage += "\nOrder Number is: " + BrowserSettings.orderNumber;
         } else if (entityTypeComboBoxIndex == 5) {
-            configureChannel.configureMagentoChannel(/*login, password,*/ driver);
+            configureChannel.configureMagentoChannel(login, password, driver);
             SimpleGUI.resultMessage += "\nMagento "+ SimpleGUI.magentoIndexName;
             SimpleGUI.resultMessage += "\nhas been synced with " + SimpleGUI.environmentsComboBox.getSelectedItem();
         }
