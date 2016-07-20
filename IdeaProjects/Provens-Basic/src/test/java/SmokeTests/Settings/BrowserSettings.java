@@ -21,10 +21,10 @@ public class BrowserSettings {
 
     //    List of Environments
     private static ArrayList<String> fsEnvironment = new ArrayList<String>(
-            Arrays.asList("https://qa01.freestylecommerce.info/web/",
-                    "https://qa03.freestylecommerce.info/web/",
-                    "https://qa05.freestylecommerce.info/web/",
-                    "https://my.freestylecommerce.com/web/"));
+            Arrays.asList("https://qa01.freestylecommerce.info/web",
+                    "https://qa03.freestylecommerce.info/web",
+                    "https://qa05.freestylecommerce.info/web",
+                    "https://my.freestylecommerce.com/web"));
 
     public static ArrayList<String> magentoEnvironment = new ArrayList<String>(
             Arrays.asList("https://linux.mailordercentral.com/qatestlab01/index.php/admin/dashboard/",
@@ -130,6 +130,12 @@ public class BrowserSettings {
 // Magento config
     public String magentoLogin = "FSAWS_Admin";
     public String magentoPassword = "#Dydacomp1";
+    public static String magentoChannelID = "";
+    private String magentoFSLink = "";
+    public String magentoAutenticationURL = magentoFSLink + "api/api/authentication";
+    public String magentoNotificationURL = magentoFSLink + "api/api/notification";
+    public String magentoQueueServiceURL = magentoFSLink + "api/Magento/CreateEntities";
+
 
     protected static int timeoutVariable = 10;
     public static int progressVariable;
@@ -143,6 +149,7 @@ public class BrowserSettings {
         ProgressBar.addProgressValue(progressVariable);
         driver.manage().window().setSize(new Dimension(1366, 900));
         driver.get(fsEnvironment.get(envIndex));
+        magentoFSLink = fsEnvironment.get(envIndex);
         driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
     }
 

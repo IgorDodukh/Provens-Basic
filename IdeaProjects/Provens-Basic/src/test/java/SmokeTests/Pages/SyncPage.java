@@ -20,12 +20,12 @@ public class SyncPage extends BrowserSettings{
     }
 
     private By syncFilterByFieldLocator = By.xpath("//div[@class='dataTables_filter']//input");
-    private By syncChannelInGridLocator = By.xpath("//table/tbody//tr[1]");
+    private By syncChannelInGridLocator = By.xpath("//table/tbody//tr[1]/td[2]");
     private By syncViewChannelButtonLocator = By.xpath("//table/tbody//tr[1]//input[@name='view_salesChannel']");
     private By channelOverviewTabLocator = By.xpath("//aside[@id='leftNav']//ul[1]/li/a");
+    private By channelIDLocator = By.xpath("//input[@id='txtChannelId']");
 
-
-    public void openChannel() {
+    public void openChannel() throws InterruptedException {
         totalResultMessage += "Search needed Channel\n";
 
         String channelName = SimpleGUI.magentoIndexName.replace("qatestlab", "");
@@ -36,10 +36,19 @@ public class SyncPage extends BrowserSettings{
         wait.until(ExpectedConditions.elementToBeClickable(syncFilterByFieldLocator));
 
         totalResultMessage += "Open found Channel\n";
+        Thread.sleep(1000);
         driver.findElement(syncChannelInGridLocator).click();
+//        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'View Channel' button is not displayed");
+//        wait2.until(ExpectedConditions.elementToBeClickable(syncViewChannelButtonLocator));
         driver.findElement(syncViewChannelButtonLocator).click();
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'View Channel' page was not loaded");
-        wait2.until(ExpectedConditions.elementToBeClickable(channelOverviewTabLocator));
+
+        final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("'View Channel' page was not loaded");
+        wait3.until(ExpectedConditions.elementToBeClickable(channelOverviewTabLocator));
+    }
+
+    public void getChannelID() {
+        totalResultMessage += "Remember Channel ID\n";
+        magentoChannelID = driver.findElement(channelIDLocator).getAttribute("value");
     }
 
 

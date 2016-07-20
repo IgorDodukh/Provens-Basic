@@ -33,7 +33,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.31 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.35 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     public static JLabel waitingLabel = new JLabel("Test is running... " + addProgressValue + "%");
@@ -74,7 +74,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
             " Create Product",
             " Create Supplier",
             " Create Warehouse & Bin",
-            " Configure Magento (in dev)",
+            " Sync Magento",
             " Reorder the last Order"
     };
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};

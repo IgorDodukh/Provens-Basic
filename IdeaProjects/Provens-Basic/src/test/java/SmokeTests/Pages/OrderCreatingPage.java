@@ -20,7 +20,6 @@ public class OrderCreatingPage extends BrowserSettings {
         this.driver = driver;
     }
 
-//    int i = 1;
     String dropdownValue = "";
     String totalValue = "";
     private By addItemButtonLocator = By.xpath("//div[@class='input-group-btn']/button[@class='btn btn-default']");

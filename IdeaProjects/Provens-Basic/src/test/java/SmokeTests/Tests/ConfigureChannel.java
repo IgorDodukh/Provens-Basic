@@ -20,9 +20,14 @@ public class ConfigureChannel extends BrowserSettings {
 
         SyncPage syncPage = new SyncPage(driver);
         syncPage.openChannel();
+        syncPage.getChannelID();
 
         MagentoAdminPanel magentoAdminPanel = new MagentoAdminPanel(driver);
         magentoAdminPanel.adminPanelLogin();
+        magentoAdminPanel.openSettingsPage();
+        magentoAdminPanel.configureAdvancedExportSettings(email, merchantPassword);
+        magentoAdminPanel.saveMagentoConfig();
+        magentoAdminPanel.addFSChannelID();
 
     }
 
