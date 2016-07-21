@@ -90,6 +90,22 @@ public class MagentoAdminPanel extends BrowserSettings {
                 break;
             }
         }
+        try {
+            final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
+            wait.until(ExpectedConditions.elementToBeClickable(magentoLoginButtonLocator));
+            driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
+            driver.findElement(magentoPasswordFieldLocator).sendKeys(magentoPassword);
+            driver.findElement(magentoLoginButtonLocator).click();
+
+        } catch (NoSuchElementException e) {
+        }
+        try{
+            final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
+            wait2.until(ExpectedConditions.visibilityOfElementLocated(magentoPopupBoxLocator));
+            driver.findElement(magentoPopupBoxCloseButtonLocator).click();
+        }catch (NoSuchElementException e){
+            System.out.println("Popup was not found");
+        }
         ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");

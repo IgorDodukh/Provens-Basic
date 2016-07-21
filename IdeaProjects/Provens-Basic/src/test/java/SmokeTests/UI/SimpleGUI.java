@@ -74,7 +74,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
             " Create Product",
             " Create Supplier",
             " Create Warehouse & Bin",
-            " Sync Magento",
+            " Sync Magento with FS",
             " Reorder the last Order"
     };
     private String[] environments = {" QA01", " QA03", " QA05", " Production (for mad guys)"};
