@@ -33,7 +33,7 @@ public class SimpleGUI extends JFrame implements KeyListener {
     private JLabel environmentLabel = new JLabel("Select Environment");
     private JLabel loginLabel = new JLabel("Login:");
     private JLabel passwordLabel = new JLabel("Password:");
-    private JLabel buildVersionLabel = new JLabel("Build Version: 1.36 beta");
+    private JLabel buildVersionLabel = new JLabel("Build Version: 1.38 beta");
     private JLabel topSpaceLabel = new JLabel(" ");
     private JLabel middleSpaceLabel = new JLabel(" ");
     public static JLabel waitingLabel = new JLabel("Test is running... " + addProgressValue + "%");

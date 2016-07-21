@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,12 +48,14 @@ public class ViewOrderPage extends BrowserSettings {
         buffer.replace(nameSpace, nameLength, "");
         orderedCustomerName = Objects.toString(buffer);
         System.out.println(orderedCustomerName);
+        ProgressBar.addProgressValue(progressVariable);
 
         driver.findElement(firstOrderFromTheListLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'View Order' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
 
         shippingMethod = driver.findElement(shippingMethodLocator).getText();
+        ProgressBar.addProgressValue(progressVariable);
 
         System.out.println("Shipping Method " + shippingMethod);
     }
@@ -62,18 +65,13 @@ public class ViewOrderPage extends BrowserSettings {
         driver.findElement(shippingDetailsTabLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Details' tab is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
-
         orderedItems = driver.findElement(orderedSkuListLocator).getText();
 
         List<WebElement> totalLinks = driver.findElements(orderedSkuListLocator);
         int totalLinkSize = totalLinks.size();
+        ProgressBar.addProgressValue(progressVariable);
         System.out.println("Total Links size : " + totalLinkSize);
         System.out.println("Total Links values : " + orderedItems);
-    }
-
-    public void getPaymentInfo() {
-        totalResultMessage += "Get Payment Info\n";
-        driver.findElement(paymentDetailsTabLocator).click();
     }
 
     public void backToOrdersGrid() {
@@ -81,6 +79,7 @@ public class ViewOrderPage extends BrowserSettings {
         driver.findElement(linkToOrdersGridLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Orders grid is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addOrderButtonLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void openOrderCreatingForm () throws InterruptedException {
@@ -89,5 +88,6 @@ public class ViewOrderPage extends BrowserSettings {
         driver.findElement(addOrderButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Order creating form is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addItemButtonLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 }

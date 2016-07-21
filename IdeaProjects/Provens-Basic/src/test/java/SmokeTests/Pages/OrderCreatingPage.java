@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +45,7 @@ public class OrderCreatingPage extends BrowserSettings {
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Item was not added");
         wait.until(ExpectedConditions.visibilityOfElementLocated(addedItemSectionLocator));
+        ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addCustomer() {
@@ -51,6 +53,7 @@ public class OrderCreatingPage extends BrowserSettings {
         driver.findElement(customerNameFieldLocator).sendKeys(orderedCustomerName);
         driver.findElement(customerNameFieldLocator).sendKeys(Keys.ENTER);
         driver.findElement(customerLastNameFieldLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Is Existing Customer' popup not appear");
         wait.until(ExpectedConditions.visibilityOfElementLocated(isExistingCustomerLocator));
@@ -59,11 +62,14 @@ public class OrderCreatingPage extends BrowserSettings {
         wait2.until(ExpectedConditions.elementToBeClickable(selectCustomerButtonLocator));
 
         driver.findElement(selectCustomerButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
     }
 
-    public void selectShippingMethod() {
+    public void selectShippingMethod() throws InterruptedException {
         totalResultMessage += "Select Shipping Method\n";
+        Thread.sleep(1000);
         driver.findElement(shippingMethodDropdownLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         for (int i = 1; i <= 100; i++){
             By shippingMethodMoreButtonLocator = By.xpath(
@@ -77,29 +83,30 @@ public class OrderCreatingPage extends BrowserSettings {
                 break;
             }
         }
+        ProgressBar.addProgressValue(progressVariable);
+    }
 
+    public void placeOrder() {
         totalResultMessage += "Wait Order Total value\n";
         while (true){
             totalValue = driver.findElement(orderTotalValueLocator).getText();
             if(!Objects.equals(totalValue, "--")){
+                driver.findElement(placeOrderButtonLocator).click();
                 break;
             }
         }
-    }
-
-    public void placeOrder() {
-        totalResultMessage += "Click 'Place Order' button\n";
-        driver.findElement(placeOrderButtonLocator).click();
-
+        ProgressBar.addProgressValue(progressVariable);
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Edit Order' page is not appear");
         wait.until(ExpectedConditions.visibilityOfElementLocated(orderSummaryTabLocator));
 
+        totalResultMessage += "Click 'Place Order' button\n";
         orderNumber = driver.findElement(orderNumberLocator).getText();
+        ProgressBar.addProgressValue(progressVariable);
 
         int numChar = orderNumber.indexOf("#");
         StringBuffer buffer = new StringBuffer(orderNumber);
-        buffer.replace(0, numChar, "");
+        buffer.replace(0, numChar + 1, "");
         orderNumber = Objects.toString(buffer);
-        System.out.println(orderNumber);
+        ProgressBar.addProgressValue(progressVariable);
     }
 }

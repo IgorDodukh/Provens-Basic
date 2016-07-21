@@ -48,7 +48,7 @@ public class DropdownValueDeterminer {
             SimpleGUI.resultMessage += "New Supplier has been created\n";
             SimpleGUI.resultMessage += "\nSupplier name is: " + BrowserSettings.supplierName;
         } else if (entityTypeComboBoxIndex == 6) {
-            BrowserSettings.progressVariable = 4;
+            BrowserSettings.progressVariable = 5;
             makeReorder.makeReorder(login, password, driver);
             SimpleGUI.resultMessage += "New Order has been created\n";
             SimpleGUI.resultMessage += "\nOrder Number is: " + BrowserSettings.orderNumber;
