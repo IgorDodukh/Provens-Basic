@@ -48,10 +48,12 @@ public class DropdownValueDeterminer {
             SimpleGUI.resultMessage += "New Supplier has been created\n";
             SimpleGUI.resultMessage += "\nSupplier name is: " + BrowserSettings.supplierName;
         } else if (entityTypeComboBoxIndex == 6) {
+            BrowserSettings.progressVariable = 4;
             makeReorder.makeReorder(login, password, driver);
             SimpleGUI.resultMessage += "New Order has been created\n";
             SimpleGUI.resultMessage += "\nOrder Number is: " + BrowserSettings.orderNumber;
         } else if (entityTypeComboBoxIndex == 5) {
+            BrowserSettings.progressVariable = 4;
             configureChannel.configureMagentoChannel(login, password, driver);
             SimpleGUI.resultMessage += "\nMagento "+ SimpleGUI.magentoIndexName;
             SimpleGUI.resultMessage += "\nhas been synced with " + SimpleGUI.environmentsComboBox.getSelectedItem();

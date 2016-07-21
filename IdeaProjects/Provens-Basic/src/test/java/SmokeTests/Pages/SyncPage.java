@@ -1,6 +1,7 @@
 package SmokeTests.Pages;
 
 import SmokeTests.Settings.BrowserSettings;
+import SmokeTests.UI.ProgressBar;
 import SmokeTests.UI.SimpleGUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -31,6 +32,7 @@ public class SyncPage extends BrowserSettings{
         String channelName = SimpleGUI.magentoIndexName.replace("qatestlab", "");
         driver.findElement(syncFilterByFieldLocator).sendKeys(channelName);
         driver.findElement(syncFilterByFieldLocator).sendKeys(Keys.ENTER);
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Sync' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(syncFilterByFieldLocator));
@@ -38,9 +40,8 @@ public class SyncPage extends BrowserSettings{
         totalResultMessage += "Open found Channel\n";
         Thread.sleep(1000);
         driver.findElement(syncChannelInGridLocator).click();
-//        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'View Channel' button is not displayed");
-//        wait2.until(ExpectedConditions.elementToBeClickable(syncViewChannelButtonLocator));
         driver.findElement(syncViewChannelButtonLocator).click();
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("'View Channel' page was not loaded");
         wait3.until(ExpectedConditions.elementToBeClickable(channelOverviewTabLocator));
@@ -49,6 +50,7 @@ public class SyncPage extends BrowserSettings{
     public void getChannelID() {
         totalResultMessage += "Remember Channel ID\n";
         magentoChannelID = driver.findElement(channelIDLocator).getAttribute("value");
+        ProgressBar.addProgressValue(progressVariable);
     }
 
 
